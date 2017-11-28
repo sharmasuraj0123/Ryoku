@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_ryoku" default="compile.module.ryoku">
+  <dirname property="module.ryoku.basedir" file="${ant.file.module_ryoku}"/>
+  
+  <property name="module.jdk.home.ryoku" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.ryoku" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.ryoku" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.ryoku" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
+  
+  <property name="ryoku.output.dir" value="${module.ryoku.basedir}/out/production/Ryoku"/>
+  <property name="ryoku.testoutput.dir" value="${module.ryoku.basedir}/out/test/Ryoku"/>
+  
+  <path id="ryoku.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ryoku.module.production.classpath">
+    <path refid="${module.jdk.classpath.ryoku}"/>
+    <path refid="library.tomcat_8.5.23.classpath"/>
+  </path>
+  
+  <path id="ryoku.runtime.production.module.classpath">
+    <pathelement location="${ryoku.output.dir}"/>
+  </path>
+  
+  <path id="ryoku.module.classpath">
+    <path refid="${module.jdk.classpath.ryoku}"/>
+    <pathelement location="${ryoku.output.dir}"/>
+    <path refid="library.tomcat_8.5.23.classpath"/>
+  </path>
+  
+  <path id="ryoku.runtime.module.classpath">
+    <pathelement location="${ryoku.testoutput.dir}"/>
+    <pathelement location="${ryoku.output.dir}"/>
+    <path refid="library.tomcat_8.5.23.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.ryoku">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ryoku">
+    <patternset refid="excluded.from.module.ryoku"/>
+  </patternset>
+  
+  <path id="ryoku.module.sourcepath">
+    <dirset dir="${module.ryoku.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.ryoku" depends="compile.module.ryoku.production,compile.module.ryoku.tests" description="Compile module Ryoku"/>
+  
+  <target name="compile.module.ryoku.production" depends="register.custom.compilers" description="Compile module Ryoku; production classes">
+    <mkdir dir="${ryoku.output.dir}"/>
+    <javac2 destdir="${ryoku.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ryoku}/javac">
+      <compilerarg line="${compiler.args.ryoku}"/>
+      <bootclasspath refid="ryoku.module.bootclasspath"/>
+      <classpath refid="ryoku.module.production.classpath"/>
+      <src refid="ryoku.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ryoku"/>
+    </javac2>
+    
+    <copy todir="${ryoku.output.dir}">
+      <fileset dir="${module.ryoku.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.ryoku.tests" depends="register.custom.compilers,compile.module.ryoku.production" description="compile module Ryoku; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.ryoku" description="cleanup module">
+    <delete dir="${ryoku.output.dir}"/>
+    <delete dir="${ryoku.testoutput.dir}"/>
+  </target>
+</project>
