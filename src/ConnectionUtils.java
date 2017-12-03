@@ -38,8 +38,6 @@ public class ConnectionUtils {
 
        for (int i = 0; i<fl.size();i++)
            System.out.println(fl.get(i).toString());
-
-
     }
 
 
