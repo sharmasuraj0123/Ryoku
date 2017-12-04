@@ -29,10 +29,10 @@ public class ConnectionUtils {
     public static void main(String[] args) throws SQLException,
             ClassNotFoundException {
 
-//        //Adding an Employee.
-//        //Person.addEmployee("man", "yes"
-//        ,"qw","sd","sd",11790, 1111111111, 1111111111, 10,
-//                1,5.6);s
+        //Adding an Employee.
+        ManagerLevelTransaction.addEmployee("man", "yes",
+        "qw","sd","sd",11790, 1111111111, 1111111111, 10,
+                1,5.6);
 
        ArrayList<String> fl =  ManagerLevelTransaction.getSalesReportOfAMonth(10,2017);
 
