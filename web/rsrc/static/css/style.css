@@ -28,3 +28,6 @@ h3.medium-font{
     font-size: 12pt;
     font-weight: 100;
 }
+span.bold{
+    font-weight: 700;
+}

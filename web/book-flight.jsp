@@ -154,6 +154,8 @@
                         </li>
                     </ul>
 
+                    <hr>
+
                     <div class="uk-margin-medium-top uk-text-center">
                         <button class="uk-button uk-button-primary">Submit</button>
                     </div>

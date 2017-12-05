@@ -11,7 +11,9 @@
             <center>
                 <label><input name="seach_type" class="uk-radio" type="radio" checked> One way</label> &nbsp;&nbsp;&nbsp;
                 <label><input name="seach_type" class="uk-radio" type="radio"> Round Trip</label> &nbsp;&nbsp;&nbsp;
-                <label><input name="seach_type" class="uk-radio" type="radio"> Multi City</label> &nbsp;&nbsp;&nbsp;
+                <label><input name="seach_type" class="uk-radio" type="radio"> Multi City</label> &nbsp; | &nbsp;
+                <label><input name="flight_type" class="uk-radio" type="radio" checked> International </label> &nbsp;&nbsp;&nbsp;
+                <label><input name="flight_type" class="uk-radio" type="radio"> Domestic</label> &nbsp;&nbsp;&nbsp;
             </center>
             <br><br>
             <div uk-grid>
