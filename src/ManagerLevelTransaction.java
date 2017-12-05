@@ -4,13 +4,13 @@ import java.util.ArrayList;
 public class ManagerLevelTransaction {
 
 
-    public static void addEmployee(String firstName, String lastName, String address
+    public static void addEmployee(String firstName, String lastName, String email, String password, String address
             , String city, String state, int zipcode, int phoneNumber , int SSN ,
                                    double hrpay, int manager, double rating) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs ;
-        CallableStatement cStmt = conn.prepareCall("{call addEmployee(?,?,?,?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call addEmployee(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
 
         Timestamp startdate = new Timestamp(System.currentTimeMillis());
@@ -26,6 +26,8 @@ public class ManagerLevelTransaction {
         cStmt.setDouble(10,hrpay);
         cStmt.setInt(11,manager);
         cStmt.setDouble(12,rating);
+        cStmt.setString(13,email);
+        cStmt.setString(14,password);
 
         boolean hadResults = cStmt.execute();
 

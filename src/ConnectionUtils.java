@@ -30,9 +30,13 @@ public class ConnectionUtils {
             ClassNotFoundException {
 
         //Adding an Employee.
-        ManagerLevelTransaction.addEmployee("man", "yes",
-        "qw","sd","sd",11790, 1111111111, 1111111111, 10,
-                1,5.6);
+//        ManagerLevelTransaction.addEmployee("maewn", "yes","yello@hi","1234",
+//        "qw","sd","sd",11790, 1111111111, 1111111111, 10,
+//                1,5.6);
+
+        CRLevelTransactions.addCustomer("test","sd","21","ew",
+                "NY",11790,1111111111,"sa@sk","1234"
+        ,1010101010,7.0);
 
        ArrayList<String> fl =  ManagerLevelTransaction.getSalesReportOfAMonth(10,2017);
 
