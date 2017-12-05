@@ -14,6 +14,8 @@ public static Customer getCustomer(int p_id) throws SQLException, ClassNotFoundE
     cStmt.setInt(1,p_id);
     boolean hadResults = cStmt.execute();
 
+    rs = cStmt.getResultSet();
+
     while (rs.next()) {
         int id = rs.getInt("id");
         String firstName = rs.getString("FirstName");

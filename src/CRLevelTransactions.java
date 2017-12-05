@@ -140,6 +140,7 @@ public class CRLevelTransactions {
         boolean hadResults = cStmt.execute();
 
         ArrayList<String> pl = new ArrayList<>();
+        rs = cStmt.getResultSet();
         while (rs.next()) {
             String data = String.format(rs.getString("Name") + " " + rs.getString("EmailAddress"));
             pl.add(data);
