@@ -16,18 +16,19 @@ public class ManagerLevelTransaction {
         Timestamp startdate = new Timestamp(System.currentTimeMillis());
         cStmt.setString(1,firstName);
         cStmt.setString(2,lastName);
-        cStmt.setString(3,address);
-        cStmt.setString(4,city);
-        cStmt.setString(5,state);
-        cStmt.setInt(6,zipcode);
-        cStmt.setInt(7,phoneNumber);
-        cStmt.setInt(8,SSN);
-        cStmt.setTimestamp(9, startdate);
-        cStmt.setDouble(10,hrpay);
-        cStmt.setInt(11,manager);
-        cStmt.setDouble(12,rating);
-        cStmt.setString(13,email);
-        cStmt.setString(14,password);
+        cStmt.setString(3,email);
+        cStmt.setString(4,password);
+        cStmt.setString(5,address);
+        cStmt.setString(6,city);
+        cStmt.setString(7,state);
+        cStmt.setInt(8,zipcode);
+        cStmt.setInt(9,phoneNumber);
+        cStmt.setInt(10,SSN);
+        cStmt.setTimestamp(11, startdate);
+        cStmt.setDouble(12,hrpay);
+        cStmt.setInt(13,manager);
+        cStmt.setDouble(14,rating);
+
 
         boolean hadResults = cStmt.execute();
 
