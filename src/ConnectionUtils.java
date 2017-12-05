@@ -33,15 +33,25 @@ public class ConnectionUtils {
 //        ManagerLevelTransaction.addEmployee("maewn", "yes","yello@hi","1234",
 //        "qw","sd","sd",11790, 1111111111, 1111111111, 10,
 //                1,5.6);
+//        String a ="9999999999";
+//
+//        CRLevelTransactions.addCustomer("teest","sdw","2d1","ew",
+//                "NY",11790,Long.parseLong(a),"ssea@sk","1234"
+//        ,1010101010,7.0);
+//        Employees e = ManagerLevelTransaction.getEmployee(3);
+//        System.out.println(e.getFirstName());
+//
+//       ArrayList<String> fl =  ManagerLevelTransaction.getSalesReportOfAMonth(10,2017);
+//
+//       for (int i = 0; i<fl.size();i++)
+//           System.out.println(fl.get(i).toString());
+        ArrayList<FlightSearch> fs =
+        CustomerLevelTransaction.searchFlights(6,11);
 
-        CRLevelTransactions.addCustomer("test","sd","21","ew",
-                "NY",11790,1111111111,"sa@sk","1234"
-        ,1010101010,7.0);
+        for (int i =0; i<fs.size();i++) {
+            System.out.println(fs.get(i).toString());
+        }
 
-       ArrayList<String> fl =  ManagerLevelTransaction.getSalesReportOfAMonth(10,2017);
-
-       for (int i = 0; i<fl.size();i++)
-           System.out.println(fl.get(i).toString());
     }
 
 
