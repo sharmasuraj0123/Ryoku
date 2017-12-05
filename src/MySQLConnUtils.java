@@ -13,7 +13,7 @@ public class MySQLConnUtils{
         String hostName = "localhost";
         String dbName = "CSE305_RYOKU";
         String userName = "root";
-        String password = "1234";
+        String password = "";
 
         return getMySQLConnection(hostName, dbName, userName, password);
     }

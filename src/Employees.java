@@ -12,7 +12,24 @@ public class Employees extends Person {
     boolean isManager;
     int rating;
 
+    public Employees(){
+        super();
+    }
 
+    public Employees(int id, String firstName, String lastName,
+                        String password, String address, String city, String state,
+                            int zipCode, int phoneNumber, int employeeId, int person_id, int SSN,
+                                Timestamp startDate, int hourlyPay, boolean isManager, int rating) {
+
+        super(id, firstName, lastName, password, address, city, state, zipCode, phoneNumber);
+        this.employeeId = employeeId;
+        this.person_id = person_id;
+        this.SSN = SSN;
+        this.startDate = startDate;
+        this.hourlyPay = hourlyPay;
+        this.isManager = isManager;
+        this.rating = rating;
+    }
 
     public int getEmployeeId() {
         return employeeId;

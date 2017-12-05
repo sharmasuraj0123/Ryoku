@@ -31,12 +31,12 @@ public class CRLevelTransactions {
     }
 
     public static void addCustomer(String firstName, String lastName, String address
-            , String city, String state, int zipcode, int phoneNumber, String email,
-                                   int creditCardNum, double rating) throws SQLException, ClassNotFoundException {
+            , String city, String state, int zipcode, long phoneNumber, String email, String password,
+                                   long creditCardNum, double rating) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call addCustomer(?,?,?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call addCustomer(?,?,?,?,?,?,?,?,?,?,?,?)}");
 
 
         Timestamp startdate = new Timestamp(System.currentTimeMillis());
@@ -46,11 +46,13 @@ public class CRLevelTransactions {
         cStmt.setString(4, city);
         cStmt.setString(5, state);
         cStmt.setInt(6, zipcode);
-        cStmt.setInt(7, phoneNumber);
+        cStmt.setLong(7, phoneNumber);
         cStmt.setString(8, email);
-        cStmt.setTimestamp(9, startdate);
-        cStmt.setInt(10, creditCardNum);
-        cStmt.setDouble(11, rating);
+        cStmt.setString(9, password);
+        cStmt.setTimestamp(10, startdate);
+        cStmt.setLong(11, creditCardNum);
+        cStmt.setDouble(12, rating);
+
 
         boolean hadResults = cStmt.execute();
 
@@ -93,7 +95,6 @@ public class CRLevelTransactions {
 
         boolean hadResults = cStmt.execute();
         conn.close();
-
 
     }
 
