@@ -17,6 +17,8 @@ public class ReservationData {
     private ArrayList<Passenger> pasengerList;
     private ArrayList<FlightSearch> Flights;
     public ReservationData() {
+        Flights = new ArrayList<>();
+        pasengerList = new ArrayList<>();
     }
 
     public ReservationData(int reservation_id, int customer_id, int numOfPassengers, Timestamp dateCreated,
@@ -32,6 +34,8 @@ public class ReservationData {
         Fare_restrictions = fare_restrictions;
         this.lengthOfstay = lengthOfstay;
         this.advPurchases = advPurchases;
+        Flights = new ArrayList<>();
+        pasengerList = new ArrayList<>();
     }
 
     public int getReservation_id() {
@@ -143,4 +147,11 @@ public class ReservationData {
         Flights.add(newFlightSearch);
     }
 
+    public ArrayList<FlightSearch> getFlights() {
+        return Flights;
+    }
+
+    public void setFlights(ArrayList<FlightSearch> flights) {
+        Flights = flights;
+    }
 }

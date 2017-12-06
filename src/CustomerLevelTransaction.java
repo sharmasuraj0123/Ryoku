@@ -70,7 +70,7 @@ public class CustomerLevelTransaction {
         cStmt.setInt(2,dest);
         cStmt.setDate(3, (java.sql.Date) date);
         boolean hadResults = cStmt.execute();
-        
+
         rs = cStmt.getResultSet();
         if(hadResults)
             while (rs.next()) {
@@ -235,46 +235,67 @@ public class CustomerLevelTransaction {
     }
 
 
-//    public static ReservationData getReservationDetails(ReservationData r) throws SQLException, ClassNotFoundException {
-//
-//
-//        Connection conn = ConnectionUtils.getConnection();
-//        ResultSet rs = null;
-//        //Get all the FlightLegs
-//        CallableStatement cStmt = conn.prepareCall("{call getReservationsByCustomerId(?)}");
-//        cStmt.setInt(1,r.getReservation_id());
-//        boolean hadResults = cStmt.execute();
-//
-//        rs = cStmt.getResultSet();
-//        FlightSearch flightBlock = new FlightSearch();
-//                if(hadResults)
-//                    while (rs.next()) {
-//                        int leg_id = rs.getInt("id");
-//                        int flight_id = rs.getInt("flight_id");
-//                        int departureAirport = rs.getInt("departureAirport");
-//                        int arrivalAirport = rs.getInt("arrivalAirport");
-//                        Timestamp dept_timestamp = rs.getTimestamp("dept_timestamp");
-//                        Timestamp arrv_timestamp = rs.getTimestamp("arrv_timestamp");
-//                        int base_fare = rs.getInt("base_fare");
-//                        int hidden_fare = rs.getInt("hidden_fare");
-//                        int stopNum = rs.getInt("stopNum");
-//
-//                        Flight newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
-//                                leg_id,base_fare,hidden_fare);
-//
-//                        flightBlock.addFlight(newflight);
-//                        flightBlock.addPrice(base_fare);
-//                    }
-//                r.addFlightSearch(flightBlock);
-//
-//        CallableStatement cStmt2 = conn.prepareCall("{call getReservationsByCustomerId(?)}");
-//        cStmt2.setInt(1,r.getReservation_id());
-//       hadResults = cStmt.execute();
-//
-//        rs = cStmt2.getResultSet();
-//
-//        return r;
-//    }
+    public static ReservationData getReservationDetails(ReservationData r) throws SQLException, ClassNotFoundException {
+
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+
+        //Get all the FlightLegs
+        CallableStatement cStmt = conn.prepareCall("{call getFlightsOfAReservation(?)}");
+        cStmt.setInt(1,r.getReservation_id());
+        boolean hadResults = cStmt.execute();
+
+        rs = cStmt.getResultSet();
+        FlightSearch flightBlock = new FlightSearch();
+                if(hadResults){
+                    while (rs.next()) {
+                        int leg_id = rs.getInt("id");
+                        int flight_id = rs.getInt("flight_id");
+                        int departureAirport = rs.getInt("departureAirport");
+                        int arrivalAirport = rs.getInt("arrivalAirport");
+                        Timestamp dept_timestamp = rs.getTimestamp("dept_timestamp");
+                        Timestamp arrv_timestamp = rs.getTimestamp("arrv_timestamp");
+                        int base_fare = rs.getInt("base_fare");
+                        int hidden_fare = rs.getInt("hidden_fare");
+                        int stopNum = rs.getInt("stopNum");
+
+                        Flight newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+                                leg_id,base_fare,hidden_fare);
+
+                        flightBlock.addFlight(newflight);
+                        flightBlock.addPrice(base_fare);
+                    }
+                r.addFlightSearch(flightBlock);
+                }
+
+
+        //Get All Passenger Details
+        CallableStatement cStmt2 = conn.prepareCall("{call getPassengersOfAReservation(?)}");
+        cStmt2.setInt(1,r.getReservation_id());
+       hadResults = cStmt2.execute();
+       rs = cStmt2.getResultSet();
+       ArrayList<Passenger> passengerList = new ArrayList<>();
+       Passenger newpass;
+        if(hadResults) {
+            while (rs.next()) {
+
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                int person_id = rs.getInt(1);
+                int reservation_id = rs.getInt("reservations_id");
+                String mealPref = rs.getString("meal_preference");
+                String travelClass = rs.getString("travel_class");
+                String seatPref = rs.getString("seat_preference");
+                String seatNum = rs.getString("seat_number");
+
+                newpass = new Passenger(person_id, firstName, lastName, person_id, reservation_id, mealPref, travelClass, seatPref, seatNum);
+                passengerList.add(newpass);
+            }
+            r.setPasengerList(passengerList);
+        }
+        return r;
+    }
 
 
 }

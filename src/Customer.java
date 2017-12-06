@@ -25,6 +25,12 @@ public class Customer extends Person{
         this.ratings = ratings;
     }
 
+    public Customer(int id, String firstName, String lastName, int accountNumber,double ratings) {
+        super(id, firstName, lastName);
+        this.accountNumber = accountNumber;
+        this.ratings = ratings;
+    }
+
     public int getAccountNumber() {
         return accountNumber;
     }

@@ -206,4 +206,31 @@ public class CRLevelTransactions {
     }
 
 
+    public static ArrayList<Customer> getCustomersList() throws SQLException, ClassNotFoundException{
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+        ArrayList<Customer> cl = new ArrayList<>();
+        CallableStatement cStmt = conn.prepareCall("{call getCustomersList()}");
+
+
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+
+        if(hadResults)
+            while (rs.next()) {
+            String firstName = rs.getString("FirstName");
+            String lastName = rs.getString("LastName");
+            int account_number = rs.getInt("AccountNumber");
+            int person_id = rs.getInt("person_id");
+            double rating = rs.getDouble("Ratings");
+
+            Customer nc = new Customer(person_id,firstName,lastName,account_number,rating);
+            cl.add(nc);
+            }
+        conn.close();
+        return cl;
+
+    }
+
 }
