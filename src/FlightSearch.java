@@ -1,10 +1,14 @@
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class FlightSearch {
     private int numberOfpassengers;
     private ArrayList<Flight> flightlegs;
     private int price;
-    private int totalTravelTime;
+    private long totalTravelTime;
+    private String day;
+    private String hours;
+    private String minutes;
 
     public FlightSearch() {
         flightlegs = new ArrayList<>();
@@ -43,12 +47,38 @@ public class FlightSearch {
         price+=fare;
     }
 
-    public int getTotalTravelTime() {
-        return totalTravelTime;
+    public void getTotalTravelTime() {
+
+        Timestamp startTime  = flightlegs.get(0).getDept_time();
+        Timestamp endTime  = flightlegs.get(flightlegs.size()-1).getArrival_time();
+        long travelTime = endTime.getTime() - startTime.getTime();
+        day = String.format(travelTime/(24 * 60 * 60 * 1000)+"");
+        hours = String.format((travelTime/(60 * 60 * 1000))%24+"");
+        minutes = String.format((travelTime/(60 * 1000))%60+"");
     }
 
-    public void setTotalTravelTime(int totalTravelTime) {
-        this.totalTravelTime = totalTravelTime;
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public String getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(String minutes) {
+        this.minutes = minutes;
     }
 
     public String printFlightLegs(){
@@ -62,6 +92,6 @@ public class FlightSearch {
 
     @Override
     public String toString() {
-        return printFlightLegs() + "Total price: " + price +"\n\n";
+        return printFlightLegs() + "Total price: " + price + "Transit Time :"+"\n\n";
     }
 }

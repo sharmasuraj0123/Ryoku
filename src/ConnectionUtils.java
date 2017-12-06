@@ -48,7 +48,6 @@ public class ConnectionUtils {
 
         ArrayList<FlightSearch> fs =
         CustomerLevelTransaction.searchFlights(6,11, new Date(System.currentTimeMillis()));
-
         for (int i =0; i<fs.size();i++) {
             System.out.println(fs.get(i).toString());
         }
