@@ -177,7 +177,7 @@ public class ManagerLevelTransaction {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs =null;
-        CallableStatement cStmt = conn.prepareCall("{call getReservationsByACustomer(?)}");
+        CallableStatement cStmt = conn.prepareCall("{call getReservationsByCustomerId(?)}");
 
         cStmt.setInt(1,cust_id);
 
@@ -196,9 +196,9 @@ public class ManagerLevelTransaction {
                 data.setTotal_fare(rs.getDouble("total_fare"));
                 data.setBooking_fee(rs.getDouble("booking_fee"));
                 data.setEmployee_id(rs.getInt("employee_id"));
-                data.setFare_restrictions(rs.getString("fare_restriction"));
+                data.setFare_restrictions(rs.getString("fare_restrictions"));
                 data.setLengthOfstay(rs.getInt("lengthOfStay"));
-                data.setAdvPurchases(rs.getString("advancePurchases"));
+                data.setAdvPurchases(rs.getString("advancePurchase"));
 
                 rl.add(data);
             }

@@ -8,11 +8,10 @@ public class Passenger extends Person {
     private String seat_num;
 
 
-    public Passenger(int id, String firstName, String lastName, String emailAddress, String password,
-                     String address, String city, String state, int zipCode, long phoneNumber, int personId,
+    public Passenger(int id, String firstName, String lastName, int personId,
                      int reservationId, String mealPref, String travelClass, String seatPref, String seat_num) {
 
-        super(id, firstName, lastName, emailAddress, password, address, city, state, zipCode, phoneNumber);
+        super(id, firstName, lastName);
         this.personId = personId;
         this.reservationId = reservationId;
         this.mealPref = mealPref;
@@ -30,6 +29,9 @@ public class Passenger extends Person {
         this.travelClass = travelClass;
         this.seatPref = seatPref;
         this.seat_num = seat_num;
+    }
+
+    public Passenger() {
     }
 
     public int getPersonId() {

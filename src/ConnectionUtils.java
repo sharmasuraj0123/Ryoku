@@ -46,11 +46,20 @@ public class ConnectionUtils {
 //       for (int i = 0; i<fl.size();i++)
 //           System.out.println(fl.get(i).toString());
 
-        ArrayList<FlightSearch> fs =
-        CustomerLevelTransaction.searchFlights(6,11, new Date(System.currentTimeMillis()));
-        for (int i =0; i<fs.size();i++) {
-            System.out.println(fs.get(i).toString());
-        }
+//        ArrayList<FlightSearch> fs =
+//        CustomerLevelTransaction.searchFlights(6,11, new Date(System.currentTimeMillis()));
+//        for (int i =0; i<fs.size();i++) {
+//            System.out.println(fs.get(i).toString());
+//        }
+
+        ArrayList<ReservationData> rl = ManagerLevelTransaction.getReservationsByACustomer(3);
+
+        ReservationData rd = rl.get(0);
+       rd = CustomerLevelTransaction.getReservationDetails(rd);
+       System.out.println(rd.getNumOfPassengers());
+        System.out.println(rd.getFlights().get(0).getFlightlegs().get(0).toString());
+        System.out.println(rd.getPasengerList().get(0).getFirstName());
+        System.out.println(rd.getPasengerList().size());
 
     }
 
