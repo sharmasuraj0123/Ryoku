@@ -7,36 +7,7 @@
 
     <div uk-grid>
         <div class="uk-width-1-4">
-            <div class=" uk-light uk-card-body uk-card-secondary">
-                <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-
-                    <li class="uk-active"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: settings"></span> My Account</a></li>
-
-
-                    <%--<li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>--%>
-                    <%--<li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>--%>
-
-
-                    <li class="uk-nav-divider"></li>
-                    <li class="uk-nav-header">Reservations</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: world"></span> All </a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: future"></span> Upcoming </a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: history"></span> Past </a></li>
-
-
-
-                    <li class="uk-nav-divider"></li>
-                    <li class="uk-nav-header">Flight List</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: star"></span> Best Seller Flights</a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: heart"></span> Personalized Flights</a></li>
-
-                    <li class="uk-nav-divider"></li>
-                    <li class="uk-nav-header">Reverse Auctions</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: clock"></span> Current</a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: history"></span> Past</a></li>
-
-                </ul>
-            </div>
+            <%@include file="my-account-sidebar.html"%>
         </div>
         <div class="uk-width-expand">
             <form class="uk-form-horizontal uk-margin">
@@ -50,7 +21,14 @@
                 </div>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="_user-new-password">Password: </label>
+                    <label class="uk-form-label" for="_user-old-password">Current Password: </label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="_user-old-password" type="password" placeholder="">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="_user-new-password">New Password: </label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="_user-new-password" type="password" placeholder="">
                     </div>
