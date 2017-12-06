@@ -14,11 +14,9 @@ public class CustomerLevelTransaction {
 
             cStmt.setInt(1,p_id);
             boolean hadResults = cStmt.execute();
-
             rs = cStmt.getResultSet();
         if(hadResults)
             while (rs.next()) {
-
                 int id = rs.getInt("id");
                 String firstName = rs.getString("FirstName");
                 String lastName= rs.getString("LastName");
@@ -72,6 +70,7 @@ public class CustomerLevelTransaction {
         cStmt.setInt(2,dest);
         cStmt.setDate(3, (java.sql.Date) date);
         boolean hadResults = cStmt.execute();
+        
         rs = cStmt.getResultSet();
         if(hadResults)
             while (rs.next()) {
