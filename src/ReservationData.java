@@ -139,4 +139,8 @@ public class ReservationData {
         this.pasengerList = pasengerList;
     }
 
+    public void addFlightSearch(FlightSearch newFlightSearch){
+        Flights.add(newFlightSearch);
+    }
+
 }

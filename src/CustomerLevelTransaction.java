@@ -7,43 +7,43 @@ public class CustomerLevelTransaction {
 
 
     public static Customer getCustomer(int p_id) throws SQLException, ClassNotFoundException{
-        Customer current_customer = null;
-        Connection conn = ConnectionUtils.getConnection();
-        ResultSet rs = null;
-        CallableStatement cStmt = conn.prepareCall("{call getCustomer(?)}");
+            Customer current_customer = null;
+            Connection conn = ConnectionUtils.getConnection();
+            ResultSet rs = null;
+            CallableStatement cStmt = conn.prepareCall("{call getCustomer(?)}");
 
-        cStmt.setInt(1,p_id);
-        boolean hadResults = cStmt.execute();
+            cStmt.setInt(1,p_id);
+            boolean hadResults = cStmt.execute();
 
-        rs = cStmt.getResultSet();
+            rs = cStmt.getResultSet();
+        if(hadResults)
+            while (rs.next()) {
 
-        while (rs.next()) {
-
-            int id = rs.getInt("id");
-            String firstName = rs.getString("FirstName");
-            String lastName= rs.getString("LastName");
-            String email= rs.getString("emailAddress");
-            String password= rs.getString("password");
-            String address= rs.getString("address");
-            String city= rs.getString("City_town");
-            String state= rs.getString("State");
-            int zipCode = rs.getInt("ZipCode");
-            long phoneNumber = rs.getLong("Phone");
-            int accountNumber = rs.getInt("AccountNumber");
-            Timestamp dateCreated = rs.getTimestamp("AccountCreationDate");
-            long creditCardNumber = rs.getLong("CreditCardNumber");
-            double ratings = rs.getDouble("Ratings");
-
-
-            current_customer = new Customer(id,firstName,lastName,email,password,
-                    address,city,state,zipCode,phoneNumber,accountNumber,
-                    dateCreated,creditCardNumber,ratings);
+                int id = rs.getInt("id");
+                String firstName = rs.getString("FirstName");
+                String lastName= rs.getString("LastName");
+                String email= rs.getString("emailAddress");
+                String password= rs.getString("password");
+                String address= rs.getString("address");
+                String city= rs.getString("City_town");
+                String state= rs.getString("State");
+                int zipCode = rs.getInt("ZipCode");
+                long phoneNumber = rs.getLong("Phone");
+                int accountNumber = rs.getInt("AccountNumber");
+                Timestamp dateCreated = rs.getTimestamp("AccountCreationDate");
+                long creditCardNumber = rs.getLong("CreditCardNumber");
+                double ratings = rs.getDouble("Ratings");
 
 
-        }
+                current_customer = new Customer(id,firstName,lastName,email,password,
+                        address,city,state,zipCode,phoneNumber,accountNumber,
+                        dateCreated,creditCardNumber,ratings);
 
-        conn.close();
-        return current_customer;
+
+            }
+
+            conn.close();
+            return current_customer;
     }
 
 
@@ -236,43 +236,46 @@ public class CustomerLevelTransaction {
     }
 
 
-//    public static ArrayList<ReservationData> myReservations(ReservationData r) throws SQLException, ClassNotFoundException {
+//    public static ReservationData getReservationDetails(ReservationData r) throws SQLException, ClassNotFoundException {
 //
 //
-//        ArrayList<ReservationData> myreservations = new ArrayList<>();
-//
-//        //Customer current_customer = null;
 //        Connection conn = ConnectionUtils.getConnection();
 //        ResultSet rs = null;
+//        //Get all the FlightLegs
 //        CallableStatement cStmt = conn.prepareCall("{call getReservationsByCustomerId(?)}");
-//        //cStmt.setInt(1,customer_id);
+//        cStmt.setInt(1,r.getReservation_id());
 //        boolean hadResults = cStmt.execute();
 //
 //        rs = cStmt.getResultSet();
-//        if(hadResults)
-//            while (rs.next()) {
-//                ReservationData newdata;
-//                int reservation_id = rs.getInt("id");
-//                int numOfPassengers = rs.getInt(3);
-//                Timestamp dateCreated = rs.getTimestamp("date");
-//                double total_fare =  rs.getInt("total_fare");
-//                double booking_fee = rs.getDouble("booking_fee");
-//                int employee_id = rs.getInt("employee_id");
-//                String fare_restrictions = rs.getString("fare_restrictions");
-//                int lengthOfstay = rs.getInt("lengthOfStay");
-//                String advPurchases = rs.getString("advancePurchase");
+//        FlightSearch flightBlock = new FlightSearch();
+//                if(hadResults)
+//                    while (rs.next()) {
+//                        int leg_id = rs.getInt("id");
+//                        int flight_id = rs.getInt("flight_id");
+//                        int departureAirport = rs.getInt("departureAirport");
+//                        int arrivalAirport = rs.getInt("arrivalAirport");
+//                        Timestamp dept_timestamp = rs.getTimestamp("dept_timestamp");
+//                        Timestamp arrv_timestamp = rs.getTimestamp("arrv_timestamp");
+//                        int base_fare = rs.getInt("base_fare");
+//                        int hidden_fare = rs.getInt("hidden_fare");
+//                        int stopNum = rs.getInt("stopNum");
 //
-////                newdata = new ReservationData(reservation_id,customer_id,numOfPassengers,dateCreated
-////                ,total_fare,booking_fee,employee_id,fare_restrictions,lengthOfstay,advPurchases);
+//                        Flight newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+//                                leg_id,base_fare,hidden_fare);
 //
-//                myreservations.add(newdata);
-//            }
+//                        flightBlock.addFlight(newflight);
+//                        flightBlock.addPrice(base_fare);
+//                    }
+//                r.addFlightSearch(flightBlock);
 //
-//        return myreservations;
+//        CallableStatement cStmt2 = conn.prepareCall("{call getReservationsByCustomerId(?)}");
+//        cStmt2.setInt(1,r.getReservation_id());
+//       hadResults = cStmt.execute();
+//
+//        rs = cStmt2.getResultSet();
+//
+//        return r;
 //    }
-
-
-
 
 
 }
