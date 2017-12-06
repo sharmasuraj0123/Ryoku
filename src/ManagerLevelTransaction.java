@@ -4,6 +4,49 @@ import java.util.ArrayList;
 public class ManagerLevelTransaction {
 
 
+    public static Employees getEmployee(int p_id) throws SQLException, ClassNotFoundException{
+        Employees current = null;
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+        CallableStatement cStmt = conn.prepareCall("{call getEmployee(?)}");
+
+        cStmt.setInt(1,p_id);
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String firstName = rs.getString("FirstName");
+            String lastName= rs.getString("LastName");
+            String email= rs.getString("emailAddress");
+            String password= rs.getString("password");
+            String address= rs.getString("address");
+            String city= rs.getString("City_town");
+            String state= rs.getString("State");
+            int zipCode = rs.getInt("ZipCode");
+            long phoneNumber = rs.getLong("Phone");
+            int employeeId  = rs.getInt("EmployeeId");
+            int SSN =rs.getInt("SSN");
+            Timestamp startDate = rs.getTimestamp("StartDate");
+            double hourlyPay = rs.getDouble("HourlyPay");
+            int isManagercheck = rs.getInt("isManager");
+            double ratings = rs.getDouble("Rating");
+
+            boolean isManager;
+            if(isManagercheck==0)
+                isManager = false;
+            else isManager = true;
+
+            current = new Employees(id,firstName,lastName,email,password,
+                    address,city,state,zipCode,phoneNumber,employeeId,
+                    SSN,startDate,hourlyPay,isManager,ratings);
+
+        }
+
+        conn.close();
+        return current;
+    }
+
     public static void addEmployee(String firstName, String lastName, String email, String password, String address
             , String city, String state, int zipcode, int phoneNumber , int SSN ,
                                    double hrpay, int manager, double rating) throws SQLException, ClassNotFoundException {
@@ -16,23 +59,25 @@ public class ManagerLevelTransaction {
         Timestamp startdate = new Timestamp(System.currentTimeMillis());
         cStmt.setString(1,firstName);
         cStmt.setString(2,lastName);
-        cStmt.setString(3,address);
-        cStmt.setString(4,city);
-        cStmt.setString(5,state);
-        cStmt.setInt(6,zipcode);
-        cStmt.setInt(7,phoneNumber);
-        cStmt.setInt(8,SSN);
-        cStmt.setTimestamp(9, startdate);
-        cStmt.setDouble(10,hrpay);
-        cStmt.setInt(11,manager);
-        cStmt.setDouble(12,rating);
-        cStmt.setString(13,email);
-        cStmt.setString(14,password);
+        cStmt.setString(3,email);
+        cStmt.setString(4,password);
+        cStmt.setString(5,address);
+        cStmt.setString(6,city);
+        cStmt.setString(7,state);
+        cStmt.setInt(8,zipcode);
+        cStmt.setInt(9,phoneNumber);
+        cStmt.setInt(10,SSN);
+        cStmt.setTimestamp(11, startdate);
+        cStmt.setDouble(12,hrpay);
+        cStmt.setInt(13,manager);
+        cStmt.setDouble(14,rating);
+
 
         boolean hadResults = cStmt.execute();
 
         conn.close();
     }
+
 
     public static void editEmployee(int empId, int SSN, Timestamp startdate,
                                     double hrpay, int manager, double rating) throws SQLException, ClassNotFoundException {
@@ -133,6 +178,7 @@ public class ManagerLevelTransaction {
         cStmt.setInt(1,cust_id);
 
         boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
 
         ArrayList<ReservationData> rl = new ArrayList<>();
         while (rs.next()) {
@@ -164,6 +210,7 @@ public class ManagerLevelTransaction {
         cStmt.setInt(1,leg_id);
 
         boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
 
         ArrayList<String> fs = new ArrayList<>();
         while (rs.next()) {
@@ -185,7 +232,7 @@ public class ManagerLevelTransaction {
         cStmt.setInt(1,flight_id);
 
         boolean hadResults = cStmt.execute();
-
+        rs = cStmt.getResultSet();
         ArrayList<String> fl = new ArrayList<>();
         while (rs.next()) {
             String data = String.format(rs.getString("airline")  + rs.getInt("flight_number")
@@ -205,6 +252,7 @@ public class ManagerLevelTransaction {
         cStmt.setString(1,city);
 
         boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
 
         ArrayList<String> cl = new ArrayList<>();
         while (rs.next()) {
@@ -225,6 +273,7 @@ public class ManagerLevelTransaction {
         cStmt.setInt(1,cust_id);
 
         boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
 
         ArrayList<String> cl = new ArrayList<>();
         while (rs.next()) {
@@ -243,6 +292,7 @@ public class ManagerLevelTransaction {
         CallableStatement cStmt = conn.prepareCall("{call getRevenueByAirport(?)}");
 
         cStmt.setInt(1,airport_id);
+        rs = cStmt.getResultSet();
 
         boolean hadResults = cStmt.execute();
 
@@ -281,7 +331,7 @@ public class ManagerLevelTransaction {
         CallableStatement cStmt = conn.prepareCall("{call getMostSalesByCustomer()}");
 
         boolean hadResults = cStmt.execute();
-
+        rs = cStmt.getResultSet();
         String rep = String.format(rs.getString("FirstName")+" "+ rs.getString("LastName")
                 +"\t"+rs.getInt("total_sales_made"));
         conn.close();
@@ -295,7 +345,7 @@ public class ManagerLevelTransaction {
         CallableStatement cStmt = conn.prepareCall("{call getMostActiveFlight()}");
 
         boolean hadResults = cStmt.execute();
-
+        rs = cStmt.getResultSet();
         ArrayList<String> fl = new ArrayList<>();
         while (rs.next()) {
             String data = String.format(rs.getString("CONCAT (F.airline, F.Flight_number)")
@@ -316,7 +366,7 @@ public class ManagerLevelTransaction {
 
 
         boolean hadResults = cStmt.execute();
-
+        rs = cStmt.getResultSet();
 
         ArrayList<String> pl = new ArrayList<>();
         while (rs.next()) {
@@ -338,6 +388,7 @@ public class ManagerLevelTransaction {
 
 
         boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
 
         ArrayList<Flight> fl = new ArrayList<>();
         while (rs.next()) {
@@ -366,6 +417,7 @@ public class ManagerLevelTransaction {
 
 
         boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
 
         ArrayList<Flight> fl = new ArrayList<>();
         while (rs.next()) {
@@ -395,6 +447,8 @@ public class ManagerLevelTransaction {
 
         boolean hadResults = cStmt.execute();
         ArrayList<Flight> fl = new ArrayList<>();
+        rs = cStmt.getResultSet();
+
         while (rs.next()) {
             Flight newFlight = new Flight();
 
