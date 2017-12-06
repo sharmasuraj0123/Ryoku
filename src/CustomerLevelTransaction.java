@@ -218,7 +218,7 @@ public class CustomerLevelTransaction {
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs = null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM `Flights` F WHERE \n" +
+        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM `Flights` F  WHERE \n" +
                 "F.id = ?;\n}");
         cStmt.setInt(1,f.getFlightId());
         boolean hadResults = cStmt.execute();

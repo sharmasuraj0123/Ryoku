@@ -286,8 +286,7 @@ public class ManagerLevelTransaction {
         ArrayList<String> cl = new ArrayList<>();
         if(hadResults)
         while (rs.next()) {
-            String data = String.format(rs.getInt("customer_id")+"\t"+rs.getString("city")
-                    +"\t"+rs.getInt("Revenue_Generated"));
+            String data = String.format(rs.getInt("customer_id")+"\t"+rs.getInt("Revenue_Generated"));
             cl.add(data);
         }
         conn.close();
