@@ -181,22 +181,23 @@ public class ManagerLevelTransaction {
         rs = cStmt.getResultSet();
 
         ArrayList<ReservationData> rl = new ArrayList<>();
-        while (rs.next()) {
-            ReservationData data = new ReservationData();
+        if(hadResults)
+            while (rs.next()) {
+                ReservationData data = new ReservationData();
 
-            data.setCustomer_id(rs.getInt("customer_id"));
-            data.setReservation_id(rs.getInt("id"));
-            data.setNumOfPassengers(rs.getInt("NumberOfPassengers"));
-            data.setDateCreated(rs.getTimestamp("date"));
-            data.setTotal_fare(rs.getDouble("total_fare"));
-            data.setBooking_fee(rs.getDouble("booking_fee"));
-            data.setEmployee_id(rs.getInt("employee_id"));
-            data.setFare_restrictions(rs.getString("fare_restriction"));
-            data.setLengthOfstay(rs.getInt("lengthOfStay"));
-            data.setAdvPurchases(rs.getString("advancePurchases"));
+                data.setCustomer_id(rs.getInt("customer_id"));
+                data.setReservation_id(rs.getInt("id"));
+                data.setNumOfPassengers(rs.getInt("NumberOfPassengers"));
+                data.setDateCreated(rs.getTimestamp("date"));
+                data.setTotal_fare(rs.getDouble("total_fare"));
+                data.setBooking_fee(rs.getDouble("booking_fee"));
+                data.setEmployee_id(rs.getInt("employee_id"));
+                data.setFare_restrictions(rs.getString("fare_restriction"));
+                data.setLengthOfstay(rs.getInt("lengthOfStay"));
+                data.setAdvPurchases(rs.getString("advancePurchases"));
 
-            rl.add(data);
-        }
+                rl.add(data);
+            }
         conn.close();
         return rl;
     }

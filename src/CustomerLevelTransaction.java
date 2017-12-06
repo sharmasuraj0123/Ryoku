@@ -236,6 +236,43 @@ public class CustomerLevelTransaction {
     }
 
 
+//    public static ArrayList<ReservationData> myReservations(ReservationData r) throws SQLException, ClassNotFoundException {
+//
+//
+//        ArrayList<ReservationData> myreservations = new ArrayList<>();
+//
+//        //Customer current_customer = null;
+//        Connection conn = ConnectionUtils.getConnection();
+//        ResultSet rs = null;
+//        CallableStatement cStmt = conn.prepareCall("{call getReservationsByCustomerId(?)}");
+//        //cStmt.setInt(1,customer_id);
+//        boolean hadResults = cStmt.execute();
+//
+//        rs = cStmt.getResultSet();
+//        if(hadResults)
+//            while (rs.next()) {
+//                ReservationData newdata;
+//                int reservation_id = rs.getInt("id");
+//                int numOfPassengers = rs.getInt(3);
+//                Timestamp dateCreated = rs.getTimestamp("date");
+//                double total_fare =  rs.getInt("total_fare");
+//                double booking_fee = rs.getDouble("booking_fee");
+//                int employee_id = rs.getInt("employee_id");
+//                String fare_restrictions = rs.getString("fare_restrictions");
+//                int lengthOfstay = rs.getInt("lengthOfStay");
+//                String advPurchases = rs.getString("advancePurchase");
+//
+////                newdata = new ReservationData(reservation_id,customer_id,numOfPassengers,dateCreated
+////                ,total_fare,booking_fee,employee_id,fare_restrictions,lengthOfstay,advPurchases);
+//
+//                myreservations.add(newdata);
+//            }
+//
+//        return myreservations;
+//    }
+
+
+
 
 
 }

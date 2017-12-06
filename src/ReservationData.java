@@ -19,6 +19,21 @@ public class ReservationData {
     public ReservationData() {
     }
 
+    public ReservationData(int reservation_id, int customer_id, int numOfPassengers, Timestamp dateCreated,
+                           double total_fare, double booking_fee, int employee_id, String fare_restrictions,
+                           int lengthOfstay, String advPurchases) {
+        this.reservation_id = reservation_id;
+        this.customer_id = customer_id;
+        this.numOfPassengers = numOfPassengers;
+        this.dateCreated = dateCreated;
+        this.total_fare = total_fare;
+        this.booking_fee = booking_fee;
+        this.employee_id = employee_id;
+        Fare_restrictions = fare_restrictions;
+        this.lengthOfstay = lengthOfstay;
+        this.advPurchases = advPurchases;
+    }
+
     public int getReservation_id() {
         return reservation_id;
     }
