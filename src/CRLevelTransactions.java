@@ -206,12 +206,12 @@ public class CRLevelTransactions {
     }
 
 
-    public static ArrayList<Customer> customerList() throws SQLException, ClassNotFoundException{
+    public static ArrayList<Customer> getCustomersList() throws SQLException, ClassNotFoundException{
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs = null;
         ArrayList<Customer> cl = new ArrayList<>();
-        CallableStatement cStmt = conn.prepareCall("{call getFlightSuggestionsForCustomer(?)}");
+        CallableStatement cStmt = conn.prepareCall("{call getCustomersList()}");
 
 
         boolean hadResults = cStmt.execute();
@@ -232,6 +232,5 @@ public class CRLevelTransactions {
         return cl;
 
     }
-
 
 }
