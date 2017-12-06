@@ -12,8 +12,8 @@
         <div class="uk-width-expand">
             <ul uk-accordion="multiple : true">
                 <li>
-                    <h3 class="uk-accordion-title medium-font"> 1. Customer Name </h3>
-                    <div class="uk-accordion-content">
+                    <h3 class="uk-accordion-title small-font"> 1. Customer Name</h3>
+                    <div class="uk-accordion-content uk-text-small">
                         <div class="uk-margin-small">
                             <table class="uk-table uk-background-muted uk-table-small uk-table-divider">
                                 <tbody>
@@ -50,14 +50,23 @@
                                     <td>11001</td>
                                 </tr>
                                 <tr>
+                                    <td>Account Since</td>
+                                    <td>2015-11-08</td>
+                                </tr>
+                                <tr>
                                     <td>Payment Info: </td>
                                     <td>On-File</td>
+                                </tr>
+                                <tr>
+                                    <td>Rating</td>
+                                    <td>&starf; 5.5</td>
                                 </tr>
                                 </tbody>
                             </table>
                             <div class="uk-margin" uk-grid>
                                 <div class="uk-width-2-3">
                                     <button class="uk-button uk-button-primary">Flight Suggestions</button>
+                                    <button class="uk-button uk-button-primary">Reservations</button>
                                 </div>
                                 <div class="uk-width-1-3 uk-text-right">
                                     <button class="uk-button uk-button-secondary"> <span uk-icon="icon: file-edit"></span> </button>
