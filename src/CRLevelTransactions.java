@@ -107,14 +107,14 @@ public class CRLevelTransactions {
         conn.close();
     }
 
-    public static void deleteCustomer(int personId) throws SQLException, ClassNotFoundException {
+    public static void deleteCustomer(int personId, int cust_id) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call editCustomer(?)}");
+        CallableStatement cStmt = conn.prepareCall("{call deleteCustomer(?,?)}");
 
-        cStmt.setInt(7, personId);
-
+        cStmt.setInt(1, personId);
+        cStmt.setInt(2,cust_id);
 
         boolean hadResults = cStmt.execute();
         conn.close();
@@ -219,13 +219,24 @@ public class CRLevelTransactions {
 
         if(hadResults)
             while (rs.next()) {
+
+            int id = rs.getInt("person_id");
             String firstName = rs.getString("FirstName");
             String lastName = rs.getString("LastName");
+            String email = rs.getString("emailAddress");
+            String password = rs.getString("password");
+            String address = rs.getString("Address");
+            String city = rs.getString("City_Town");
+            String state = rs.getString("State");
+            int zipCode = rs.getInt("ZipCode");
+            long phoneNumber =rs.getLong("Phone");
             int account_number = rs.getInt("AccountNumber");
-            int person_id = rs.getInt("person_id");
+            Timestamp dateCreated =  rs.getTimestamp("AccountCreationDate");
+            long creditCardNumber = rs.getLong("CreditCardNumber");
             double rating = rs.getDouble("Ratings");
 
-            Customer nc = new Customer(person_id,firstName,lastName,account_number,rating);
+            Customer nc = new Customer(id,firstName,lastName,email,password,address,city,
+                    state,zipCode,phoneNumber,account_number,dateCreated,creditCardNumber,rating);
             cl.add(nc);
             }
         conn.close();
