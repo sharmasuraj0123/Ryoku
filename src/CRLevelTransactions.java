@@ -53,6 +53,11 @@ public class CRLevelTransactions {
         conn.close();
     }
 
+    // by The Bird of Hermes
+    public static void addCustomer(String firstname, String lastname, String email, String password) throws SQLException, ClassNotFoundException{
+        addCustomer(firstname, lastname, "","","",0,0,email,password,0,0);
+    }
+
     public static void addCustomer(String firstName, String lastName, String address
             , String city, String state, int zipcode, long phoneNumber, String email, String password,
                                    long creditCardNum, double rating) throws SQLException, ClassNotFoundException {
@@ -84,13 +89,12 @@ public class CRLevelTransactions {
 
     public static void editCustomer(String firstName, String lastName, String address
             , String city, String state, int zipcode, int phoneNumber, String email,
-                                    int creditCardNum, double rating, int personId, int custId) throws SQLException, ClassNotFoundException {
+                                    long creditCardNum, double rating, int personId, int custId, String password) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call editCustomer(?,?,?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call editCustomer(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
-        Timestamp startdate = new Timestamp(System.currentTimeMillis());
         cStmt.setString(1, firstName);
         cStmt.setString(2, lastName);
         cStmt.setString(3, address);
@@ -99,9 +103,11 @@ public class CRLevelTransactions {
         cStmt.setInt(6, zipcode);
         cStmt.setInt(7, phoneNumber);
         cStmt.setString(8, email);
-        cStmt.setTimestamp(9, startdate);
-        cStmt.setInt(10, creditCardNum);
-        cStmt.setDouble(11, rating);
+        cStmt.setLong(9, creditCardNum);
+        cStmt.setDouble(10, rating);
+        cStmt.setInt(11,personId);
+        cStmt.setInt(12, custId);
+        cStmt.setString(13, password);
 
         boolean hadResults = cStmt.execute();
         conn.close();
