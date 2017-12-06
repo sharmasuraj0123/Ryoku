@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Index", urlPatterns = "")
-public class Index extends HttpServlet {
+@WebServlet(name = "error404")
+public class error404Class extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/landing.jsp");
+        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/error404.html");
         rd.forward(request, response);
     }
 }

@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "SignUp", urlPatterns = {"/sign-up"})
+@WebServlet(name = "SignUp")
 public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/sign-up.jsp");
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/sign-up.jsp");
         dispatcher.forward(request, response);
     }
 }
