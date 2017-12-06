@@ -5,20 +5,68 @@
          version="3.1">
 
 
-    <!--<jsp-config>-->
-        <!--<jsp-property-group>-->
-            <!--<url-pattern>*.jsp</url-pattern>-->
-        <!--</jsp-property-group>-->
-    <!--</jsp-config>-->
+    <!--Servlets begin-->
+    <servlet>
+        <servlet-name>SignUp</servlet-name>
+        <servlet-class>SignUpCustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUp</servlet-name>
+        <url-pattern>/sign-up</url-pattern>
+    </servlet-mapping>
 
-    <!--<servelet>-->
-        <!--<servelet-name>index</servelet-name>-->
-        <!--<servelet-class>Index</servelet-class>-->
-    <!--</servelet>-->
+    <servlet>
+        <servlet-name>LogInServlet</servlet-name>
+        <servlet-class>LogInServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogInServlet</servlet-name>
+        <url-pattern>/log-in</url-pattern>
+    </servlet-mapping>
 
-    <!--<servelet-mapping>-->
-        <!--<servelet-name>index</servelet-name>-->
-        <!--<url-pattern>/</url-pattern>-->
-    <!--</servelet-mapping>-->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/log-in/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MyAccountServlet</servlet-name>
+        <servlet-class>MyAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyAccountServlet</servlet-name>
+        <url-pattern>/my-account</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BestSellerFlightsServlet</servlet-name>
+        <servlet-class>BestSellerFlightsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BestSellerFlightsServlet</servlet-name>
+        <url-pattern>/my-account/best-seller-flights</url-pattern>
+    </servlet-mapping>
+
+
+    <!--Servlets end -->
+
+    <mime-mapping>
+        <extension>css</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>js</extension>
+        <mime-type>application/javascript</mime-type>
+    </mime-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.html</location>
+    </error-page>
 
 </web-app>

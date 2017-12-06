@@ -12,15 +12,22 @@ public class Customer extends Person{
         super();
     }
 
-    public Customer(int id, String firstName, String lastName, String password,
-                        String address, String city, String state, int zipCode,
-                            int phoneNumber, int accountNumber, Timestamp dateCreated,
-                                long creditCardNumber, double ratings) {
-
-        super(id, firstName, lastName, password, address, city, state, zipCode, phoneNumber);
+    public Customer(int id, String firstName, String lastName,
+                    String emailAddress, String password,
+                    String address, String city, String state,
+                    int zipCode, long phoneNumber, int accountNumber,
+                    Timestamp dateCreated, long creditCardNumber,
+                    double ratings) {
+        super(id, firstName, lastName, emailAddress, password, address, city, state, zipCode, phoneNumber);
         this.accountNumber = accountNumber;
         this.dateCreated = dateCreated;
         this.creditCardNumber = creditCardNumber;
+        this.ratings = ratings;
+    }
+
+    public Customer(int id, String firstName, String lastName, int accountNumber,double ratings) {
+        super(id, firstName, lastName);
+        this.accountNumber = accountNumber;
         this.ratings = ratings;
     }
 

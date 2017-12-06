@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.html"%>
+<%@include file="header.jsp"%>
 
 <br> <br>
 <div class="uk-container">
@@ -89,21 +89,27 @@
                     <li><span>All Flights</span></li>
                 </ul>
             </div>
-                <div class="uk-card uk-card-default uk-card-body">
+                <div class="uk-card uk-card-default uk-card-small uk-card-body">
                     <div class="uk-margin">
                         <div class="uk-grid-small" uk-grid>
-                            <div class="uk-width-expand">
-                                <span class="uk-text-bold">American Airlines</span>
+                            <div class="uk-width-1-3">
+                                <span class="uk-text-bold">American Airlines</span><br>
+                                <span class="uk-text-small uk-text-muted"> AA 101 </span>
                             </div>
-                            <div class="uk-width-auto">
+                            <div class="uk-width-1-3 uk-text-center">
+                                <span> JFK <span uk-icon="icon: arrow-right"></span> DEL  </span> <br>
+                                <span class="small-font">New York - New Delhi</span>
+                            </div>
+                            <div class="uk-width-1-3 uk-text-right">
                                 $ <b>999</b>&nbsp;<sup>.00</sup>
                             </div>
                         </div>
                         <div class="uk-grid-small" uk-grid>
                             <div class="uk-width-1-3 uk-text-small">
-                                09:00 &ndash; 23:00
+                                09:00 &ndash; 23:00 <span class="uk-text-danger"> +1</span> <br>
+                                December 21, 2017
                             </div>
-                            <div class="uk-width-1-3 uk-text-small">
+                            <div class="uk-width-1-3 uk-text-center uk-text-small">
                                 <span class="uk-align-center">18h 30m</span>
                             </div>
                             <div class="uk-width-expand">
@@ -112,9 +118,19 @@
                         </div>
                         <ul uk-accordion>
                             <li>
-                                <h3 class="uk-accordion-title small-font"> More Details</h3>
+                                <h3 class="uk-accordion-title small-font"> More </h3>
                                 <div class="uk-accordion-content">
-                                    <button class="uk-button uk-align-center uk-button-small uk-button-link"> Reverse Auction this flight </button>
+                                    <div class="uk-margin-small" uk-grid>
+                                        <div class="uk-width-1-3 uk-text-small">
+                                            Reverse Auction
+                                        </div>
+                                        <div class="uk-width-1-3 uk-text-small">
+                                            Your Price: <input type="text" class="uk-input uk-form-width-small uk-form-blank uk-form-small" placeholder="$">
+                                        </div>
+                                        <div class="uk-width-1-3 uk-text-small uk-text-right">
+                                            <button class="uk-button uk-button-small uk-button-default"> <span class="uk-text-primary">Bid</span></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
@@ -124,18 +140,24 @@
 
                     <div class="uk-margin">
                         <div class="uk-grid-small" uk-grid>
-                            <div class="uk-width-expand">
-                                <span class="uk-text-bold">American Airlines</span>
+                            <div class="uk-width-1-3">
+                                <span class="uk-text-bold">American Airlines</span><br>
+                                <span class="uk-text-small uk-text-muted"> AA 101 </span>
                             </div>
-                            <div class="uk-width-auto">
+                            <div class="uk-width-1-3 uk-text-center">
+                                <span> JFK <span uk-icon="icon: arrow-right"></span> DEL  </span> <br>
+                                <span class="small-font">New York - New Delhi</span>
+                            </div>
+                            <div class="uk-width-1-3 uk-text-right">
                                 $ <b>999</b>&nbsp;<sup>.00</sup>
                             </div>
                         </div>
                         <div class="uk-grid-small" uk-grid>
                             <div class="uk-width-1-3 uk-text-small">
-                                09:00 &ndash; 23:00
+                                09:00 &ndash; 23:00 <span class="uk-text-danger"> +1</span> <br>
+                                December 21, 2017
                             </div>
-                            <div class="uk-width-1-3 uk-text-small">
+                            <div class="uk-width-1-3 uk-text-center uk-text-small">
                                 <span class="uk-align-center">18h 30m</span>
                             </div>
                             <div class="uk-width-expand">
@@ -144,19 +166,29 @@
                         </div>
                         <ul uk-accordion>
                             <li>
-                                <h3 class="uk-accordion-title small-font"> More Details</h3>
+                                <h3 class="uk-accordion-title small-font"> More </h3>
                                 <div class="uk-accordion-content">
-                                    <button class="uk-button uk-align-center uk-button-small uk-button-link"> Reverse Auction this flight </button>
+                                    <div class="uk-margin-small" uk-grid>
+                                        <div class="uk-width-1-3 uk-text-small">
+                                            Reverse Auction
+                                        </div>
+                                        <div class="uk-width-1-3 uk-text-small">
+                                            Your Price: <input type="text" class="uk-input uk-form-width-small uk-form-blank uk-form-small" placeholder="$">
+                                        </div>
+                                        <div class="uk-width-1-3 uk-text-small uk-text-right">
+                                            <button class="uk-button uk-button-small uk-button-default"> <span class="uk-text-primary">Bid</span></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
 
-                </div>
 
+                </div>
         </div>
     </div>
 
 </div>
 
-<%@include file="footer.html"%>
+<%@include file="footer.jsp"%>

@@ -5,25 +5,26 @@ import java.sql.*;
 
 public class Employees extends Person {
     private int employeeId;
-    private int person_id;
     private int SSN;
     private Timestamp startDate;
-    private int hourlyPay;
-    boolean isManager;
-    int rating;
+    private double hourlyPay;
+    private boolean isManager;
+    private double rating;
 
     public Employees(){
         super();
     }
 
     public Employees(int id, String firstName, String lastName,
-                        String password, String address, String city, String state,
-                            int zipCode, int phoneNumber, int employeeId, int person_id, int SSN,
-                                Timestamp startDate, int hourlyPay, boolean isManager, int rating) {
+                     String emailAddress, String password, String address,
+                     String city, String state, int zipCode, long phoneNumber,
+                     int employeeId, int SSN, Timestamp startDate,
+                     double hourlyPay, boolean isManager, double rating) {
 
-        super(id, firstName, lastName, password, address, city, state, zipCode, phoneNumber);
+        super(id, firstName, lastName,
+                emailAddress, password, address, city, state, zipCode,
+                phoneNumber);
         this.employeeId = employeeId;
-        this.person_id = person_id;
         this.SSN = SSN;
         this.startDate = startDate;
         this.hourlyPay = hourlyPay;
@@ -37,14 +38,6 @@ public class Employees extends Person {
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public int getPerson_id() {
-        return person_id;
-    }
-
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
     }
 
     public int getSSN() {
@@ -63,11 +56,11 @@ public class Employees extends Person {
         this.startDate = startDate;
     }
 
-    public int getHourlyPay() {
+    public double getHourlyPay() {
         return hourlyPay;
     }
 
-    public void setHourlyPay(int hourlyPay) {
+    public void setHourlyPay(double hourlyPay) {
         this.hourlyPay = hourlyPay;
     }
 
@@ -79,11 +72,11 @@ public class Employees extends Person {
         isManager = manager;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 }

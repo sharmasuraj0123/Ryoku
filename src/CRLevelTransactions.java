@@ -5,6 +5,31 @@ import java.util.ArrayList;
 
 public class CRLevelTransactions {
 
+    public static void editmyInfo(int empId,int person_id, String firstName, String lastName, String email, String password, String address
+            , String city, String state, int zipcode, int phoneNumber , int SSN
+                                    ) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs ;
+        CallableStatement cStmt = conn.prepareCall("{call editEmployee_cr(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+
+        cStmt.setString(1,firstName);
+        cStmt.setString(2,lastName);
+        cStmt.setString(3,email);
+        cStmt.setString(4,password);
+        cStmt.setString(5,address);
+        cStmt.setString(6,city);
+        cStmt.setString(7,state);
+        cStmt.setInt(8,zipcode);
+        cStmt.setInt(9,phoneNumber);
+        cStmt.setInt(10,SSN);
+        cStmt.setInt(12,empId);
+        cStmt.setInt(13,person_id);
+
+        boolean hadResults = cStmt.execute();
+        conn.close();
+    }
+
     public static void addReservation(int cust_id, double fare,
                                       double book_fee, int emp_id, int length_stay, int advPurchase) throws SQLException, ClassNotFoundException {
 
@@ -22,12 +47,15 @@ public class CRLevelTransactions {
         cStmt.setInt(5, length_stay);
         cStmt.setInt(6, advPurchase);
 
-        try {
-            boolean hadResults = cStmt.execute();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
+
+        boolean hadResults = cStmt.execute();
+
         conn.close();
+    }
+
+    // by The Bird of Hermes
+    public static void addCustomer(String firstname, String lastname, String email, String password) throws SQLException, ClassNotFoundException{
+        addCustomer(firstname, lastname, "","","",0,0,email,password,0,0);
     }
 
     public static void addCustomer(String firstName, String lastName, String address
@@ -61,13 +89,12 @@ public class CRLevelTransactions {
 
     public static void editCustomer(String firstName, String lastName, String address
             , String city, String state, int zipcode, int phoneNumber, String email,
-                                    int creditCardNum, double rating, int personId, int custId) throws SQLException, ClassNotFoundException {
+                                    long creditCardNum, double rating, int personId, int custId, String password) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call editCustomer(?,?,?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call editCustomer(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
-        Timestamp startdate = new Timestamp(System.currentTimeMillis());
         cStmt.setString(1, firstName);
         cStmt.setString(2, lastName);
         cStmt.setString(3, address);
@@ -76,22 +103,24 @@ public class CRLevelTransactions {
         cStmt.setInt(6, zipcode);
         cStmt.setInt(7, phoneNumber);
         cStmt.setString(8, email);
-        cStmt.setTimestamp(9, startdate);
-        cStmt.setInt(10, creditCardNum);
-        cStmt.setDouble(11, rating);
+        cStmt.setLong(9, creditCardNum);
+        cStmt.setDouble(10, rating);
+        cStmt.setInt(11,personId);
+        cStmt.setInt(12, custId);
+        cStmt.setString(13, password);
 
         boolean hadResults = cStmt.execute();
         conn.close();
     }
 
-    public static void deleteCustomer(int personId) throws SQLException, ClassNotFoundException {
+    public static void deleteCustomer(int personId, int cust_id) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call editCustomer(?)}");
+        CallableStatement cStmt = conn.prepareCall("{call deleteCustomer(?,?)}");
 
-        cStmt.setInt(7, personId);
-
+        cStmt.setInt(1, personId);
+        cStmt.setInt(2,cust_id);
 
         boolean hadResults = cStmt.execute();
         conn.close();
@@ -140,6 +169,8 @@ public class CRLevelTransactions {
         boolean hadResults = cStmt.execute();
 
         ArrayList<String> pl = new ArrayList<>();
+        rs = cStmt.getResultSet();
+        if(hadResults)
         while (rs.next()) {
             String data = String.format(rs.getString("Name") + " " + rs.getString("EmailAddress"));
             pl.add(data);
@@ -157,13 +188,11 @@ public class CRLevelTransactions {
         ArrayList<Flight> fl = new ArrayList<>();
         CallableStatement cStmt = conn.prepareCall("{call getFlightSuggestionsForCustomer(?)}");
 
-        try {
+
             boolean hadResults = cStmt.execute();
             rs = cStmt.getResultSet();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
 
+        if(hadResults)
         while (rs.next()) {
             Flight newFlight = new Flight();
 
@@ -183,8 +212,42 @@ public class CRLevelTransactions {
     }
 
 
+    public static ArrayList<Customer> getCustomersList() throws SQLException, ClassNotFoundException{
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+        ArrayList<Customer> cl = new ArrayList<>();
+        CallableStatement cStmt = conn.prepareCall("{call getCustomersList()}");
 
 
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
 
+        if(hadResults)
+            while (rs.next()) {
+
+            int id = rs.getInt("person_id");
+            String firstName = rs.getString("FirstName");
+            String lastName = rs.getString("LastName");
+            String email = rs.getString("emailAddress");
+            String password = rs.getString("password");
+            String address = rs.getString("Address");
+            String city = rs.getString("City_Town");
+            String state = rs.getString("State");
+            int zipCode = rs.getInt("ZipCode");
+            long phoneNumber =rs.getLong("Phone");
+            int account_number = rs.getInt("AccountNumber");
+            Timestamp dateCreated =  rs.getTimestamp("AccountCreationDate");
+            long creditCardNumber = rs.getLong("CreditCardNumber");
+            double rating = rs.getDouble("Ratings");
+
+            Customer nc = new Customer(id,firstName,lastName,email,password,address,city,
+                    state,zipCode,phoneNumber,account_number,dateCreated,creditCardNumber,rating);
+            cl.add(nc);
+            }
+        conn.close();
+        return cl;
+
+    }
 
 }

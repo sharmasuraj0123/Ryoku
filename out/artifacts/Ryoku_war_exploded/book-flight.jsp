@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.html"%>
+<%@ include file="header.jsp"%>
 
 <br><br>
 <div class="uk-container">
@@ -154,6 +154,8 @@
                         </li>
                     </ul>
 
+                    <hr>
+
                     <div class="uk-margin-medium-top uk-text-center">
                         <button class="uk-button uk-button-primary">Submit</button>
                     </div>
@@ -163,4 +165,4 @@
         <%@include file="sidebar_right.html"%>
     </div>
 </div>
-<%@include file="footer.html"%>
+<%@include file="footer.jsp"%>

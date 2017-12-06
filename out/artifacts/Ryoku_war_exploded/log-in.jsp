@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.html"%>
+<%@ include file="header.jsp"%>
 
 <br><br>
 <div class="uk-container">
@@ -10,19 +10,19 @@
             <div class="uk-card uk-card-default uk-card-body">
                 <span uk-icon="icon: user"></span> &nbsp;&nbsp; Sign In to your account
 
-                <form class="uk-form-horizontal uk-margin-large">
+                <form action="/log-in" method="post" class="uk-form-horizontal uk-margin-large">
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="_new_user-email">Email: </label>
                         <div class="uk-form-controls">
-                            <input class="uk-input" id="_new_user-email" type="text" placeholder="Your email address">
+                            <input class="uk-input" id="_new_user-email" type="email" name="username" required placeholder="Your email address">
                         </div>
                     </div>
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="_new_user-password1t">Password: </label>
                         <div class="uk-form-controls">
-                            <input class="uk-input" id="_new_user-password1t" type="Password" placeholder="">
+                            <input class="uk-input" id="_new_user-password1t" type="Password" name="password" required placeholder="">
                         </div>
                     </div>
 
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="uk-margin-medium uk-text-center">
-                        <button class="uk-button uk-button-primary">Sign In</button>
+                        <button class="uk-button uk-button-primary" type="submit">Sign In</button>
                     </div>
 
                 </form>
@@ -47,4 +47,4 @@
 
 </div>
 
-<%@ include file="footer.html"%>
+<%@ include file="footer.jsp"%>

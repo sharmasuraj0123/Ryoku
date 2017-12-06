@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.html"%>
+<%@include file="header.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <br><br>
 <div class="uk-container">
@@ -7,59 +8,38 @@
 
     <div uk-grid>
         <div class="uk-width-1-4">
-            <div class=" uk-light uk-card-body uk-card-secondary">
-                <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-
-                    <li class="uk-active"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: settings"></span> My Account</a></li>
-
-
-                    <%--<li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>--%>
-                    <%--<li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>--%>
-
-
-                    <li class="uk-nav-divider"></li>
-                    <li class="uk-nav-header">Reservations</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: world"></span> All </a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: future"></span> Upcoming </a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: history"></span> Past </a></li>
-
-
-
-                    <li class="uk-nav-divider"></li>
-                    <li class="uk-nav-header">Flight List</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: star"></span> Best Seller Flights</a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: heart"></span> Personalized Flights</a></li>
-
-                    <li class="uk-nav-divider"></li>
-                    <li class="uk-nav-header">Reverse Auctions</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: clock"></span> Current</a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: history"></span> Past</a></li>
-
-                </ul>
-            </div>
+            <%@include file="my-account-sidebar.html"%>
         </div>
         <div class="uk-width-expand">
-            <form class="uk-form-horizontal uk-margin">
-
+            <form method="post" action="/my-account?updateUser=1" class="uk-form-horizontal uk-margin">
+                <input type="hidden" value="${sessionScope.get("customer").id}" name="person_id">
+                <input type="hidden" value="${sessionScope.get("customer").accountNumber}" name="customer_id">
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-email">Email: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-email" type="text" placeholder="Your email address">
+                        <input class="uk-input" id="_user-email" type="text" required name="emailAddress"  placeholder="Your email address" value="${sessionScope.get("customer").emailAddress}">
                     </div>
                 </div>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="_user-new-password">Password: </label>
+                    <label class="uk-form-label" for="_user-old-password">Current Password: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-new-password" type="password" placeholder="">
+                        <input class="uk-input" id="_user-old-password" required name="password_old" type="password" placeholder="">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="_user-new-password">New Password: </label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="_user-new-password" name="password_1" type="password" placeholder="">
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-new-password-2">Confirm Password </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-new-password-2" type="password" placeholder="">
+                        <input class="uk-input" id="_user-new-password-2" name="password_2" type="password" placeholder="">
                     </div>
                 </div>
 
@@ -69,21 +49,31 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-first-name">First Name: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-first-name" type="text" placeholder="">
+                        <input class="uk-input" id="_user-first-name" type="text"  name="firstName" placeholder="" value="${sessionScope.get("customer").firstName}">
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-last-name">Last Name: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-last-name" type="text" placeholder="">
+                        <input class="uk-input" id="_user-last-name" type="text"  name="lastName" placeholder="" value="${sessionScope.get("customer").lastName}">
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-phone-number">Mobile: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-phone-number" type="text" placeholder="">
+
+                        <c:set var="mobile" value="${sessionScope.get(\"customer\").phoneNumber}"/>
+                        <% Object mob = pageContext.getAttribute("mobile");
+                           if (mob.toString().equals("0")){
+                               %>
+                        <input class="uk-input" id="_user-phone-number" type="text"  name="mobile" placeholder="Mobile Number" value="">
+                        <%
+                           } else {
+                        %>
+                        <input class="uk-input" id="_user-phone-number" type="text"  name="mobile" placeholder="Mobile Number" value="${sessionScope.get("customer").phoneNumber}">
+                        <% } %>
                     </div>
                 </div>
 
@@ -92,19 +82,13 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-address-1">Address: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-address-1" type="text" placeholder="Address Line 1">
-                    </div>
-                </div>
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="_user-address-2"> </label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-address-2" type="text" placeholder="Address Line 2">
+                        <input class="uk-input" id="_user-address-1" type="text"  name="address" placeholder="Address" value="${sessionScope.get("customer").address}">
                     </div>
                 </div>
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-city-town"> City / Town</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-city-town" type="text" placeholder="City/Town">
+                        <input class="uk-input" id="_user-city-town" type="text"  name="city" placeholder="City/Town" value="${sessionScope.get("customer").city}">
                     </div>
                 </div>
 
@@ -112,8 +96,8 @@
                     <label class="uk-form-label" for="_user-state"> State: </label>
                     <div class="uk-form-controls">
                         <%--<input class="uk-input" id="_user-state" type="text" placeholder="State">--%>
-                        <select name="state" id="_user-state" class="uk-select">
-                            <option value="NY">NY</option>
+                        <select name="state" id="_user-state" name="state" class="uk-select">
+                            <option value="${sessionScope.get("customer").state}">${sessionScope.get("customer").state}</option>
                         </select>
                     </div>
                 </div>
@@ -121,7 +105,13 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-zip-code"> Zip Code: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-zip-code" type="text" placeholder="Zip Code">
+                        <c:set var="zip" value="${sessionScope.get(\"customer\").zipCode}"/>
+                        <% Object m2 = pageContext.getAttribute("zip");
+                            if(m2.toString().equals("0"))
+                                pageContext.setAttribute("zip", "");
+                            else pageContext.setAttribute("zip", m2.toString());
+                        %>
+                        <input class="uk-input" id="_user-zip-code" type="text" placeholder="Zip Code" name="zipCode" value="<%= pageContext.getAttribute("zip")%>">
                     </div>
                 </div>
 
@@ -131,12 +121,18 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_user-credit-card"> Credit Card Number: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_user-credit-card" type="text" placeholder="Credit Card Number" maxlength="16">
+                        <c:set var="cc" value="${sessionScope.get(\"customer\").creditCardNumber}"/>
+                        <% Object cc = pageContext.getAttribute("zip");
+                            if(cc.toString().equals("0"))
+                                pageContext.setAttribute("cc", "");
+                            else pageContext.setAttribute("cc", cc.toString());
+                        %>
+                        <input class="uk-input" id="_user-credit-card" type="text" placeholder="Credit Card Number" name="creditCard" maxlength="16" value="<%= pageContext.getAttribute("cc")%>">
                     </div>
                 </div>
 
                 <div class="uk-margin-medium-top uk-text-center">
-                    <button class="uk-button uk-button-primary">Update</button>
+                    <button class="uk-button uk-button-primary" type="submit">Update</button>
                 </div>
 
             </form>
@@ -145,4 +141,4 @@
 
 </div>
 
-<%@include file="footer.html"%>
+<%@include file="footer.jsp"%>

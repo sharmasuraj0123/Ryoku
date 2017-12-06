@@ -1,16 +1,42 @@
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class ReservationData {
     private int reservation_id;
     private int customer_id;
+    private Customer customer;
     private int numOfPassengers;
     private Timestamp dateCreated;
     private double total_fare;
     private double booking_fee;
     private int employee_id;
+    private Employees CR;
     private String Fare_restrictions;
     private int lengthOfstay;
     private String advPurchases;
+    private ArrayList<Passenger> pasengerList;
+    private ArrayList<FlightSearch> Flights;
+    public ReservationData() {
+        Flights = new ArrayList<>();
+        pasengerList = new ArrayList<>();
+    }
+
+    public ReservationData(int reservation_id, int customer_id, int numOfPassengers, Timestamp dateCreated,
+                           double total_fare, double booking_fee, int employee_id, String fare_restrictions,
+                           int lengthOfstay, String advPurchases) {
+        this.reservation_id = reservation_id;
+        this.customer_id = customer_id;
+        this.numOfPassengers = numOfPassengers;
+        this.dateCreated = dateCreated;
+        this.total_fare = total_fare;
+        this.booking_fee = booking_fee;
+        this.employee_id = employee_id;
+        Fare_restrictions = fare_restrictions;
+        this.lengthOfstay = lengthOfstay;
+        this.advPurchases = advPurchases;
+        Flights = new ArrayList<>();
+        pasengerList = new ArrayList<>();
+    }
 
     public int getReservation_id() {
         return reservation_id;
@@ -91,5 +117,41 @@ public class ReservationData {
 
     public void setBooking_fee(double booking_fee) {
         this.booking_fee = booking_fee;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Employees getCR() {
+        return CR;
+    }
+
+    public void setCR(Employees CR) {
+        this.CR = CR;
+    }
+
+    public ArrayList<Passenger> getPasengerList() {
+        return pasengerList;
+    }
+
+    public void setPasengerList(ArrayList<Passenger> pasengerList) {
+        this.pasengerList = pasengerList;
+    }
+
+    public void addFlightSearch(FlightSearch newFlightSearch){
+        Flights.add(newFlightSearch);
+    }
+
+    public ArrayList<FlightSearch> getFlights() {
+        return Flights;
+    }
+
+    public void setFlights(ArrayList<FlightSearch> flights) {
+        Flights = flights;
     }
 }

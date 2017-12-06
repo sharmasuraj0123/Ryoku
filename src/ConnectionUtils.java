@@ -33,15 +33,34 @@ public class ConnectionUtils {
 //        ManagerLevelTransaction.addEmployee("maewn", "yes","yello@hi","1234",
 //        "qw","sd","sd",11790, 1111111111, 1111111111, 10,
 //                1,5.6);
+//        String a ="9999999999";
+//
+//        CRLevelTransactions.addCustomer("teest","sdw","2d1","ew",
+//                "NY",11790,Long.parseLong(a),"ssea@sk","1234"
+//        ,1010101010,7.0);
+//        Employees e = ManagerLevelTransaction.getEmployee(3);
+//        System.out.println(e.getFirstName());
+//
+//       ArrayList<String> fl =  ManagerLevelTransaction.getSalesReportOfAMonth(10,2017);
+//
+//       for (int i = 0; i<fl.size();i++)
+//           System.out.println(fl.get(i).toString());
 
-        CRLevelTransactions.addCustomer("test","sd","21","ew",
-                "NY",11790,1111111111,"sa@sk","1234"
-        ,1010101010,7.0);
+//        ArrayList<FlightSearch> fs =
+//        CustomerLevelTransaction.searchFlights(6,11, new Date(System.currentTimeMillis()));
+//        for (int i =0; i<fs.size();i++) {
+//            System.out.println(fs.get(i).toString());
+//        }
 
-       ArrayList<String> fl =  ManagerLevelTransaction.getSalesReportOfAMonth(10,2017);
+        ArrayList<ReservationData> rl = ManagerLevelTransaction.getReservationsByACustomer(3);
 
-       for (int i = 0; i<fl.size();i++)
-           System.out.println(fl.get(i).toString());
+        ReservationData rd = rl.get(0);
+       rd = CustomerLevelTransaction.getReservationDetails(rd);
+       System.out.println(rd.getNumOfPassengers());
+        System.out.println(rd.getFlights().get(0).getFlightlegs().get(0).toString());
+        System.out.println(rd.getPasengerList().get(0).getFirstName());
+        System.out.println(rd.getPasengerList().size());
+
     }
 
 

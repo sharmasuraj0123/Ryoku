@@ -3,12 +3,15 @@ public class Person implements java.io.Serializable {
     private int id;
     private String firstName;
     private String lastName;
+    private String emailAddress;
     private String password;
     private String Address;
     private String city;
     private String state;
     private int zipCode;
-    private int phoneNumber;
+    private long phoneNumber;
+
+
 
     public int getId() {
         return id;
@@ -16,18 +19,35 @@ public class Person implements java.io.Serializable {
 
     public Person(){}
 
-    public Person(int id, String firstName, String lastName,
-                  String password, String address, String city,
-                    String state, int zipCode, int phoneNumber) {
+    public Person(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Person(int id, String firstName, String lastName,
+                  String emailAddress, String password,
+                  String address, String city,
+                  String state, int zipCode,
+                  long phoneNumber) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
         this.password = password;
         Address = address;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getFirstName() {
@@ -78,11 +98,11 @@ public class Person implements java.io.Serializable {
         this.zipCode = zipCode;
     }
 
-    public int getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
