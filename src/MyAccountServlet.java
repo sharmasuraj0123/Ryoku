@@ -57,20 +57,18 @@ public class MyAccountServlet extends HttpServlet {
 //        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/log-in.jsp");
         ServletContext dispatcher2 = request.getServletContext();
         RequestDispatcher dispatcher = null;
-        System.out.println("here 0");
+
         HttpSession session = request.getSession();
 
         if (session != null){
             if (session.getAttribute("person_type") != null && (int)session.getAttribute("person_type") == 0){
-                System.out.println("here 1");
+
                 dispatcher = dispatcher2.getRequestDispatcher("/my-account.jsp");
                 dispatcher.forward(request, response);
             } else if (session.getAttribute("person_type") != null && (int)session.getAttribute("person_type") == 1) {
-                System.out.println("here 2");
                 dispatcher = dispatcher2.getRequestDispatcher("/my-account-cr.jsp");
                 dispatcher.forward(request, response);
             } else if (session.getAttribute("person_type") != null && (int)session.getAttribute("person_type") == 2) {
-                System.out.println("here 3");
                 dispatcher = dispatcher2.getRequestDispatcher("/my-account-mgr.jsp");
                 dispatcher.forward(request, response);
             } else{

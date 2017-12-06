@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp"%>
 
@@ -19,30 +20,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <c:forEach items="${MailingList}" var="cust">
+                        <%
+                            String data = pageContext.getAttribute("cust").toString();
+                            int i = data.indexOf('$');
+                            String dataName = data.substring(0, i);
+                            String email = data.substring(i+1);
+                        %>
                         <tr>
                             <td>
-                             Pranav Sethi
+                                <%= dataName%>
                             </td>
                             <td>
-                                pranav.sethi@stonybrook.edu
+                                <%= email%>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                Pranav Sethi
-                            </td>
-                            <td>
-                                pranav.sethi@stonybrook.edu
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Pranav Sethi
-                            </td>
-                            <td>
-                                pranav.sethi@stonybrook.edu
-                            </td>
-                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class="uk-margin-large-top">

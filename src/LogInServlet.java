@@ -66,6 +66,8 @@ public class LogInServlet extends HttpServlet {
                     Customer curr_customer = CustomerLevelTransaction.getCustomer(pid);
                     Employees curr_employee = ManagerLevelTransaction.getEmployee(pid);
 
+                    System.out.println("$" + curr_employee.getEmployeeId());
+
                     if(curr_customer == null && curr_employee == null){
 
                         // throw some error
@@ -84,9 +86,13 @@ public class LogInServlet extends HttpServlet {
                     }else{
 
                         // employee found
-                        session.setAttribute("employee",curr_employee);
+                        session.setAttribute("employee", curr_employee);
+                        System.out.println("$2 : " + curr_employee.getEmployeeId());
                         session.setAttribute("loggedin",true);
-                        session.setAttribute("person_type",1);
+                        if (curr_employee.isManager())
+                            session.setAttribute("person_type",2);
+                        else
+                            session.setAttribute("person_type",1);
 
                         System.out.print("3");
                         response.sendRedirect("/my-account");
