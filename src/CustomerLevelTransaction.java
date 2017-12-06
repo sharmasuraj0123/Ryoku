@@ -56,7 +56,7 @@ public class CustomerLevelTransaction {
      * This method is to return the Flight Search Blocks between Source Airport and destination.
      * It Searches in three steps First the direct Then one Stop and Then 2 Stops.
      */
-    public static ArrayList<FlightSearch> searchFlights (int source, int dest)throws SQLException, ClassNotFoundException{
+    public static ArrayList<FlightSearch> searchFlights (int source, int dest , Date date)throws SQLException, ClassNotFoundException{
 
         ArrayList<FlightSearch> fs = new ArrayList<>();
         FlightSearch flightBlock;
@@ -67,9 +67,10 @@ public class CustomerLevelTransaction {
 
 
         //Execute The Statement For direct Flights
-        CallableStatement cStmt = conn.prepareCall("{call searchFlights_direct(?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call searchFlights_direct(?,?,?)}");
         cStmt.setInt(1,source);
         cStmt.setInt(2,dest);
+        cStmt.setDate(3, (java.sql.Date) date);
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
         if(hadResults)
@@ -97,9 +98,10 @@ public class CustomerLevelTransaction {
 
 
         //Execute The Statement For two Flights
-        CallableStatement cStmt2 = conn.prepareCall("{call searchFlights_oneStop(?,?)}");
+        CallableStatement cStmt2 = conn.prepareCall("{call searchFlights_oneStop(?,?,?)}");
         cStmt2.setInt(1,source);
         cStmt2.setInt(2,dest);
+        cStmt2.setDate(3, (java.sql.Date) date);
         hadResults = cStmt2.execute();
         rs = cStmt2.getResultSet();
         if(hadResults)
@@ -144,9 +146,10 @@ public class CustomerLevelTransaction {
 
 
 
-        CallableStatement cStmt3 = conn.prepareCall("{call searchFlights_twoStop(?,?)}");
+        CallableStatement cStmt3 = conn.prepareCall("{call searchFlights_twoStop(?,?,?)}");
         cStmt3.setInt(1,source);
         cStmt3.setInt(2,dest);
+        cStmt3.setDate(3, (java.sql.Date) date);
         hadResults = cStmt3.execute();
         rs = cStmt3.getResultSet();
         if(hadResults)

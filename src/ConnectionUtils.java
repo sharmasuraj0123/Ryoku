@@ -45,12 +45,13 @@ public class ConnectionUtils {
 //
 //       for (int i = 0; i<fl.size();i++)
 //           System.out.println(fl.get(i).toString());
-        ArrayList<FlightSearch> fs =
-        CustomerLevelTransaction.searchFlights(6,11);
 
-        for (int i =0; i<fs.size();i++) {
-            System.out.println(fs.get(i).toString());
-        }
+//        ArrayList<FlightSearch> fs =
+//        CustomerLevelTransaction.searchFlights(6,11, new Date(System.currentTimeMillis()));
+//
+//        for (int i =0; i<fs.size();i++) {
+//            System.out.println(fs.get(i).toString());
+//        }
 
     }
 
