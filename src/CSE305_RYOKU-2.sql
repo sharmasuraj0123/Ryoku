@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 05, 2017 at 03:47 AM
+-- Generation Time: Dec 06, 2017 at 09:00 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -105,7 +105,9 @@ INSERT INTO `Customers` (`AccountNumber`, `person_id`, `AccountCreationDate`, `C
 (3, 8, '2017-10-23 00:00:00', 1234123412341234, 5),
 (4, 9, '2017-10-23 00:00:00', 1234123412341234, 5),
 (5, 10, '2017-10-23 00:00:00', 1234123412341234, 5),
-(7, 18, '2017-12-04 20:13:59', 1010101010, 7);
+(7, 18, '2017-12-04 20:13:59', 1010101010, 7),
+(8, 21, '2017-12-04 23:04:58', 1010101010, 7),
+(9, 23, '2017-12-04 23:14:18', 1010101010, 7);
 
 -- --------------------------------------------------------
 
@@ -133,9 +135,7 @@ INSERT INTO `Employees` (`EmployeeID`, `person_id`, `SSN`, `StartDate`, `HourlyP
 (4, 5, '1234567890', '2017-10-24 00:47:01', 10.00, 1, 8.8),
 (5, 6, '1234567890', '2017-10-24 00:47:01', 10.00, 1, 8.8),
 (7, 7, '0987654321', '2017-10-24 00:47:01', 10.00, 0, 9.9),
-(8, 14, '1111111111', '2017-12-01 07:34:03', 10.00, 1, 5.6),
-(9, 15, '1111111111', '2017-12-01 08:30:21', 10.00, 1, 5.6),
-(10, 16, '1111111111', '2017-12-05 00:24:12', 10.00, 1, 5.6);
+(8, 14, '1111111111', '2017-12-01 07:34:03', 10.00, 1, 5.6);
 
 -- --------------------------------------------------------
 
@@ -169,7 +169,10 @@ INSERT INTO `FlightLegs` (`id`, `flight_id`, `departureAirport`, `arrivalAirport
 (5, 2, 7, 8, '2011-01-10 22:30:00', '2011-01-10 19:30:00', '1200', 1000, 2, '2011-01-10 22:30:00', '2011-01-10 19:30:00'),
 (6, 2, 8, 10, '2011-01-11 08:00:00', '2011-01-11 05:00:00', '1200', 1000, 3, '2017-10-25 07:00:00', '2011-01-11 07:00:00'),
 (7, 3, 5, 4, '2011-01-13 07:00:00', '2011-01-13 05:00:00', '600', 450, 1, '2011-01-13 09:00:00', '2011-01-13 05:00:00'),
-(8, 3, 4, 5, '2011-01-14 03:00:00', '2011-01-13 23:00:00', '650', 500, 2, '2011-01-14 02:00:00', '2011-01-13 23:00:00');
+(8, 3, 4, 5, '2011-01-14 03:00:00', '2011-01-13 23:00:00', '650', 500, 2, '2011-01-14 02:00:00', '2011-01-13 23:00:00'),
+(9, 5, 5, 6, '2017-12-05 00:00:00', '2017-12-05 07:00:00', '90', 50, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 5, 6, 11, '2017-12-05 09:00:00', '2017-12-05 17:31:00', '700', 400, 2, '2017-12-05 09:00:00', '2017-12-05 17:00:00'),
+(11, 5, 6, 11, '2017-12-06 09:00:00', '2017-12-06 17:31:00', '700', 400, 2, '2017-12-06 09:00:00', '2017-12-06 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -195,7 +198,8 @@ CREATE TABLE `Flights` (
 INSERT INTO `Flights` (`id`, `airline`, `flight_number`, `base_fare`, `hidden_fare`, `numOfSeats`, `numOfStops`, `days_Op`) VALUES
 (1, 'AA', 111, '600', 400, 100, 3, b'1010100'),
 (2, 'JA', 111, '600', 400, 150, 3, b'1111111'),
-(3, 'AM', 1337, '900', 600, 33, 2, b'0000011');
+(3, 'AM', 1337, '900', 600, 33, 2, b'0000011'),
+(5, 'AA', 7, '97', 50, 100, 2, b'1111111');
 
 -- --------------------------------------------------------
 
@@ -300,9 +304,10 @@ INSERT INTO `Person` (`id`, `FirstName`, `LastName`, `emailAddress`, `password`,
 (10, 'Rick ', 'Astley', 'test12@roku.com', '1234', '1337 Internet Lane', 'Los Angelles', 'CA', 90001, 3141592653),
 (13, 'new', 'Doe', 'test221@roku.com', '1234', '1 Street', 'New York', 'NY', 11700, 3999999999),
 (14, 'man', 'yes', 'test1k@roku.com', '1234', 'qw', 'sd', 'sd', 11790, 1111111111),
-(15, 'msdsdan', 'ysdsdsdes', 'test16@roku.com', '1234', 'qw', 'sd', 'sd', 11790, 1111111111),
 (16, 'maewn', 'yes', 'yello@hi', '1234', 'qw', 'sd', 'sd', 11790, 1111111111),
-(18, 'test', 'sd', '21', 'sa@sk', '1234', 'ew', 'NY', 11790, 1111111111);
+(18, 'test', 'sd', '21', 'sa@sk', '1234', 'ew', 'NY', 11790, 1111111111),
+(21, 'teest', 'sdw', '2d1', 'ssea@sk', '1234', 'ew', 'NY', 11790, 9999999999),
+(23, 'teest', 'sdw', 'ssea@sk', '1234', 'ew', '2d1', 'NY', 11790, 9999999999);
 
 -- --------------------------------------------------------
 
@@ -546,7 +551,7 @@ ALTER TABLE `Airports`
 -- AUTO_INCREMENT for table `Customers`
 --
 ALTER TABLE `Customers`
-  MODIFY `AccountNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `AccountNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `Employees`
@@ -558,13 +563,13 @@ ALTER TABLE `Employees`
 -- AUTO_INCREMENT for table `FlightLegs`
 --
 ALTER TABLE `FlightLegs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `Flights`
 --
 ALTER TABLE `Flights`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Passenger`
@@ -576,7 +581,7 @@ ALTER TABLE `Passenger`
 -- AUTO_INCREMENT for table `Person`
 --
 ALTER TABLE `Person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `Reservation`

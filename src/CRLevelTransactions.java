@@ -5,6 +5,31 @@ import java.util.ArrayList;
 
 public class CRLevelTransactions {
 
+    public static void editmyInfo(int empId,int person_id, String firstName, String lastName, String email, String password, String address
+            , String city, String state, int zipcode, int phoneNumber , int SSN
+                                    ) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs ;
+        CallableStatement cStmt = conn.prepareCall("{call editEmployee_cr(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+
+        cStmt.setString(1,firstName);
+        cStmt.setString(2,lastName);
+        cStmt.setString(3,email);
+        cStmt.setString(4,password);
+        cStmt.setString(5,address);
+        cStmt.setString(6,city);
+        cStmt.setString(7,state);
+        cStmt.setInt(8,zipcode);
+        cStmt.setInt(9,phoneNumber);
+        cStmt.setInt(10,SSN);
+        cStmt.setInt(12,empId);
+        cStmt.setInt(13,person_id);
+
+        boolean hadResults = cStmt.execute();
+        conn.close();
+    }
+
     public static void addReservation(int cust_id, double fare,
                                       double book_fee, int emp_id, int length_stay, int advPurchase) throws SQLException, ClassNotFoundException {
 
@@ -22,11 +47,9 @@ public class CRLevelTransactions {
         cStmt.setInt(5, length_stay);
         cStmt.setInt(6, advPurchase);
 
-        try {
-            boolean hadResults = cStmt.execute();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
+
+        boolean hadResults = cStmt.execute();
+
         conn.close();
     }
 
@@ -140,6 +163,8 @@ public class CRLevelTransactions {
         boolean hadResults = cStmt.execute();
 
         ArrayList<String> pl = new ArrayList<>();
+        rs = cStmt.getResultSet();
+        if(hadResults)
         while (rs.next()) {
             String data = String.format(rs.getString("Name") + " " + rs.getString("EmailAddress"));
             pl.add(data);
@@ -157,13 +182,11 @@ public class CRLevelTransactions {
         ArrayList<Flight> fl = new ArrayList<>();
         CallableStatement cStmt = conn.prepareCall("{call getFlightSuggestionsForCustomer(?)}");
 
-        try {
+
             boolean hadResults = cStmt.execute();
             rs = cStmt.getResultSet();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
 
+        if(hadResults)
         while (rs.next()) {
             Flight newFlight = new Flight();
 
@@ -181,10 +204,6 @@ public class CRLevelTransactions {
         conn.close();
         return fl;
     }
-
-
-
-
 
 
 }
