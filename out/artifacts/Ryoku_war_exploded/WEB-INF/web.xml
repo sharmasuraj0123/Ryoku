@@ -8,11 +8,47 @@
     <!--Servlets begin-->
     <servlet>
         <servlet-name>SignUp</servlet-name>
-        <servlet-class>SignUp</servlet-class>
+        <servlet-class>SignUpCustomerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/sign-up</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogInServlet</servlet-name>
+        <servlet-class>LogInServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogInServlet</servlet-name>
+        <url-pattern>/log-in</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/log-in/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MyAccountServlet</servlet-name>
+        <servlet-class>MyAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyAccountServlet</servlet-name>
+        <url-pattern>/my-account</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BestSellerFlightsServlet</servlet-name>
+        <servlet-class>BestSellerFlightsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BestSellerFlightsServlet</servlet-name>
+        <url-pattern>/my-account/best-seller-flights</url-pattern>
     </servlet-mapping>
 
 

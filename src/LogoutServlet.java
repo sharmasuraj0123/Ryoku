@@ -1,19 +1,20 @@
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "SignUp")
-public class SignUp extends HttpServlet {
+@WebServlet(name = "LogoutServlet")
+public class LogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/sign-up.jsp");
-        dispatcher.forward(request, response);
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("/");
     }
 }
