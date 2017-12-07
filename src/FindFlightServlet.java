@@ -65,8 +65,10 @@ public class FindFlightServlet extends HttpServlet {
 
             Airport src = CustomerLevelTransaction.getAirportName(5);
             Airport dest = CustomerLevelTransaction.getAirportName(6);
+
             request.setAttribute("srcAirport",src);
             request.setAttribute("destAirport",dest);
+
 
                 //One Way.
             ArrayList<FlightSearch> flightBlocks = new ArrayList<>();
@@ -92,6 +94,8 @@ public class FindFlightServlet extends HttpServlet {
                 flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
             }
             else if(searchType==3){
+                Airport airport3 = CustomerLevelTransaction.getAirportName(6);
+                request.setAttribute("airport3", airport3);
 
             }
             else{

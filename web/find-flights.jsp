@@ -16,20 +16,20 @@
                 <div class="uk-card uk-card-primary uk-card-body uk-animation-slide-left-small">
                     <h4 class="uk-heading-line uk-text-left"> <span>Modify Search</span></h4>
 
-                    <label class="uk-form-label"><input name="search_type" value="1" class="uk-radio" type="radio" <%
+                    <label class="uk-form-label"><input name="search_type" value="1" onclick="search_type_func(1)" class="uk-radio" type="radio" <%
                         if (request.getParameter("search_type").toString().equals("1")){
                             out.print("checked");
                         }
                         %>> One way</label>
                     <br>
-                    <label class="uk-form-label"><input name="search_type" value="2" class="uk-radio" type="radio"
+                    <label class="uk-form-label"><input name="search_type" value="2" onclick="search_type_func(2)" class="uk-radio" type="radio"
                         <%
                         if (request.getParameter("search_type").toString().equals("2")){
                             out.print("checked");
                         }
                         %>> Round Trip</label>
                     <br>
-                    <label class="uk-form-label"><input name="search_type" value="3" class="uk-radio" type="radio" <%
+                    <label class="uk-form-label"><input name="search_type" value="3" onclick="search_type_func(3)" class="uk-radio" type="radio" <%
                         if (request.getParameter("search_type").toString().equals("3")){
                             out.print("checked");
                         }
@@ -50,7 +50,7 @@
 
                     <div class="uk-margin">
                         <label class="uk-form-label"> <i class="fa fa-plane" aria-hidden="true"></i> From:</label>
-                        <select  name="airport" class="uk-select">
+                        <select  name="airport" id="src-airport-select" class="uk-select">
                             <option value="${srcAirport.id}">${srcAirport.name}</option>
                             <option value="1" > JFK </option>
                             <option value="2" > LGA </option>
@@ -60,22 +60,46 @@
 
                     <div class="uk-margin">
                         <label class="uk-form-label"> <i class="fa fa-plane" aria-hidden="true"></i> To:</label><br>
-                        <select  name="airport" class="uk-select">
+                        <select  name="airport" id="return-airport-select" class="uk-select">
                             <option value="${destAirport.id}"> ${destAirport.name} </option>
                             <option value="3" > DEL </option>
                             <option value="4" > BOM </option>
                         </select>
                     </div>
 
-                    <div class="uk-margin">
-                        <label class="uk-form-label">Departing:</label> <br>
-                        <input type="date" class="uk-input" name="date" value="${searchQuery.dates[0]}">
+
+                    <div class="uk-margin" id="airport-3">
+                        <label class="uk-form-label"> <i class="fa fa-plane" aria-hidden="true"></i> To:</label><br>
+                        <select  name="airport" id="airport-3-select" class="uk-select">
+                            <option value="${airport3.id}"> ${airport3.name} </option>
+                            <option value="3" > DEL </option>
+                            <option value="4" > BOM </option>
+                        </select>
                     </div>
 
+
                     <div class="uk-margin">
-                        <label class="uk-form-label">Returning:</label> <br>
-                        <input type="date" class="uk-input" name="date" value="${searchQuery.dates[1]}">
+                        <label class="uk-form-label">Departing:</label> <br>
+                        <input type="date" class="uk-input" id="date-1" name="date" value="${searchQuery.dates[0]}">
                     </div>
+
+                    <div class="uk-margin" id="date-2-containter">
+                        <label class="uk-form-label">Returning/Connecting:</label> <br>
+                        <input type="date" class="uk-input" id="date-2" name="date" value="${searchQuery.dates[1]}">
+                    </div>
+
+
+                    <div class="uk-margin" id="date-3-containter">
+                        <label class="uk-form-label">Connecting:</label> <br>
+                        <input type="date" class="uk-input" id="date-3" name="date" value="${searchQuery.dates[2]}">
+                    </div>
+
+
+                    <script>
+                        $(function(){
+                            search_type_func(${searchQuery.searchType});
+                        });
+                    </script>
 
                     <div class="uk-margin">
                         <div class="uk-grid">
