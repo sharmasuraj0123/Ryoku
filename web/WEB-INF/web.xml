@@ -114,6 +114,15 @@
         <url-pattern>/my-account/flight/list</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GetReservationsByACustomerServlet</servlet-name>
+        <servlet-class>GetReservationsByACustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetReservationsByACustomerServlet</servlet-name>
+        <url-pattern>/my-account/customer/list/reservation</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets end -->
 
     <mime-mapping>

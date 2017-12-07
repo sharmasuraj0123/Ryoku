@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class ReservationData {
+public class ReservationData implements Serializable {
     private int reservation_id;
     private int customer_id;
     private Customer customer;
@@ -15,9 +16,9 @@ public class ReservationData {
     private int lengthOfstay;
     private String advPurchases;
     private ArrayList<Passenger> pasengerList;
-    private ArrayList<FlightSearch> Flights;
+    private ArrayList<FlightSearch> flights;
     public ReservationData() {
-        Flights = new ArrayList<>();
+        flights = new ArrayList<>();
         pasengerList = new ArrayList<>();
     }
 
@@ -34,7 +35,7 @@ public class ReservationData {
         Fare_restrictions = fare_restrictions;
         this.lengthOfstay = lengthOfstay;
         this.advPurchases = advPurchases;
-        Flights = new ArrayList<>();
+        flights = new ArrayList<>();
         pasengerList = new ArrayList<>();
     }
 
@@ -144,14 +145,14 @@ public class ReservationData {
     }
 
     public void addFlightSearch(FlightSearch newFlightSearch){
-        Flights.add(newFlightSearch);
+        flights.add(newFlightSearch);
     }
 
     public ArrayList<FlightSearch> getFlights() {
-        return Flights;
+        return flights;
     }
 
     public void setFlights(ArrayList<FlightSearch> flights) {
-        Flights = flights;
+        flights = flights;
     }
 }

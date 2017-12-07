@@ -21,15 +21,16 @@ public class GetReservationsByACustomerServlet extends HttpServlet {
 
             try {
 
-                int cust_id = (int)request.getAttribute("custID");
+                // add check here later skrr
+                int cust_id = Integer.parseInt(request.getQueryString());
 
                 ArrayList<ReservationData> reservations = ManagerLevelTransaction.getReservationsByACustomer(cust_id);
-//                request.setAttribute("flights",flights);
-//
-//                System.out.println("hello => "+flights.size());
-//
-//                RequestDispatcher rd = request.getRequestDispatcher("/my-account-mgr-flights.jsp");
-//                rd.forward(request,response);
+                request.setAttribute("reservations", reservations);
+
+                System.out.print("num of reservations +>"+reservations.size());
+
+                RequestDispatcher rd = request.getRequestDispatcher("/my-account-mgr-reservation-cust.jsp");
+                rd.forward(request,response);
 
             } catch (SQLException e) {
                 e.printStackTrace();
