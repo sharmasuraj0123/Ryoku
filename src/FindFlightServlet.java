@@ -62,6 +62,7 @@ public class FindFlightServlet extends HttpServlet {
 
         try {
             ArrayList<FlightSearch> flightBlocks = CustomerLevelTransaction.searchFlights(6,11, dates.get(0));
+
             Airport src = CustomerLevelTransaction.getAirportName(6);
             Airport dest = CustomerLevelTransaction.getAirportName(11);
 
