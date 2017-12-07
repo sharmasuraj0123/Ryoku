@@ -2,6 +2,7 @@ import java.sql.Timestamp;
 
 public class Flight {
     private String airline;
+    private String airlineName;
     private int Flight_number;
     private int stopNum;
     private String departureAirport;
@@ -15,6 +16,9 @@ public class Flight {
     private int legId;
     private int base_fare;
     private int hidden_fare;
+
+    private Airport departureAirport_ob;
+    private Airport arrivalAirport_ob;
 
 
     public Flight(int stopNum, Timestamp dept_time, Timestamp arrival_time, int departAirport_Id, int arriveAirport_id,
@@ -143,6 +147,32 @@ public class Flight {
     public void setHidden_fare(int hidden_fare) {
         this.hidden_fare = hidden_fare;
     }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
+    }
+
+    public Airport getDepartureAirport_ob() {
+        return departureAirport_ob;
+    }
+
+    public void setDepartureAirport_ob(Airport departureAirport_ob) {
+        this.departureAirport_ob = departureAirport_ob;
+    }
+
+    public Airport getArrivalAirport_ob() {
+        return arrivalAirport_ob;
+    }
+
+    public void setArrivalAirport_ob(Airport arrivalAirport_ob) {
+        this.arrivalAirport_ob = arrivalAirport_ob;
+    }
+
+
 
     @Override
     public String toString() {
