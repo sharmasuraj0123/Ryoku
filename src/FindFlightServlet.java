@@ -115,6 +115,9 @@ public class FindFlightServlet extends HttpServlet {
             request.setAttribute("flightBlocks", flightBlocks);
             request.setAttribute("flightsNum", flightBlocks.size());
 
+            request.getSession().setAttribute("flights_inSession", flightBlocks);
+            request.getSession().setAttribute("flightsNum_inSession", flightBlocks.size());
+
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/find-flights.jsp");
             dispatcher.forward(request, response);
 
