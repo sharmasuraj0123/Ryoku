@@ -172,8 +172,8 @@ public class ManagerLevelTransaction {
         rs = cStmt.getResultSet();
 
         while (rs.next()) {
-            String newEntry = String.format(rs.getString("EmployeeName")+"\t"+ rs.getInt("TotalRevenue")
-                    +"\t"+rs.getInt("FEES"));
+            String newEntry = String.format("<td>" + rs.getString("EmployeeName")+"</td><td>"+ rs.getInt("TotalRevenue")
+                    +"</td><td>"+rs.getInt("FEES"));
             el.add(newEntry);
         }
         conn.close();

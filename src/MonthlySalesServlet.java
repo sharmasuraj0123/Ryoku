@@ -5,11 +5,42 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 @WebServlet(name = "MonthlySalesServlet")
 public class MonthlySalesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getParameter("month-year") != null){
+            System.out.println(request.getParameter("month-year"));
+            DateFormat df = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
 
+            String month = request.getParameter("month-year").toString() + "-01" ;
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+            LocalDate date = LocalDate.parse(month, formatter);
+
+            try {
+                System.out.println(date.getMonthValue() + " |  " + date.getYear());
+                ArrayList<String> result = ManagerLevelTransaction.getSalesReportOfAMonth(date.getMonthValue(), date.getYear());
+
+                System.out.println(result);
+
+                request.setAttribute("result", result);
+                RequestDispatcher d = request.getServletContext().getRequestDispatcher("/my-account-mgr-sales-report.jsp");
+                d.forward(request, response);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

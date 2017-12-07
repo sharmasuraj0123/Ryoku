@@ -22,29 +22,27 @@
                 </div>
             </form>
             <div class="uk-margin">
-                <table class="uk-table">
+                <table class="uk-table uk-table-striped">
                     <thead>
                     <tr>
                         <th>
-                            Reservation #
-                        </th>
-                        <th>
-                            Customer ID
-                        </th>
-                        <th>
-                            Customer Name
-                        </th>
-                        <th>
-                            Flight Number
-                        </th>
-                        <th>
-                            Date
+                            Customer Representative
                         </th>
                         <th>
                             Revenue
                         </th>
+                        <th>
+                            Fees
+                        </th>
                     </tr>
                     </thead>
+                    <tbody>
+                    <c:forEach items="${result}" var="res">
+                        <tr>
+                                ${res}
+                        </tr>
+                    </c:forEach>
+                    </tbody>
                 </table>
             </div>
         </div>
