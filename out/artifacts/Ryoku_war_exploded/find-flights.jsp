@@ -116,8 +116,7 @@
                         </div>
                         <div class="uk-grid-small" uk-grid>
                             <div class="uk-width-1-3 uk-text-small">
-                                ${legs.dTime} &ndash; ${legs.aTime} <br>
-
+                                ${legs.dTime} &ndash; ${legs.aTime} <span class="uk-text-danger"> +1</span> <br>
                             </div>
                             <div class="uk-width-1-3 uk-text-center uk-text-small">
                                 <span class="uk-align-center">${flight_block.hours}h ${flight_block.minutes}m</span>

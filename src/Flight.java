@@ -1,14 +1,20 @@
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Flight {
+public class Flight implements Serializable {
     private String airline;
     private String airlineName;
-    private int Flight_number;
+    private int flight_number;
     private int stopNum;
     private String departureAirport;
     private String arrivalAirport;
     private Timestamp dept_time;
     private Timestamp arrival_time;
+    private String dTime;
+    private String aTime;
+    private String d_date;
     private int daysOp;
     private int departAirport_Id;
     private int arriveAirport_id;
@@ -20,6 +26,29 @@ public class Flight {
     private Airport departureAirport_ob;
     private Airport arrivalAirport_ob;
 
+    public String getdTime() {
+        return dTime;
+    }
+
+    public void setdTime(String dTime) {
+        this.dTime = dTime;
+    }
+
+    public String getaTime() {
+        return aTime;
+    }
+
+    public void setaTime(String aTime) {
+        this.aTime = aTime;
+    }
+
+    public String getD_date() {
+        return d_date;
+    }
+
+    public void setD_date(String d_date) {
+        this.d_date = d_date;
+    }
 
     public Flight(int stopNum, Timestamp dept_time, Timestamp arrival_time, int departAirport_Id, int arriveAirport_id,
                   int flightId, int legId, int base_fare, int hidden_fare) {
@@ -32,6 +61,12 @@ public class Flight {
         this.legId = legId;
         this.base_fare = base_fare;
         this.hidden_fare = hidden_fare;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        this.dTime = sdf.format(dept_time.getTime());
+        this.aTime = sdf.format(arrival_time.getTime());
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MMMMM dd, YYYY");
+        this.d_date = sdf2.format(dept_time.getTime());
     }
 
     public Flight(){}
@@ -45,11 +80,11 @@ public class Flight {
     }
 
     public int getFlight_number() {
-        return Flight_number;
+        return flight_number;
     }
 
     public void setFlight_number(int flight_number) {
-        Flight_number = flight_number;
+        this.flight_number = flight_number;
     }
 
     public int getStopNum() {
@@ -176,7 +211,7 @@ public class Flight {
 
     @Override
     public String toString() {
-        return airline+Flight_number+"\t"+
+        return airline+flight_number+"\t"+
                 stopNum+"\t"+ departAirport_Id+"\t"+arriveAirport_id+"\t"+dept_time+"\t"+arrival_time+"\t"+daysOp +"\n";
     }
 }

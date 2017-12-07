@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class FindFlightServlet extends HttpServlet {
         if (dates_s != null){
             for (int i = 0; i < dates_s.length; i++){
                 if (dates_s[i] != null && !dates_s[i].equals("")) {
-                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
                     java.util.Date date = null;
                     try {
                         date = sdf1.parse(dates_s[i]);
@@ -56,8 +58,24 @@ public class FindFlightServlet extends HttpServlet {
 
         System.out.println(sq);
 
-        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/find-flights.jsp");
-        dispatcher.forward(request, response);
+
+        try {
+            ArrayList<FlightSearch> flightBlocks = CustomerLevelTransaction.searchFlights(6,11, dates.get(0));
+
+            System.out.println(flightBlocks.size());
+            for (int i = 0; i < flightBlocks.size(); i++) {
+                flightBlocks.get(i).getTotalTravelTime();
+                System.out.println(flightBlocks.get(i).getFlightlegs().get(0).getArrival_time().toString());
+            }
+
+            request.setAttribute("flightBlocks", flightBlocks);
+
+            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/find-flights.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

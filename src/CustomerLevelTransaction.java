@@ -1,6 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 
 public class CustomerLevelTransaction {
 
@@ -221,8 +221,7 @@ public class CustomerLevelTransaction {
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs = null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM `Flights` F  WHERE \n" +
-                "F.id = ?;\n}");
+        CallableStatement cStmt = conn.prepareCall("SELECT * FROM `Flights` F  WHERE F.id = ?");
         cStmt.setInt(1,f.getFlightId());
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
@@ -231,13 +230,13 @@ public class CustomerLevelTransaction {
 
                 f.setAirline(rs.getString(2));
                 f.setDaysOp(rs.getInt("days_Op"));
-                f.setFlight_number(3);
+                f.setFlight_number(rs.getInt(3));
             }
         conn.close();
         //Return the Airports.
         f.setDepartureAirport_ob(getAirportName(f.getDepartAirport_Id()));
-        f.setDepartureAirport_ob(getAirportName(f.getArriveAirport_id()));
-        f.setAirlineName(f.getAirline());
+        f.setArrivalAirport_ob(getAirportName(f.getArriveAirport_id()));
+        f.setAirlineName(getAirlineName(f.getAirline()));
         return f;
 
     }
@@ -249,18 +248,19 @@ public class CustomerLevelTransaction {
         ResultSet rs = null;
         Airport airport = null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM Airports A  WHERE \n" +
-                "A.id = ?;\n}");
+        CallableStatement cStmt = conn.prepareCall("SELECT * FROM Airports A  WHERE A.id = ?");
         cStmt.setInt(1,airport_id);
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
         if(hadResults) {
-            String name = rs.getString("name");
-            String city =rs.getString("city");
-            String state =rs.getString("state");
-            String country =rs.getString("country");
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                String country = rs.getString("country");
 
-            airport = new Airport(airport_id,name,state,city,country);
+                airport = new Airport(airport_id, name, state, city, country);
+            }
         }
 
         conn.close();
@@ -274,14 +274,16 @@ public class CustomerLevelTransaction {
         ResultSet rs = null;
         String airlinename =null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM Airlines A  WHERE \n" +
-                "A.iD = ?;\n}");
+        CallableStatement cStmt = conn.prepareCall("SELECT * FROM Airlines A  WHERE A.id = ?");
+
         cStmt.setString(1,airline);
 
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
         if(hadResults) {
-            airlinename = rs.getString("airline_name");
+            while (rs.next()) {
+                airlinename = rs.getString("airline_name");
+            }
         }
 
         conn.close();
