@@ -207,6 +207,7 @@ public class ManagerLevelTransaction {
             newFlight.setDeparture_status(rs.getTimestamp("departure_status"));
             newFlight.setArrival_status(rs.getTimestamp("arrival_status"));
             newFlight.setFlightId(rs.getInt("id"));
+            newFlight.setTime();
             fl.add(newFlight);
         }
         conn.close();
