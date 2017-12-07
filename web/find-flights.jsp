@@ -5,6 +5,7 @@
 <%@include file="header.jsp"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% int i = 0; %>
+<%int position = 0;%>
 <br> <br>
 <div class="uk-container">
     <h4 class="uk-heading-line uk-text-center"> <span>Search Results</span></h4>
@@ -164,7 +165,6 @@
                 <%
                 }%>
                 <c:forEach items="${flightBlocks}" var="flight_block">
-                    <%int position = 0;%>
                     <div class="uk-margin">
                         <%--<div class="uk-grid-small" uk-grid>--%>
                             <%--<div class="uk-width-1-3">--%>
