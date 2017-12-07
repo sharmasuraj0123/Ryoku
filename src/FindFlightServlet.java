@@ -83,8 +83,8 @@ public class FindFlightServlet extends HttpServlet {
                 ArrayList<FlightSearch> flightBlocks_going = new ArrayList<>();
                 ArrayList<FlightSearch> flightBlocks_returning = new ArrayList<>();
                 if(isFlexible) {
-                     flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
-                     flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
+                     flightBlocks_going = CustomerLevelTransaction.searchFlights_flex(6, 5, dates.get(0));
+                     flightBlocks_returning = CustomerLevelTransaction.searchFlights_flex(5, 6, dates.get(1));
                 }
                 else{
                      flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
@@ -96,6 +96,27 @@ public class FindFlightServlet extends HttpServlet {
             else if(searchType==3){
                 Airport airport3 = CustomerLevelTransaction.getAirportName(6);
                 request.setAttribute("airport3", airport3);
+
+
+
+                ArrayList<FlightSearch> flightBlock_one =new ArrayList<>();
+                ArrayList<FlightSearch> flightBlock_two =new ArrayList<>();
+                ArrayList<FlightSearch> flightBlock_three =new ArrayList<>();
+
+                if(isFlexible){
+                    flightBlock_one = CustomerLevelTransaction.searchFlights_flex(6,11,dates.get(0));
+                    flightBlock_two = CustomerLevelTransaction.searchFlights_flex(11,5,dates.get(1));
+                    flightBlock_three = CustomerLevelTransaction.searchFlights_flex(5,6,dates.get(2));
+
+                }
+                else{
+                    flightBlock_one = CustomerLevelTransaction.searchFlights(6,4,dates.get(0));
+                    flightBlock_two = CustomerLevelTransaction.searchFlights(4,5,dates.get(1));
+                    flightBlock_three = CustomerLevelTransaction.searchFlights(5,11,dates.get(2));
+                }
+
+                flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlock_one,flightBlock_two);
+                flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks,flightBlock_three);
 
             }
             else{
