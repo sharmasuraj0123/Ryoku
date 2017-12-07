@@ -70,49 +70,50 @@ public class FindFlightServlet extends HttpServlet {
 
                 //One Way.
             ArrayList<FlightSearch> flightBlocks = new ArrayList<>();
-                if(searchType==1) {
-                    flightBlocks = CustomerLevelTransaction.searchFlights(5, 6, dates.get(0));
-                }
-                //It is a two way Flight.
-                else if(searchType ==2){
+            if(searchType==1) {
+                flightBlocks = CustomerLevelTransaction.searchFlights(5, 6, dates.get(0));
+            }
+            //It is a two way Flight.
+            else if(searchType ==2){
 
-                    ArrayList<FlightSearch> flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
-                    ArrayList<FlightSearch> flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
+                ArrayList<FlightSearch> flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
+                ArrayList<FlightSearch> flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
 
-                    flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
-                }
-                else if(searchType==3){
+                flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
+            }
+            else if(searchType==3){
 
-                }
-                else{
-                    System.out.println(searchType);
-                    //System.out.println(flightBlocks.size());
-                }
+            }
+            else{
+                System.out.println(searchType);
+                //System.out.println(flightBlocks.size());
+            }
 
-                for (int i = 0; i < flightBlocks.size(); i++) {
-                    flightBlocks.get(i).getTotalTravelTime();
-                    System.out.println(flightBlocks.get(i).getFlightlegs().get(0).getArrival_time().toString());
-                }
+            for (int i = 0; i < flightBlocks.size(); i++) {
+                flightBlocks.get(i).getTotalTravelTime();
+                System.out.println(flightBlocks.get(i).getFlightlegs().get(0).getArrival_time().toString());
+            }
 
 
             //Changing User Infos Accordingly.
             for (int i =0; i<flightBlocks.size();i++) {
                 //Changing the Price Accordingly
                 flightBlocks.get(i).setPrice(flightBlocks.get(i).getPrice() * (int) flyingClass * passengers);
-                request.setAttribute("flightBlocks", flightBlocks);
             }
 
 
-            if(scope==1)
-                for (int i =0; i<flightBlocks.size();i++) {
+            if(scope==1) {
+                for (int i = 0; i < flightBlocks.size(); i++) {
                     if (flightBlocks.get(i).isInternational()) {
                         flightBlocks.remove(i);
-                        i =i-1;
+                        i = i - 1;
                     }
 
                 }
+            }
 
-
+            request.setAttribute("flightBlocks", flightBlocks);
+            request.setAttribute("flightsNum", flightBlocks.size());
 
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/find-flights.jsp");
             dispatcher.forward(request, response);
