@@ -79,6 +79,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>FindFlightServlet</servlet-name>
+        <servlet-class>FindFlightServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FindFlightServlet</servlet-name>
+        <url-pattern>/find-flights</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>StarCustomerServlet</servlet-name>
         <servlet-class>StarCustomerServlet</servlet-class>
     </servlet>

@@ -37,7 +37,6 @@ public class CustomerLevelTransaction {
                         address,city,state,zipCode,phoneNumber,accountNumber,
                         dateCreated,creditCardNumber,ratings);
 
-
             }
 
             conn.close();
@@ -206,8 +205,12 @@ public class CustomerLevelTransaction {
 
                 fs.add(flightBlock);
             }
-
         conn.close();
+
+        for (int i=0; i<fs.size();i++)
+            for (int j = 0; j<fs.get(i).getFlightlegs().size();j++)
+                fs.get(i).getFlightlegs().set(j,getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
+
         return fs;
     }
 
@@ -218,7 +221,7 @@ public class CustomerLevelTransaction {
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs = null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM `Flights` F WHERE \n" +
+        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM `Flights` F  WHERE \n" +
                 "F.id = ?;\n}");
         cStmt.setInt(1,f.getFlightId());
         boolean hadResults = cStmt.execute();
@@ -230,9 +233,63 @@ public class CustomerLevelTransaction {
                 f.setDaysOp(rs.getInt("days_Op"));
                 f.setFlight_number(3);
             }
+        conn.close();
+        //Return the Airports.
+        f.setDepartureAirport_ob(getAirportName(f.getDepartAirport_Id()));
+        f.setDepartureAirport_ob(getAirportName(f.getArriveAirport_id()));
+        f.setAirlineName(f.getAirline());
         return f;
 
     }
+
+
+    public static Airport getAirportName(int airport_id) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+        Airport airport = null;
+
+        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM Airports A  WHERE \n" +
+                "A.id = ?;\n}");
+        cStmt.setInt(1,airport_id);
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+        if(hadResults) {
+            String name = rs.getString("name");
+            String city =rs.getString("city");
+            String state =rs.getString("state");
+            String country =rs.getString("country");
+
+            airport = new Airport(airport_id,name,state,city,country);
+        }
+
+        conn.close();
+        return airport;
+
+    }
+
+    public static String getAirlineName(String  airline) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+        String airlinename =null;
+
+        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM Airlines A  WHERE \n" +
+                "A.iD = ?;\n}");
+        cStmt.setString(1,airline);
+
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+        if(hadResults) {
+            airlinename = rs.getString("airline_name");
+        }
+
+        conn.close();
+        return airlinename;
+
+
+    }
+
 
 
     public static ReservationData getReservationDetails(ReservationData r) throws SQLException, ClassNotFoundException {
@@ -294,6 +351,8 @@ public class CustomerLevelTransaction {
             }
             r.setPasengerList(passengerList);
         }
+
+        conn.close();
         return r;
     }
 

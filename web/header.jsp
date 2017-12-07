@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://localhost:8080/rsrc/uikit/css/uikit.min.css" />
         <link rel="stylesheet" href="http://localhost:8080/rsrc/static/css/style.css" />
+        <script src="http://localhost:8080/rsrc/static/js/script.js"></script>
         <script src="http://localhost:8080/rsrc/uikit/js/uikit.min.js"></script>
         <script src="http://localhost:8080/rsrc/uikit/js/uikit-icons.min.js"></script>
         <script src="https://use.fontawesome.com/028384ec2d.js"></script>

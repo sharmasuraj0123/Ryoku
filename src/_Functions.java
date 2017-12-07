@@ -27,6 +27,7 @@ public class _Functions  {
     }
 
     public static int getInteger(String val){
+        if (val == null) return 0;
         if (val.equals("")) return  0;
         else {
             int n = 0;
