@@ -66,8 +66,6 @@ public class LogInServlet extends HttpServlet {
                     Customer curr_customer = CustomerLevelTransaction.getCustomer(pid);
                     Employees curr_employee = ManagerLevelTransaction.getEmployee(pid);
 
-                    System.out.println("$" + curr_employee.getEmployeeId());
-
                     if(curr_customer == null && curr_employee == null){
 
                         // throw some error
@@ -97,6 +95,9 @@ public class LogInServlet extends HttpServlet {
                         System.out.print("3");
                         response.sendRedirect("/my-account");
                     }
+
+                } else {
+                    System.out.println("User doesn't exist! or Login Error");
 
                 }
 

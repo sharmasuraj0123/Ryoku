@@ -16,25 +16,27 @@ public class MyAccountServlet extends HttpServlet {
         System.out.println("in post 0");
         if (request.getParameter("updateUser") != null ){
             System.out.println("in post");
+
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String emailAddress = request.getParameter("emailAddress");
+
+            int mobile = _Functions.getInteger(request.getParameter("mobile"));
+
+            String address = request.getParameter("address");
+            String city = request.getParameter("city");
+            String state = request.getParameter("state");
+
+            int zipCode = _Functions.getInteger(request.getParameter("zipCode"));
+            String pass = request.getParameter("password_old");
+
+            int pid = Integer.parseInt(request.getParameter("person_id"));
+
             if (request.getParameter("updateUser").toString().equals("1")){
                 System.out.println("in post 2");
-                String firstName = request.getParameter("firstName");
-                String lastName = request.getParameter("lastName");
-                String emailAddress = request.getParameter("emailAddress");
+                long cc = _Functions.getInteger(request.getParameter("creditCard"));
 
-                int mobile = Integer.parseInt(request.getParameter("mobile"));
-
-                String address = request.getParameter("address");
-                String city = request.getParameter("city");
-                String state = request.getParameter("state");
-
-                int zipCode = Integer.parseInt(request.getParameter("zipCode"));
-                long cc = Integer.parseInt(request.getParameter("creditCard"));
-
-                String pass = request.getParameter("password_old");
-
-                int pid = Integer.parseInt(request.getParameter("person_id"));
-                int cid = Integer.parseInt(request.getParameter("customer_id"));
+                int cid = _Functions.getInteger(request.getParameter("customer_id"));
 
                 double rat = ((Customer)request.getSession().getAttribute("customer")).getRatings();
 
@@ -49,6 +51,29 @@ public class MyAccountServlet extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else if (request.getParameter("updateUser").toString().equals("2")){
+                int ssn = _Functions.getInteger(request.getParameter("socialSecurityNumber"));
+                System.out.println("ssn: " + ssn);
+                int eid = _Functions.getInteger(request.getParameter("employee_id"));
+                double rat = ((Employees)request.getSession().getAttribute("employee")).getRating();
+                boolean isManager = ((Employees)request.getSession().getAttribute("employee")).isManager();
+                int mgr = 0;
+                if (isManager)
+                    mgr = 1;
+                double hpay = ((Employees)request.getSession().getAttribute("employee")).getHourlyPay();
+
+                try {
+                   ManagerLevelTransaction.editEmployee(eid,pid,firstName,lastName,emailAddress,pass,address,city,
+                           state,zipCode,mobile,ssn,hpay,mgr,rat);
+
+                    Employees e = ManagerLevelTransaction.getEmployee(pid);
+                    request.getSession().setAttribute("employee", e);
+
+                    response.sendRedirect("/my-account");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }

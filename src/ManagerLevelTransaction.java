@@ -47,6 +47,45 @@ public class ManagerLevelTransaction {
         return current;
     }
 
+    public static ArrayList<Employees> getEmployeesList() throws SQLException, ClassNotFoundException {
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+        ArrayList<Employees> cl = new ArrayList<>();
+        CallableStatement cStmt = conn.prepareCall("{call getEmployeeList()}");
+
+
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+
+        if(hadResults)
+            while (rs.next()) {
+                int id = rs.getInt("person_id");
+                String firstName = "" + rs.getString("FirstName");
+                String lastName = "" + rs.getString("LastName");
+                String email = "" + rs.getString("emailAddress");
+                String password = "" + rs.getString("password");
+                String address = "" + rs.getString("Address");
+                String city = "" + rs.getString("City_Town");
+                String state = "" + rs.getString("State");
+                int zipCode = rs.getInt("ZipCode");
+                long phoneNumber = rs.getLong("Phone");
+                int eid = rs.getInt("EmployeeID");
+                Timestamp startDate = rs.getTimestamp("StartDate");
+                int SSN = rs.getInt("SSN");
+                double hpay = rs.getDouble("HourlyPay");
+                int isManager = rs.getInt("isManager");
+                boolean mgr = false;
+                if (isManager == 1)
+                    mgr = true;
+                double rating = rs.getDouble("Rating");
+
+                Employees ne = new Employees(id, firstName, lastName, email, password, address, city, state, zipCode, phoneNumber, eid, SSN, startDate, hpay, mgr,rating);
+                cl.add(ne);
+            }
+        conn.close();
+        return cl;
+    }
+
     public static void addEmployee(String firstName, String lastName, String email, String password, String address
             , String city, String state, int zipcode, int phoneNumber , int SSN ,
                                    double hrpay, int manager, double rating) throws SQLException, ClassNotFoundException {
@@ -85,26 +124,24 @@ public class ManagerLevelTransaction {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs ;
-        CallableStatement cStmt = conn.prepareCall("{call editEmployee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call editEmployee(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
-        Timestamp startdate = new Timestamp(System.currentTimeMillis());
+
         cStmt.setString(1,firstName);
         cStmt.setString(2,lastName);
         cStmt.setString(3,email);
-        cStmt.setString(4,password);
-        cStmt.setString(5,address);
+        cStmt.setString(4,address);
+        cStmt.setString(5,password);
         cStmt.setString(6,city);
         cStmt.setString(7,state);
         cStmt.setInt(8,zipcode);
         cStmt.setInt(9,phoneNumber);
         cStmt.setInt(10,SSN);
-        cStmt.setTimestamp(11, startdate);
-        cStmt.setDouble(12,hrpay);
-        cStmt.setInt(13,manager);
-        cStmt.setDouble(14,rating);
-        cStmt.setInt(15,empId);
-        cStmt.setInt(16,person_id);
-
+        cStmt.setDouble(11,hrpay);
+        cStmt.setInt(12,manager);
+        cStmt.setDouble(13,rating);
+        cStmt.setInt(14,empId);
+        cStmt.setInt(15,person_id);
         boolean hadResults = cStmt.execute();
         conn.close();
     }

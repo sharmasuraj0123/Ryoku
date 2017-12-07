@@ -26,6 +26,12 @@
                             <table class="uk-table uk-background-muted uk-table-small uk-table-divider">
                                 <tbody>
                                 <tr>
+                                    <td>
+                                        Customer ID:
+                                    </td>
+                                    <td>${cust_list.accountNumber}</td>
+                                </tr>
+                                <tr>
                                     <td>First Name : </td>
                                     <td>${cust_list.firstName}</td>
                                 </tr>

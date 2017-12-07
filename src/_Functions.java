@@ -25,4 +25,17 @@ public class _Functions  {
 
         return false;
     }
+
+    public static int getInteger(String val){
+        if (val.equals("")) return  0;
+        else {
+            int n = 0;
+            try{
+                n = Integer.parseInt(val);
+            } catch (Exception e){
+                n = 0;
+            }
+            return n;
+        }
+    }
 }
