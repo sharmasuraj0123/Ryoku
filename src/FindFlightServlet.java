@@ -71,8 +71,9 @@ public class FindFlightServlet extends HttpServlet {
                 }
                 //It is a two way Flight.
                 else if(searchType ==2){
-                    flightBlocks = CustomerLevelTransaction.searchFlights(6, 11, dates.get(0));
-                    flightBlocks = CustomerLevelTransaction.searchFlights(6, 11, dates.get(1));
+                    ArrayList<FlightSearch> flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 11, dates.get(0));
+                    ArrayList<FlightSearch> flightBlocks_returning = CustomerLevelTransaction.searchFlights(6, 11, dates.get(1));
+
                 }
                 else if(searchType==3){
 
