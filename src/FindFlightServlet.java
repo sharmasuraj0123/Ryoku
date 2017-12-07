@@ -54,6 +54,7 @@ public class FindFlightServlet extends HttpServlet {
         _SearchQuery sq = new _SearchQuery(s ,
                  passengers, flyingClass, dates, searchType, scope, isFlexible);
 
+
         request.setAttribute("searchQuery", sq);
 
         System.out.println(sq);
@@ -61,6 +62,11 @@ public class FindFlightServlet extends HttpServlet {
 
         try {
             ArrayList<FlightSearch> flightBlocks = CustomerLevelTransaction.searchFlights(6,11, dates.get(0));
+            Airport src = CustomerLevelTransaction.getAirportName(6);
+            Airport dest = CustomerLevelTransaction.getAirportName(11);
+
+            request.setAttribute("srcAirport", src);
+            request.setAttribute("destAirport", dest);
 
             System.out.println(flightBlocks.size());
             for (int i = 0; i < flightBlocks.size(); i++) {
