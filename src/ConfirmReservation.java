@@ -26,7 +26,7 @@ public class ConfirmReservation extends HttpServlet {
             String seat_preference[] = request.getParameterValues("seat_preference");
 
 
-            System.out.println(flight_selected);
+            System.out.println(meal_preference[0]);
             //  reservation code
 
 
@@ -46,10 +46,6 @@ public class ConfirmReservation extends HttpServlet {
                     CRLevelTransactions.addPassenger(r_id,meal_preference[i],"FIRST","AISLE","33A",
                             passenger_firstName[i],passenger_lastName[i]);
                 }
-
-
-
-
 
             } catch (SQLException e) {
                 e.printStackTrace();
