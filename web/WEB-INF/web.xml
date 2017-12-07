@@ -141,6 +141,60 @@
         <url-pattern>/confirm-reservation</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AddCustomerServelet</servlet-name>
+        <servlet-class>AddCustomerServelet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddCustomerServelet</servlet-name>
+        <url-pattern>/my-account/customer/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerEditServlet</servlet-name>
+        <servlet-class>CustomerEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerEditServlet</servlet-name>
+        <url-pattern>/my-account/customer/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerDeleteServlet</servlet-name>
+        <servlet-class>CustomerDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerDeleteServlet</servlet-name>
+        <url-pattern>/my-account/customer/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddEmployeeServlet</servlet-name>
+        <servlet-class>AddEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddEmployeeServlet</servlet-name>
+        <url-pattern>/my-account/employee/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EmployeeEditServlet</servlet-name>
+        <servlet-class>EmployeeEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmployeeEditServlet</servlet-name>
+        <url-pattern>/my-account/employee/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EmployeeDeleteServlet</servlet-name>
+        <servlet-class>EmployeeDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmployeeDeleteServlet</servlet-name>
+        <url-pattern>/my-account/employee/delete</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>GetReservationByFlightServlet</servlet-name>
