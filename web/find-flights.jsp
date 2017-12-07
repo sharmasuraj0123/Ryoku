@@ -95,11 +95,13 @@
                     <li><span>All Flights</span></li>
                 </ul>
             </div>
-                <div class="uk-card uk-card-default uk-card-small uk-card-body">
+
+            <div class="uk-card uk-card-default uk-card-small uk-card-body">
+                <c:forEach items="${flightBlocks}" var="flight_block">
                     <div class="uk-margin">
                         <div class="uk-grid-small" uk-grid>
                             <div class="uk-width-1-3">
-                                <span class="uk-text-bold">American Airlines</span><br>
+                                <span class="uk-text-bold"> ${flight_block.flightlegs[0].arilineName} </span><br>
                                 <span class="uk-text-small uk-text-muted"> AA 101 </span>
                             </div>
                             <div class="uk-width-1-3 uk-text-center">
@@ -107,7 +109,7 @@
                                 <span class="small-font">New York - New Delhi</span>
                             </div>
                             <div class="uk-width-1-3 uk-text-right">
-                                $ <b>999</b>&nbsp;<sup>.00</sup>
+                                $ <b>${flight_block.price}</b>&nbsp;<sup>.00</sup>
                             </div>
                         </div>
                         <div class="uk-grid-small" uk-grid>
@@ -143,7 +145,7 @@
                     </div>
 
                     <hr>
-
+                </c:forEach>
                     <div class="uk-margin">
                         <div class="uk-grid-small" uk-grid>
                             <div class="uk-width-1-3">
