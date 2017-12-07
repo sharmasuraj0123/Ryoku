@@ -17,36 +17,35 @@
                         <tbody>
                         <tr>
                             <td>Email : </td>
-                            <td>Employee.Email@email.com</td>
+                            <td><%= request.getAttribute("str-email") %></td>
                         </tr>
                         <tr>
                             <td>Address : </td>
-                            <td>Employee Address 1 <br>
-                                Employee Address 2</td>
+                            <td><%= request.getAttribute("str-address") %></td>
                         </tr>
                         <tr>
                             <td>City / Town :</td>
-                            <td>Employee City</td>
+                            <td><%= request.getAttribute("str-city") %></td>
                         </tr>
                         <tr>
                             <td>State : </td>
-                            <td>Employee State</td>
+                            <td><%= request.getAttribute("str-state") %></td>
                         </tr>
                         <tr>
                             <td>Zip Code</td>
-                            <td>11001</td>
+                            <td><%= request.getAttribute("str-zipCode") %></td>
                         </tr>
                         <tr>
                             <td>
                                 Start Date
                             </td>
                             <td>
-                                2019-08-09
+                                <%= request.getAttribute("str-startDate") %>
                             </td>
                         </tr>
                         <tr>
                             <td>Hourly Pay</td>
-                            <td>$25.00</td>
+                            <td><%= request.getAttribute("str-hrPay") %></td>
                         </tr>
                         <tr>
                             <td>Social Security Info: </td>
@@ -54,13 +53,13 @@
                         </tr>
                         <tr>
                             <td>Rating:</td>
-                            <td>&starf; 5.5</td>
+                            <td>&starf; <%= request.getAttribute("str-rating") %></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="uk-margin">
-                    <span>Revenue Generated: $9123</span>
+                    <span>Revenue Generated: $<%= request.getAttribute("str-revenue") %></span>
                 </div>
                 <div class="uk-margin uk-text-center">
                     <button class="uk-button uk-button-secondary">View Reservations</button>
