@@ -8,31 +8,27 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(name = "MailingListServlet")
-public class MailingListServlet extends HttpServlet {
+@WebServlet(name = "EmployeeListServlet")
+public class EmployeeListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (_Functions.isValidSession(request, 2)) {
 
-        if (_Functions.isValidSession(request, 1) || _Functions.isValidSession(request, 2)) {
             try {
-                ArrayList<String> ar = CRLevelTransactions.generateMailingList();
-                request.setAttribute("MailingList", ar);
-                RequestDispatcher rd = request.getRequestDispatcher("/my-account-cr-maillist.jsp");
-                rd.forward(request, response);
+                ArrayList<Employees> employees = ManagerLevelTransaction.getEmployeesList();
+                request.setAttribute("employeeList", employees);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/my-account-mgr-emp-list.jsp");
+                dispatcher.forward(request, response);
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
         } else {
-            response.sendRedirect("/error401");
+            response.sendRedirect("/error403");
         }
-
     }
 }

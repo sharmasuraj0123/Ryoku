@@ -172,7 +172,7 @@ public class CRLevelTransactions {
         rs = cStmt.getResultSet();
         if(hadResults)
         while (rs.next()) {
-            String data = String.format(rs.getString("Name") + " " + rs.getString("EmailAddress"));
+            String data = String.format(rs.getString("Name") + "$" + rs.getString("EmailAddress"));
             pl.add(data);
         }
         conn.close();
@@ -227,19 +227,20 @@ public class CRLevelTransactions {
             while (rs.next()) {
 
             int id = rs.getInt("person_id");
-            String firstName = rs.getString("FirstName");
-            String lastName = rs.getString("LastName");
-            String email = rs.getString("emailAddress");
-            String password = rs.getString("password");
-            String address = rs.getString("Address");
-            String city = rs.getString("City_Town");
-            String state = rs.getString("State");
+            String firstName = "" + rs.getString("FirstName");
+            String lastName = "" + rs.getString("LastName");
+            String email = "" + rs.getString("emailAddress");
+            String password = "" + rs.getString("password");
+            String address = "" + rs.getString("Address");
+            String city = "" + rs.getString("City_Town");
+            String state = "" + rs.getString("State");
             int zipCode = rs.getInt("ZipCode");
             long phoneNumber =rs.getLong("Phone");
             int account_number = rs.getInt("AccountNumber");
             Timestamp dateCreated =  rs.getTimestamp("AccountCreationDate");
             long creditCardNumber = rs.getLong("CreditCardNumber");
             double rating = rs.getDouble("Ratings");
+
 
             Customer nc = new Customer(id,firstName,lastName,email,password,address,city,
                     state,zipCode,phoneNumber,account_number,dateCreated,creditCardNumber,rating);

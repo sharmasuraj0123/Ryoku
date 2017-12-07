@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <br><br>
 <div class="uk-container">
@@ -7,59 +9,67 @@
 
     <div uk-grid>
         <div class="uk-width-1-4">
-            <%@include file="my-account-cr-sidebar.html"%>
+            <% if ((int)session.getAttribute("person_type") == 1){%>
+                <%@include file="my-account-cr-sidebar.html"%>
+            <%} else if ((int)session.getAttribute("person_type") == 2) { %>
+                <%@include file="my-account-mgr-sidebar.html"%>
+            <%}%>
         </div>
         <div class="uk-width-expand">
-            <ul uk-accordion="multiple : true">
+            <% int i = 1;%>
+            <c:forEach items="${CustomerList}" var="cust_list">
+            <ul uk-accordion>
                 <li>
-                    <h3 class="uk-accordion-title small-font"> 1. Customer Name</h3>
+                    <h3 class="uk-accordion-title small-font"> <%= i++ %>. ${cust_list.firstName} ${cust_list.lastName} </h3>
                     <div class="uk-accordion-content uk-text-small">
                         <div class="uk-margin-small">
                             <table class="uk-table uk-background-muted uk-table-small uk-table-divider">
                                 <tbody>
                                 <tr>
+                                    <td>
+                                        Customer ID:
+                                    </td>
+                                    <td>${cust_list.accountNumber}</td>
+                                </tr>
+                                <tr>
                                     <td>First Name : </td>
-                                    <td>Customer First Name</td>
+                                    <td>${cust_list.firstName}</td>
                                 </tr>
                                 <tr>
                                     <td>Last Name : </td>
-                                    <td>Customer Last Name</td>
+                                    <td>${cust_list.lastName}</td>
                                 </tr>
                                 <tr>
                                     <td>Email : </td>
-                                    <td>Customer.Email@email.com</td>
+                                    <td>${cust_list.emailAddress}</td>
                                 </tr>
                                 <tr>
                                     <td>Address : </td>
-                                    <td>Customer Address 1</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>Customer Address 2</td>
+                                        <td>${cust_list.address}</td>
                                 </tr>
                                 <tr>
                                     <td>City / Town :</td>
-                                    <td>Customer City</td>
+                                    <td>${cust_list.city}</td>
                                 </tr>
                                 <tr>
                                     <td>State : </td>
-                                    <td>Customer State</td>
+                                    <td>${cust_list.state}</td>
                                 </tr>
                                 <tr>
                                     <td>Zip Code</td>
-                                    <td>11001</td>
+                                    <td>${cust_list.zipCode}</td>
                                 </tr>
                                 <tr>
                                     <td>Account Since</td>
-                                    <td>2015-11-08</td>
+                                    <td>${cust_list.dateCreated}</td>
                                 </tr>
                                 <tr>
                                     <td>Payment Info: </td>
                                     <td>On-File</td>
                                 </tr>
                                 <tr>
-                                    <td>Rating</td>
-                                    <td>&starf; 5.5</td>
+                                    <td>Rating: </td>
+                                    <td>&starf; ${cust_list.ratings} </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -76,8 +86,9 @@
                         </div>
                     </div>
                 </li>
-            </ul>
             <hr>
+            </ul>
+            </c:forEach>
         </div>
     </div>
 

@@ -51,6 +51,33 @@
         <url-pattern>/my-account/best-seller-flights</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>MailingListServlet</servlet-name>
+        <servlet-class>MailingListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MailingListServlet</servlet-name>
+        <url-pattern>/my-account/customer/maillist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomersListServlet</servlet-name>
+        <servlet-class>CustomersListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomersListServlet</servlet-name>
+        <url-pattern>/my-account/customer/list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EmployeeListServlet</servlet-name>
+        <servlet-class>EmployeeListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmployeeListServlet</servlet-name>
+        <url-pattern>/my-account/employee/list</url-pattern>
+    </servlet-mapping>
+
 
     <!--Servlets end -->
 
@@ -64,9 +91,9 @@
         <mime-type>application/javascript</mime-type>
     </mime-mapping>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/error404.html</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<error-code>404</error-code>-->
+        <!--<location>/error404.html</location>-->
+    <!--</error-page>-->
 
 </web-app>

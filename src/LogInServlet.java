@@ -84,13 +84,20 @@ public class LogInServlet extends HttpServlet {
                     }else{
 
                         // employee found
-                        session.setAttribute("employee",curr_employee);
+                        session.setAttribute("employee", curr_employee);
+                        System.out.println("$2 : " + curr_employee.getEmployeeId());
                         session.setAttribute("loggedin",true);
-                        session.setAttribute("person_type",1);
+                        if (curr_employee.isManager())
+                            session.setAttribute("person_type",2);
+                        else
+                            session.setAttribute("person_type",1);
 
                         System.out.print("3");
                         response.sendRedirect("/my-account");
                     }
+
+                } else {
+                    System.out.println("User doesn't exist! or Login Error");
 
                 }
 

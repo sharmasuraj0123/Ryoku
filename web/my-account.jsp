@@ -98,6 +98,8 @@
                         <%--<input class="uk-input" id="_user-state" type="text" placeholder="State">--%>
                         <select name="state" id="_user-state" name="state" class="uk-select">
                             <option value="${sessionScope.get("customer").state}">${sessionScope.get("customer").state}</option>
+                            <option value="">--</option>
+                            <%@include file="_state_options.html"%>
                         </select>
                     </div>
                 </div>

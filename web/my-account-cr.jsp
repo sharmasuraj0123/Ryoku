@@ -92,6 +92,8 @@
                         <%--<input class="uk-input" id="_cr-state" type="text" placeholder="State">--%>
                         <select name="state" id="_cr-state" class="uk-select">
                             <option value="NY">NY</option>
+                            <option value="">--</option>
+                            <%@include file="_state_options.html"%>
                         </select>
                     </div>
                 </div>

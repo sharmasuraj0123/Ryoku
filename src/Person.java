@@ -5,7 +5,7 @@ public class Person implements java.io.Serializable {
     private String lastName;
     private String emailAddress;
     private String password;
-    private String Address;
+    private String address;
     private String city;
     private String state;
     private int zipCode;
@@ -35,7 +35,7 @@ public class Person implements java.io.Serializable {
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.password = password;
-        Address = address;
+        this.address = address;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
@@ -67,11 +67,11 @@ public class Person implements java.io.Serializable {
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public String getCity() {

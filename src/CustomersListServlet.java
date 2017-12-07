@@ -17,23 +17,25 @@ public class CustomersListServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (_Functions.isValidSession(request, 1) || _Functions.isValidSession(request, 2)) {
+            try {
 
-        try {
+                ArrayList<Customer> ar = CRLevelTransactions.getCustomersList();
+                request.setAttribute("CustomerList", ar);
 
-            ArrayList<Customer> ar = CRLevelTransactions.getCustomersList();
-
-            request.setAttribute("CustomerList",ar);
-
-            RequestDispatcher rd = request.getRequestDispatcher("my-account-cr-list.js");
-            rd.forward(request,response);
+                RequestDispatcher rd = request.getRequestDispatcher("/my-account-cr-list.jsp");
+                rd.forward(request, response);
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } else{
+            response.sendRedirect("/error401");
         }
-
 
     }
 }
