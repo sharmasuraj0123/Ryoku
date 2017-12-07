@@ -54,6 +54,7 @@ public class FindFlightServlet extends HttpServlet {
         _SearchQuery sq = new _SearchQuery(s ,
                  passengers, flyingClass, dates, searchType, scope, isFlexible);
 
+
         request.setAttribute("searchQuery", sq);
 
         System.out.println(sq);

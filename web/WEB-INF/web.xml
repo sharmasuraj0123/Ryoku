@@ -87,7 +87,23 @@
         <url-pattern>/find-flights</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StarCustomerServlet</servlet-name>
+        <servlet-class>StarCustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StarCustomerServlet</servlet-name>
+        <url-pattern>/my-account/customer/star</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StarEmployeeServlet</servlet-name>
+        <servlet-class>StarEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StarEmployeeServlet</servlet-name>
+        <url-pattern>/my-account/employee/star</url-pattern>
+    </servlet-mapping>
 
     <!--Servlets end -->
 

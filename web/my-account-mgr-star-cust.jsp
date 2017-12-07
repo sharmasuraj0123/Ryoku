@@ -17,31 +17,30 @@
                         <tbody>
                         <tr>
                             <td>Email : </td>
-                            <td>Customer.Email@email.com</td>
+                            <td> <%= request.getAttribute("str-email") %> </td>
                         </tr>
                         <tr>
                             <td>Address : </td>
-                            <td>Customer Address 1 <br>
-                                Customer Address 2</td>
+                            <td>  <%= request.getAttribute("str-address") %> </td>
                         </tr>
                         <tr>
                             <td>City / Town :</td>
-                            <td>Customer City</td>
+                            <td><%= request.getAttribute("str-city") %></td>
                         </tr>
                         <tr>
                             <td>State : </td>
-                            <td>Customer State</td>
+                            <td><%= request.getAttribute("str-state") %></td>
                         </tr>
                         <tr>
                             <td>Zip Code</td>
-                            <td>11001</td>
+                            <td><%= request.getAttribute("str-zipCode") %></td>
                         </tr>
                         <tr>
                             <td>
                                 Member Since
                             </td>
                             <td>
-                                2019-08-09
+                                <%= request.getAttribute("str-memberSince") %>
                             </td>
                         </tr>
                         <tr>
@@ -50,13 +49,13 @@
                         </tr>
                         <tr>
                             <td>Rating:</td>
-                            <td>&starf; 5.5</td>
+                            <td>&starf; <%= request.getAttribute("str-rating") %></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="uk-margin">
-                    <span>Revenue Generated: $9123</span>
+                    <span>Revenue Generated: $<%= request.getAttribute("str-revenue") %></span>
                 </div>
                 <div class="uk-margin uk-text-center">
                     <button class="uk-button uk-button-secondary">View Reservations</button>
