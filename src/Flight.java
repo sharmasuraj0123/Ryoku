@@ -26,6 +26,9 @@ public class Flight implements Serializable {
     private String minutes;
     private boolean isInternational;
 
+    private Timestamp departure_status;
+    private Timestamp arrival_status;
+
 
     private Airport departureAirport_ob;
     private Airport arrivalAirport_ob;
@@ -81,7 +84,6 @@ public class Flight implements Serializable {
     }
 
     public Flight(){
-       // isInternational = false;
     }
 
     public String getAirline() {
@@ -242,6 +244,36 @@ public class Flight implements Serializable {
 
     public void setInternational(boolean international) {
         isInternational = international;
+    }
+
+    public Timestamp getDeparture_status() {
+        return departure_status;
+    }
+
+    public void setDeparture_status(Timestamp departure_status) {
+        this.departure_status = departure_status;
+    }
+
+    public Timestamp getArrival_status() {
+        return arrival_status;
+    }
+
+    public void setArrival_status(Timestamp arrival_status) {
+        this.arrival_status = arrival_status;
+    }
+
+    public void setTime(){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        this.dTime = sdf.format(dept_time.getTime());
+        this.aTime = sdf.format(arrival_time.getTime());
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MMMMM dd, YYYY");
+        this.d_date = sdf2.format(dept_time.getTime());
+
+        long ft =  arrival_time.getTime() - dept_time.getTime();
+        hours = String.format((ft/(60 * 60 * 1000))%24+"");
+        minutes = String.format((ft/(60 * 1000))%60+"");
+
     }
 
     @Override

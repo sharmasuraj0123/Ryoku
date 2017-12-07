@@ -203,6 +203,11 @@ public class ManagerLevelTransaction {
             newFlight.setArrival_time(rs.getTimestamp("arrv_timestamp"));
             newFlight.setDept_time(rs.getTimestamp("dept_timestamp"));
             newFlight.setDaysOp(rs.getInt("days_Op"));
+            newFlight.setBase_fare(rs.getInt("base_fare"));
+            newFlight.setDeparture_status(rs.getTimestamp("departure_status"));
+            newFlight.setArrival_status(rs.getTimestamp("arrival_status"));
+            newFlight.setFlightId(rs.getInt("id"));
+            newFlight.setTime();
             fl.add(newFlight);
         }
         conn.close();
