@@ -360,15 +360,30 @@ public class CustomerLevelTransaction {
     }
 
 
-    public FlightSearch mergeFlightBlock(FlightSearch a , FlightSearch b){
+    public static FlightSearch mergeFlightBlock(FlightSearch a , FlightSearch b){
         FlightSearch newList = a;
 
+        //Add teh Price
         newList.addPrice(b.getPrice());
+        //Add All the Flights.
         for (int i =0; i<b.getFlightlegs().size();i++){
-            //Flight newFlight  =
+            Flight newFlight  = b.getFlightlegs().get(i);
+            newList.addFlight(newFlight);
         }
         return a;
     }
+
+
+    public static ArrayList<FlightSearch> mergeBlockList(ArrayList<FlightSearch>a,ArrayList<FlightSearch>b){
+        ArrayList<FlightSearch> newList= new ArrayList<>();
+
+        for (int i=0; i<a.size();i++)
+            for (int j=0; j<b.size();j++)
+                newList.add(mergeFlightBlock(a.get(i),b.get(j)));
+
+        return newList;
+    }
+
 
 
 }

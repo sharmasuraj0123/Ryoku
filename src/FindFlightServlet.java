@@ -62,24 +62,30 @@ public class FindFlightServlet extends HttpServlet {
 
         try {
                 //Implement Different Types of Bookings.
+            //searchType =2;
+            Airport src = CustomerLevelTransaction.getAirportName(6);
+            Airport dest = CustomerLevelTransaction.getAirportName(11);
+            request.setAttribute("srcAirport",src);
+            request.setAttribute("destAirport",dest);
 
                 //One Way.
             ArrayList<FlightSearch> flightBlocks = new ArrayList<>();
                 if(searchType==1) {
-
                     flightBlocks = CustomerLevelTransaction.searchFlights(6, 11, dates.get(0));
                 }
                 //It is a two way Flight.
                 else if(searchType ==2){
+
                     ArrayList<FlightSearch> flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 11, dates.get(0));
                     ArrayList<FlightSearch> flightBlocks_returning = CustomerLevelTransaction.searchFlights(6, 11, dates.get(1));
 
+                    flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
                 }
                 else if(searchType==3){
 
                 }
                 else{
-                    System.out.println("lol");
+                    System.out.println(searchType);
                     //System.out.println(flightBlocks.size());
                 }
 
