@@ -10,9 +10,11 @@ public class FlightSearch implements Serializable{
     private String day;
     private String hours;
     private String minutes;
+    private boolean isInternational ;
 
     public FlightSearch() {
         flightlegs = new ArrayList<>();
+        //isInternational = false;
         price =0;
     }
 
@@ -89,6 +91,14 @@ public class FlightSearch implements Serializable{
             rs+= flightlegs.get(i).toString();
         }
         return rs;
+    }
+
+    public boolean isInternational() {
+        return isInternational;
+    }
+
+    public void setInternational(boolean international) {
+        isInternational = international;
     }
 
     @Override
