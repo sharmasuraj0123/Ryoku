@@ -23,7 +23,10 @@ public class AllFlightsServlet extends HttpServlet {
                 ArrayList<Flight> flights = ManagerLevelTransaction.listAllFlights();
                 request.setAttribute("flights",flights);
 
-                System.out.println("hello => "+flights.size());
+                System.out.println("hello => "+flights.get(0));
+
+
+
 
                 RequestDispatcher rd = request.getRequestDispatcher("/my-account-mgr-flights.jsp");
                 rd.forward(request,response);

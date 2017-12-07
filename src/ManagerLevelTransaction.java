@@ -203,6 +203,7 @@ public class ManagerLevelTransaction {
             newFlight.setArrival_time(rs.getTimestamp("arrv_timestamp"));
             newFlight.setDept_time(rs.getTimestamp("dept_timestamp"));
             newFlight.setDaysOp(rs.getInt("days_Op"));
+            CustomerLevelTransaction.getMoreFlightdetails(newFlight);
             fl.add(newFlight);
         }
         conn.close();
@@ -219,6 +220,43 @@ public class ManagerLevelTransaction {
         CallableStatement cStmt = conn.prepareCall("{call getReservationsByCustomerId(?)}");
 
         cStmt.setInt(1,cust_id);
+
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+
+        ArrayList<ReservationData> rl = new ArrayList<>();
+        if(hadResults)
+            while (rs.next()) {
+                ReservationData data = new ReservationData();
+
+                data.setCustomer_id(rs.getInt("customer_id"));
+                data.setReservation_id(rs.getInt("id"));
+                data.setNumOfPassengers(rs.getInt("NumberOfPassengers"));
+                data.setDateCreated(rs.getTimestamp("date"));
+                data.setTotal_fare(rs.getDouble("total_fare"));
+                data.setBooking_fee(rs.getDouble("booking_fee"));
+                data.setEmployee_id(rs.getInt("employee_id"));
+                data.setFare_restrictions(rs.getString("fare_restrictions"));
+                data.setLengthOfstay(rs.getInt("lengthOfStay"));
+                data.setAdvPurchases(rs.getString("advancePurchase"));
+
+                rl.add(data);
+            }
+        conn.close();
+
+        for (int i =0;i < rl.size();i++)
+            rl.set(i,CustomerLevelTransaction.getReservationDetails(rl.get(i)));
+
+        return rl;
+    }
+
+    public static ArrayList<ReservationData> getReservationsByAFlight(int flight_id) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs =null;
+        CallableStatement cStmt = conn.prepareCall("{call getReservationByFlight(?)}");
+
+        cStmt.setInt(1,flight_id);
 
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();

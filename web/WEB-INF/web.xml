@@ -141,6 +141,16 @@
         <url-pattern>/confirm-reservation</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>GetReservationByFlightServlet</servlet-name>
+        <servlet-class>GetReservationByFlightServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetReservationByFlightServlet</servlet-name>
+        <url-pattern> /my-account/flight/list/reservation</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets end -->
 
     <mime-mapping>

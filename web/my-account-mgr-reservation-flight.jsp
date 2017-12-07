@@ -27,50 +27,30 @@
                 </div>
             </div>
             <div class="uk-card uk-card-default uk-card-small uk-card-body">
+
+
                 <ul uk-accordion="multiple : true">
+                    <c:forEach items="${reservations}" var="reservation">
                     <li>
-                        <h3 class="uk-accordion-title small-font"> 1. Customer Name</h3>
+                        <h3 class="uk-accordion-title small-font"> ${reservation.customer.firstName} ${reservation.customer.lastName}</h3>
                         <div class="uk-accordion-content uk-text-small">
                             <div class="uk-margin-small">
                                 <table class="uk-table uk-background-muted uk-table-small uk-table-divider">
                                     <tbody>
+                                        <c:forEach items="${reservation.pasengerList}" var="passenger">
                                         <tr>
-                                            <td>Passenger 1 </td>
-                                            <td class="uk-text-center">Meal Type : Indian</td>
-                                            <td class="uk-text-right">Seat Number : 33F</td>
+                                            <td>${passenger.firstName} ${passenger.lastName}</td>
+                                            <td class="uk-text-center">Meal Type : ${passenger.mealPref}</td>
+                                            <td class="uk-text-right">Seat Number : ${passenger.seatPref}${passenger.seat_num}</td>
                                         </tr>
-                                        <tr>
-                                            <td>Passenger 1 </td>
-                                            <td class="uk-text-center">Meal Type : Indian</td>
-                                            <td class="uk-text-right">Seat Number : 33F</td>
-                                        </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </li>
 
-                    <li>
-                        <h3 class="uk-accordion-title small-font"> 2. Customer Name</h3>
-                        <div class="uk-accordion-content uk-text-small">
-                            <div class="uk-margin-small">
-                                <table class="uk-table uk-background-muted uk-table-small uk-table-divider">
-                                    <tbody>
-                                    <tr>
-                                        <td>Passenger 1 </td>
-                                        <td class="uk-text-center">Meal Type : Indian</td>
-                                        <td class="uk-text-right">Seat Number : 33F</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Passenger 1 </td>
-                                        <td class="uk-text-center">Meal Type : Indian</td>
-                                        <td class="uk-text-right">Seat Number : 33F</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </li>
+                    </c:forEach>
 
                 </ul>
 

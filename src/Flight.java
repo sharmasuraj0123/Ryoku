@@ -247,6 +247,6 @@ public class Flight implements Serializable {
     @Override
     public String toString() {
         return airline+flight_number+"\t"+
-                stopNum+"\t"+ departAirport_Id+"\t"+arriveAirport_id+"\t"+dept_time+"\t"+arrival_time+"\t"+daysOp +"\n";
+                stopNum+"\t"+ departAirport_Id+"\t"+arriveAirport_id+"\t"+dept_time+"\t"+arrival_time+"\t"+daysOp +"\t"+hours+"\t"+base_fare;
     }
 }
