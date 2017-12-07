@@ -78,6 +78,15 @@
         <url-pattern>/my-account/employee/list</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StarCustomerServlet</servlet-name>
+        <servlet-class>StarCustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StarCustomerServlet</servlet-name>
+        <url-pattern>/my-account/customer/star</url-pattern>
+    </servlet-mapping>
+
 
     <!--Servlets end -->
 

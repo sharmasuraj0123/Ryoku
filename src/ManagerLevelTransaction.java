@@ -376,11 +376,39 @@ public class ManagerLevelTransaction {
 
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
+
         String rep = null;
-        if(hadResults)
-        rep = String.format(rs.getString("FirstName")+" "+ rs.getString("LastName")
-                +"\t"+rs.getInt("total_sales_made"));
+
+        if(hadResults){
+            if(rs.next()) {
+                int id = rs.getInt("id"); // 0
+                //String firstName = "" + rs.getString("FirstName");
+                //String lastName = "" + rs.getString("LastName");
+                String email = "" + rs.getString("emailAddress"); // 1
+                //String password = "" + rs.getString("password");
+                String address = "" + rs.getString("Address"); // 2
+                String city = "" + rs.getString("City_Town"); // 3
+                String state = "" + rs.getString("State");  // 4
+                int zipCode = rs.getInt("ZipCode");  // 5
+                //long phoneNumber = rs.getLong("Phone");
+                //int account_number = rs.getInt("AccountNumber");
+
+                Timestamp dateCreated = rs.getTimestamp("AccountCreationDate"); // 6
+                Date memberSince = new Date(dateCreated.getTime());
+
+                //long creditCardNumber = rs.getLong("CreditCardNumber");
+                double rating = rs.getDouble("Ratings"); // 7
+                int totalSales = rs.getInt("total_sales_made");
+
+                rep = String.format(email + "~" + address + "~" + city + "~" + state + "~" + zipCode + "~"
+                        + memberSince + "~" + rating+"~"+totalSales);
+            }
+        }
+
+
         conn.close();
+
+
         return rep;
     }
 
