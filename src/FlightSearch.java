@@ -11,7 +11,6 @@ public class FlightSearch implements Serializable{
     private String hours;
     private String minutes;
 
-
     public FlightSearch() {
         flightlegs = new ArrayList<>();
         price =0;

@@ -207,10 +207,11 @@ public class CustomerLevelTransaction {
             }
         conn.close();
 
-        for (int i=0; i<fs.size();i++)
-            for (int j = 0; j<fs.get(i).getFlightlegs().size();j++)
-                fs.get(i).getFlightlegs().set(j,getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
-
+        for (int i=0; i<fs.size();i++) {
+            for (int j = 0; j < fs.get(i).getFlightlegs().size(); j++)
+                fs.get(i).getFlightlegs().set(j, getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
+            fs.get(i).getTotalTravelTime();
+        }
         return fs;
     }
 
@@ -357,6 +358,32 @@ public class CustomerLevelTransaction {
         conn.close();
         return r;
     }
+
+
+    public static FlightSearch mergeFlightBlock(FlightSearch a , FlightSearch b){
+        FlightSearch newList = a;
+
+        //Add teh Price
+        newList.addPrice(b.getPrice());
+        //Add All the Flights.
+        for (int i =0; i<b.getFlightlegs().size();i++){
+            Flight newFlight  = b.getFlightlegs().get(i);
+            newList.addFlight(newFlight);
+        }
+        return a;
+    }
+
+
+    public static ArrayList<FlightSearch> mergeBlockList(ArrayList<FlightSearch>a,ArrayList<FlightSearch>b){
+        ArrayList<FlightSearch> newList= new ArrayList<>();
+
+        for (int i=0; i<a.size();i++)
+            for (int j=0; j<b.size();j++)
+                newList.add(mergeFlightBlock(a.get(i),b.get(j)));
+
+        return newList;
+    }
+
 
 
 }

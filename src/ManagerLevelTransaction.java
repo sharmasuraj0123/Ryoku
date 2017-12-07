@@ -241,6 +241,10 @@ public class ManagerLevelTransaction {
                 rl.add(data);
             }
         conn.close();
+
+        for (int i =0;i < rl.size();i++)
+            rl.set(i,CustomerLevelTransaction.getReservationDetails(rl.get(i)));
+
         return rl;
     }
 
