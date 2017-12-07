@@ -22,6 +22,9 @@ public class Flight implements Serializable {
     private int legId;
     private int base_fare;
     private int hidden_fare;
+    private String hours;
+    private String minutes;
+
 
     private Airport departureAirport_ob;
     private Airport arrivalAirport_ob;
@@ -67,6 +70,12 @@ public class Flight implements Serializable {
         this.aTime = sdf.format(arrival_time.getTime());
         SimpleDateFormat sdf2 = new SimpleDateFormat("MMMMM dd, YYYY");
         this.d_date = sdf2.format(dept_time.getTime());
+
+        long ft = dept_time.getTime() - arrival_time.getTime();
+        hours = String.format((ft/(60 * 60 * 1000))%24+"");
+        minutes = String.format((ft/(60 * 1000))%60+"");
+
+
     }
 
     public Flight(){}
@@ -207,7 +216,21 @@ public class Flight implements Serializable {
         this.arrivalAirport_ob = arrivalAirport_ob;
     }
 
+    public String getHours() {
+        return hours;
+    }
 
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public String getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(String minutes) {
+        this.minutes = minutes;
+    }
 
     @Override
     public String toString() {
