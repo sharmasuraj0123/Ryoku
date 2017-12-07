@@ -6,9 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-@WebServlet(name = "StarCustomerServlet")
-public class StarCustomerServlet extends HttpServlet {
+@WebServlet(name = "AllFlightsServlet")
+public class AllFlightsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -19,21 +20,12 @@ public class StarCustomerServlet extends HttpServlet {
 
             try {
 
-                String cust_data = ManagerLevelTransaction.getMostSalesByCustomer();
+                ArrayList<Flight> flights = ManagerLevelTransaction.listAllFlights();
+                request.setAttribute("flights",flights);
 
-                String [] data = cust_data.split("~");
+                System.out.println("hello => "+flights.size());
 
-                // add the attributes in request
-                request.setAttribute("str-email",data[0]);
-                request.setAttribute("str-address",data[1]);
-                request.setAttribute("str-city",data[2]);
-                request.setAttribute("str-state",data[3]);
-                request.setAttribute("str-zipCode",data[4]);
-                request.setAttribute("str-memberSince",data[5]);
-                request.setAttribute("str-rating",data[6]);
-                request.setAttribute("str-revenue",data[7]);
-
-                RequestDispatcher rd = request.getRequestDispatcher("/my-account-mgr-star-cust.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/my-account-mgr-flights.jsp");
                 rd.forward(request,response);
 
             } catch (SQLException e) {
@@ -45,8 +37,6 @@ public class StarCustomerServlet extends HttpServlet {
         } else {
             response.sendRedirect("/error403");
         }
-
-
 
     }
 }

@@ -105,6 +105,15 @@
         <url-pattern>/my-account/employee/star</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AllFlightsServlet</servlet-name>
+        <servlet-class>AllFlightsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AllFlightsServlet</servlet-name>
+        <url-pattern>/my-account/flight/list</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets end -->
 
     <mime-mapping>
