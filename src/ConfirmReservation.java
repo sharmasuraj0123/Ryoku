@@ -26,8 +26,18 @@ public class ConfirmReservation extends HttpServlet {
             //  reservation code
 
             try {
+                //Add it to the Reservation Table
                 CRLevelTransactions.addReservation(customer.getAccountNumber(),flight_selected.getPrice(),flight_selected.getPrice()/10
                 ,3,passenger_firstName.length,5,5);
+
+                //Add it to the Reservation Legs Table. (Add the Flight legs to the reservation)
+
+                //Add it to the Passenger Table. (Add the Passengers to the reservation)
+
+
+
+
+
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
