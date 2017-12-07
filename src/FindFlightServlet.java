@@ -103,13 +103,14 @@ public class FindFlightServlet extends HttpServlet {
             }
 
 
-            for (int i =0; i<flightBlocks.size();i++) {
-                if (scope == 1 && flightBlocks.get(i).isInternational()) {
-                    flightBlocks.remove(i);
-                    i =i-1;
-                }
+            if(scope==1)
+                for (int i =0; i<flightBlocks.size();i++) {
+                    if (flightBlocks.get(i).isInternational()) {
+                        flightBlocks.remove(i);
+                        i =i-1;
+                    }
 
-            }
+                }
 
 
 
