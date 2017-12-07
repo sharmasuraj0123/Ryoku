@@ -17,7 +17,7 @@ public class GetReservationsByACustomerServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if (_Functions.isValidSession(request, 2) || _Functions.isValidSession(request, 1)) {
+        if (_Functions.isValidSession(request, 2) || _Functions.isValidSession(request, 1))
 
             try {
 
@@ -25,20 +25,30 @@ public class GetReservationsByACustomerServlet extends HttpServlet {
                 int cust_id = Integer.parseInt(request.getQueryString());
 
                 ArrayList<ReservationData> reservations = ManagerLevelTransaction.getReservationsByACustomer(cust_id);
+
+
+                for (int  l=0; l<reservations.size();l++) {
+                    ArrayList<FlightSearch> fs = reservations.get(l).getFlights();
+                    for (int i = 0; i < fs.size(); i++) {
+                        for (int j = 0; j < fs.get(i).getFlightlegs().size(); j++) {
+                            fs.get(i).getFlightlegs().set(j, CustomerLevelTransaction.getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
+                        }
+                        fs.get(i).getTotalTravelTime();
+                    }
+                }
+
+
                 request.setAttribute("reservations", reservations);
-
                 System.out.print("num of reservations +>"+reservations.size());
-
                 RequestDispatcher rd = request.getRequestDispatcher("/my-account-mgr-reservation-cust.jsp");
                 rd.forward(request,response);
 
-            } catch (SQLException e) {
+
+        } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            }
-
-        } else {
+            } else {
             response.sendRedirect("/error403");
         }
     }

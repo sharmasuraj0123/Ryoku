@@ -63,7 +63,7 @@
                                 <div class="uk-margin-small">
                                     <div class="uk-grid-small" uk-grid>
                                         <div class="uk-text-left uk-width-1-3 uk-text-small">
-                                             ${leg}  &nbsp; <span class="uk-text-muted" uk-icon="icon: chevron-right"></span> &nbsp; ${leg.departureAirport} <span uk-icon="icon: arrow-right"></span> ${leg.arrivalAirport}  <br>
+                                             ${leg.airline}  &nbsp; <span class="uk-text-muted" uk-icon="icon: chevron-right"></span> &nbsp; ${leg.departureAirport} <span uk-icon="icon: arrow-right"></span> ${leg.arrivalAirport}  <br>
                                             <span> ${leg.hours}h ${leg.minutes}m</span>
                                         </div>
                                         <div class="uk-width-1-3 uk-text-center uk-text-small">

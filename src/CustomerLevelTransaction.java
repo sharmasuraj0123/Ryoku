@@ -242,6 +242,8 @@ public class CustomerLevelTransaction {
         f.setArrivalAirport_ob(getAirportName(f.getArriveAirport_id()));
         f.setAirlineName(getAirlineName(f.getAirline()));
 
+
+        if(f.getArrivalAirport_ob()!=null && f.getDepartureAirport_ob()!=null)
         if(!f.getArrivalAirport_ob().getCountry().equalsIgnoreCase("United States of America") ||
                 !f.getDepartureAirport_ob().getCountry().equalsIgnoreCase("United States of America"))
             f.setInternational(true);
