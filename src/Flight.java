@@ -24,6 +24,7 @@ public class Flight implements Serializable {
     private int hidden_fare;
     private String hours;
     private String minutes;
+    private boolean isInternational;
 
 
     private Airport departureAirport_ob;
@@ -55,6 +56,7 @@ public class Flight implements Serializable {
 
     public Flight(int stopNum, Timestamp dept_time, Timestamp arrival_time, int departAirport_Id, int arriveAirport_id,
                   int flightId, int legId, int base_fare, int hidden_fare) {
+        //isInternational = false;
         this.stopNum = stopNum;
         this.dept_time = dept_time;
         this.arrival_time = arrival_time;
@@ -78,7 +80,9 @@ public class Flight implements Serializable {
 
     }
 
-    public Flight(){}
+    public Flight(){
+       // isInternational = false;
+    }
 
     public String getAirline() {
         return airline;
@@ -230,6 +234,14 @@ public class Flight implements Serializable {
 
     public void setMinutes(String minutes) {
         this.minutes = minutes;
+    }
+
+    public boolean isInternational() {
+        return isInternational;
+    }
+
+    public void setInternational(boolean international) {
+        isInternational = international;
     }
 
     @Override
