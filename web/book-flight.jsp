@@ -136,12 +136,13 @@
 
                             </div>
                         </li>
+                        <hr>
                         <%
                             }
                         %>
                     </ul>
 
-                    <hr>
+
 
                     <div class="uk-margin-medium-top uk-text-center">
                         <button class="uk-button uk-button-primary" type="submit">Confirm</button>
@@ -169,7 +170,7 @@
                         <span class="small-font ">Your Fare:</span>
                     </div>
                     <div class="uk-width-1-2">
-                        <span class="small-font uk-align-right uk-text-right ">$ ${flight.price}</span>
+                        <span class="small-font uk-align-right uk-text-right ">$ ${flight.price}.0</span>
                     </div>
                 </div>
 

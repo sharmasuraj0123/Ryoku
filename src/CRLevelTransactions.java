@@ -53,6 +53,7 @@ public class CRLevelTransactions {
         conn.close();
     }
 
+
     // by The Bird of Hermes
     public static void addCustomer(String firstname, String lastname, String email, String password) throws SQLException, ClassNotFoundException{
         addCustomer(firstname, lastname, "","","",0,0,email,password,0,0);
@@ -119,8 +120,8 @@ public class CRLevelTransactions {
         ResultSet rs;
         CallableStatement cStmt = conn.prepareCall("{call deleteCustomer(?,?)}");
 
-        cStmt.setInt(1, personId);
-        cStmt.setInt(2,cust_id);
+        cStmt.setInt(1, cust_id);
+        cStmt.setInt(2, personId);
 
         boolean hadResults = cStmt.execute();
         conn.close();

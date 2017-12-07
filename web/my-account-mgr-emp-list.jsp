@@ -79,8 +79,8 @@
                                     <button class="uk-button uk-button-primary">Reservations</button>
                                 </div>
                                 <div class="uk-width-1-3 uk-text-right">
-                                    <button class="uk-button uk-button-secondary"> <span uk-icon="icon: file-edit"></span> </button>
-                                    <button class="uk-button uk-button-danger"> <span uk-icon="icon: trash"></span> </button>
+                                    <a href="/my-account/employee/edit?id=${emp_list.id}" class="uk-button uk-button-secondary"> <span uk-icon="icon: file-edit"></span> </a>
+                                    <a href="/my-account/employee/delete?id=${emp_list.id}" class="uk-button uk-button-danger"> <span uk-icon="icon: trash"></span> </a>
                                 </div>
                             </div>
                         </div>

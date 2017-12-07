@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<% int i = 0; %>
 <br> <br>
 <div class="uk-container">
     <h4 class="uk-heading-line uk-text-center"> <span>Search Results</span></h4>
@@ -281,7 +281,9 @@
                         </ul>
                     </div>
 
-                    <hr>
+                    <% if (i++ > 0){ %>
+                        <hr>
+                    <%}%>
                 </c:forEach>
                     <%--<div class="uk-margin">--%>
                         <%--<div class="uk-grid-small" uk-grid>--%>

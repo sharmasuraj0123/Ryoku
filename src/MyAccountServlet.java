@@ -17,18 +17,25 @@ public class MyAccountServlet extends HttpServlet {
         if (request.getParameter("updateUser") != null ){
             System.out.println("in post");
 
-            String firstName = request.getParameter("firstName");
-            String lastName = request.getParameter("lastName");
-            String emailAddress = request.getParameter("emailAddress");
+            String firstName = "" + request.getParameter("firstName");
+            String lastName = "" + request.getParameter("lastName");
+            String emailAddress = "" + request.getParameter("emailAddress");
 
             int mobile = _Functions.getInteger(request.getParameter("mobile"));
 
-            String address = request.getParameter("address");
-            String city = request.getParameter("city");
-            String state = request.getParameter("state");
+            String address = "" + request.getParameter("address");
+            String city = "" + request.getParameter("city");
+            String state = "" + request.getParameter("state");
 
             int zipCode = _Functions.getInteger(request.getParameter("zipCode"));
-            String pass = request.getParameter("password_old");
+            String pass = "" + request.getParameter("password_old");
+
+            String pass1 = "" + request.getParameter("pass1");
+            String pass2 = "" + request.getParameter("pass2");
+
+            if (!pass1.equals("") && pass1.equals(pass2)){
+                pass = pass1;
+            }
 
             int pid = Integer.parseInt(request.getParameter("person_id"));
 
@@ -41,8 +48,12 @@ public class MyAccountServlet extends HttpServlet {
                 double rat = ((Customer)request.getSession().getAttribute("customer")).getRatings();
 
                 try {
-                    CRLevelTransactions.editCustomer(firstName, lastName, address, city, state, zipCode,
-                            mobile, emailAddress, cc, rat, pid, cid, pass);
+                    if (((Customer) request.getSession().getAttribute("customer")).getEmailAddress().equals(emailAddress)) {
+                        CRLevelTransactions.editCustomer(firstName, lastName, address, city, state, zipCode,
+                                mobile, emailAddress, cc, rat, pid, cid, pass);
+                    } else {
+                        response.sendRedirect("/my-account");
+                    }
                     HttpSession session = request.getSession();
                     Customer curr_customer = CustomerLevelTransaction.getCustomer(pid);
                     request.getSession().setAttribute("customer", curr_customer);
@@ -63,9 +74,12 @@ public class MyAccountServlet extends HttpServlet {
                 double hpay = ((Employees)request.getSession().getAttribute("employee")).getHourlyPay();
 
                 try {
-                   ManagerLevelTransaction.editEmployee(eid,pid,firstName,lastName,emailAddress,pass,address,city,
-                           state,zipCode,mobile,ssn,hpay,mgr,rat);
-
+                    if (((Employees) request.getSession().getAttribute("employee")).getEmailAddress().equals(emailAddress)){
+                        ManagerLevelTransaction.editEmployee(eid,pid,firstName,lastName,emailAddress,pass,address,city,
+                                state,zipCode,mobile,ssn,hpay,mgr,rat);
+                    } else {
+                        response.sendRedirect("/my-account");
+                    }
                     Employees e = ManagerLevelTransaction.getEmployee(pid);
                     request.getSession().setAttribute("employee", e);
 
