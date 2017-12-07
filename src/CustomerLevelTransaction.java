@@ -37,7 +37,6 @@ public class CustomerLevelTransaction {
                         address,city,state,zipCode,phoneNumber,accountNumber,
                         dateCreated,creditCardNumber,ratings);
 
-
             }
 
             conn.close();
@@ -206,8 +205,12 @@ public class CustomerLevelTransaction {
 
                 fs.add(flightBlock);
             }
-
         conn.close();
+
+        for (int i=0; i<fs.size();i++)
+            for (int j = 0; j<fs.get(i).getFlightlegs().size();j++)
+                fs.get(i).getFlightlegs().set(j,getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
+
         return fs;
     }
 
