@@ -26,6 +26,9 @@ public class Flight implements Serializable {
     private String minutes;
     private boolean isInternational;
 
+    private Timestamp departure_status;
+    private Timestamp arrival_status;
+
 
     private Airport departureAirport_ob;
     private Airport arrivalAirport_ob;
@@ -242,6 +245,22 @@ public class Flight implements Serializable {
 
     public void setInternational(boolean international) {
         isInternational = international;
+    }
+
+    public Timestamp getDeparture_status() {
+        return departure_status;
+    }
+
+    public void setDeparture_status(Timestamp departure_status) {
+        this.departure_status = departure_status;
+    }
+
+    public Timestamp getArrival_status() {
+        return arrival_status;
+    }
+
+    public void setArrival_status(Timestamp arrival_status) {
+        this.arrival_status = arrival_status;
     }
 
     @Override
