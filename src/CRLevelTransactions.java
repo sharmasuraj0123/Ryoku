@@ -31,21 +31,24 @@ public class CRLevelTransactions {
     }
 
     public static void addReservation(int cust_id, double fare,
-                                      double book_fee, int emp_id, int length_stay, int advPurchase) throws SQLException, ClassNotFoundException {
+                                      double book_fee, int emp_id, int numberOfPassengers,int length_stay, int advPurchase) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call addReservation(?,?,?,?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call addReservation(?,?,?,?,?,?,?,?,?)}");
 
 
         Date reservationDate = new Date(System.currentTimeMillis());
 
         cStmt.setInt(1, cust_id);
         cStmt.setDate(2, reservationDate);
-        cStmt.setDouble(3, book_fee);
-        cStmt.setInt(4, emp_id);
-        cStmt.setInt(5, length_stay);
-        cStmt.setInt(6, advPurchase);
+        cStmt.setDouble(3, fare);
+        cStmt.setDouble(4, book_fee);
+        cStmt.setInt(5, emp_id);
+        cStmt.setString(6,"Restricted");
+        cStmt.setInt(7, length_stay);
+        cStmt.setInt(8, advPurchase);
+        cStmt.setInt(9, numberOfPassengers);
 
 
         boolean hadResults = cStmt.execute();
@@ -129,7 +132,7 @@ public class CRLevelTransactions {
 
 
     public static void addPassenger(int reservation_id, String mealPref,
-                                    int TravelClass, String seatPref,
+                                    String TravelClass, String seatPref,
                                     String seatNum, String firstName, String lastName,
                                     String address
             , String city, String state, int zipcode, int phoneNumber) throws SQLException, ClassNotFoundException {
@@ -140,7 +143,7 @@ public class CRLevelTransactions {
 
         cStmt.setInt(1, reservation_id);
         cStmt.setString(2, mealPref);
-        cStmt.setString(3, "ECONOMY");
+        cStmt.setString(3, TravelClass);
         cStmt.setString(4, seatPref);
         cStmt.setString(5, seatNum);
         cStmt.setString(6, firstName);
