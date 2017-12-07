@@ -71,7 +71,7 @@ public class Flight implements Serializable {
         SimpleDateFormat sdf2 = new SimpleDateFormat("MMMMM dd, YYYY");
         this.d_date = sdf2.format(dept_time.getTime());
 
-        long ft = dept_time.getTime() - arrival_time.getTime();
+        long ft =  arrival_time.getTime() - dept_time.getTime();
         hours = String.format((ft/(60 * 60 * 1000))%24+"");
         minutes = String.format((ft/(60 * 1000))%60+"");
 

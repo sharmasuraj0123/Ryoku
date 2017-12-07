@@ -40,6 +40,7 @@ public class FindFlightServlet extends HttpServlet {
 
 
         int searchType = _Functions.getInteger(request.getParameter("search_type"));
+        System.out.println("searchType " + searchType);
         int scope = _Functions.getInteger(request.getParameter("flight_type"));
 
         String flex = (String)request.getParameter("isFlexible");
@@ -94,7 +95,10 @@ public class FindFlightServlet extends HttpServlet {
                     System.out.println(flightBlocks.get(i).getFlightlegs().get(0).getArrival_time().toString());
                 }
 
+            request.setAttribute("flightsNum", flightBlocks.size());
             request.setAttribute("flightBlocks", flightBlocks);
+            request.getSession().setAttribute("flights_inSession", flightBlocks);
+            request.getSession().setAttribute("flightsNum_inSession", flightBlocks.size());
 
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/find-flights.jsp");
             dispatcher.forward(request, response);

@@ -112,19 +112,19 @@
                         <label class="uk-form-label" for="prefered_class">Preferred Class:</label>
                         <div class="uk-form-controls">
                             <select class="uk-select" name="class"  id="prefered_class">
-                                <option value="0"
-                                        <%
-                                            if (request.getParameter("class").toString().equals("0"))
-                                                out.print("selected");
-                                        %>>Economy Class</option>
                                 <option value="1"
                                         <%
                                             if (request.getParameter("class").toString().equals("1"))
                                                 out.print("selected");
-                                        %>>Business Class</option>
+                                        %>>Economy Class</option>
                                 <option value="2"
                                         <%
                                             if (request.getParameter("class").toString().equals("2"))
+                                                out.print("selected");
+                                        %>>Business Class</option>
+                                <option value="3"
+                                        <%
+                                            if (request.getParameter("class").toString().equals("3"))
                                                 out.print("selected");
                                         %>>First Class</option>
                             </select>
@@ -156,7 +156,15 @@
             </div>
 
             <div class="uk-card uk-card-default uk-card-small uk-card-body">
+                <% if (request.getAttribute("flightsNum").toString().equals("0")){
+                    %>
+                <div class="uk-align-center uk-margin">
+                        No Search Results Found!
+                </div>
+                <%
+                }%>
                 <c:forEach items="${flightBlocks}" var="flight_block">
+                    <%int position = 0;%>
                     <div class="uk-margin">
                         <%--<div class="uk-grid-small" uk-grid>--%>
                             <%--<div class="uk-width-1-3">--%>
@@ -174,7 +182,7 @@
                         <div class="uk-margin-small">
                             <div class="uk-grid-small" uk-grid>
                                 <div class="uk-width-1-3">
-                                    <c:set value="${flightBlocks[0].flightlegs[0]}" var="f1"/>
+                                    <c:set value="${flight_block.flightlegs[0]}" var="f1"/>
                                     <span class="bold">${f1.airlineName}</span> <br>
                                     <span class="small-font uk-text-muted">
                                     <c:set value="${searchQuery.dates[0]}" var="date_d2" />
@@ -219,7 +227,12 @@
                                         ${flight_block.hours}h ${flight_block.minutes}m</span>
                             </div>
                             <div class="uk-width-expand">
-                                <button class="uk-align-right uk-button uk-button-secondary uk-button-small"> Select </button>
+                                <form action="/book-flight" method="post">
+                                    <input type="hidden" value="<%=position++%>" name="flight_selected_position">
+                                    <input type="hidden" value="<%=request.getParameter("passenger_count")%>" name="passenger_count">
+                                    <input type="hidden" value="<%=request.getParameter("class")%>" name="class">
+                                    <button class="uk-align-right uk-button uk-button-secondary uk-button-small" type="submit"> Select </button>
+                                </form>
                             </div>
                         </div>
                         <ul uk-accordion>
@@ -234,13 +247,13 @@
                                                 <span class="small-font"> ${legs.departureAirport_ob.name} <span uk-icon="icon: arrow-right"></span> ${legs.arrivalAirport_ob.name} </span>
                                             </div>
                                             <div class="uk-width-1-3 uk-text-center uk-text-small">
-                                                ${legs.dTime} &ndash; ${legs.aTime} <span class="uk-text-danger"> +1 </span> <br>
+                                                ${legs.dTime} &ndash; ${legs.aTime} <br>
                                                 ${legs.d_date}
                                             </div>
                                             <div class="uk-width-expand uk-text-right">
                                                 <span class="uk-text-small"> ${legs.departureAirport_ob.city} <span uk-icon="icon: arrow-right"></span> ${legs.arrivalAirport_ob.city} </span>
                                                 <br>
-                                                <span class="small-font uk-text-muted">XXh XXm</span>
+                                                <span class="small-font uk-text-muted">${legs.hours}h ${legs.minutes}m</span>
                                             </div>
                                         </div>
                                     </div>

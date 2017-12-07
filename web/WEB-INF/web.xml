@@ -105,6 +105,24 @@
         <url-pattern>/my-account/employee/star</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>BookFlightServlet</servlet-name>
+        <servlet-class>BookFlightServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookFlightServlet</servlet-name>
+        <url-pattern>/book-flight</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ConfirmReservation</servlet-name>
+        <servlet-class>ConfirmReservation</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmReservation</servlet-name>
+        <url-pattern>/confirm-reservation</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets end -->
 
     <mime-mapping>

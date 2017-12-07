@@ -68,9 +68,9 @@
                         <label class="uk-form-label" for="prefered_class">Preferred Class :</label>
                         <div class="uk-form-controls">
                             <select class="uk-select" name="class" id="prefered_class">
-                                <option value="0">Economy Class</option>
-                                <option value="1">Business Class</option>
-                                <option value="2">First Class</option>
+                                <option value="1">Economy Class</option>
+                                <option value="2">Business Class</option>
+                                <option value="3">First Class</option>
                             </select>
                         </div>
                     </div>
