@@ -78,6 +78,16 @@
         <url-pattern>/my-account/employee/list</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>FindFlightServlet</servlet-name>
+        <servlet-class>FindFlightServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FindFlightServlet</servlet-name>
+        <url-pattern>/find-flights</url-pattern>
+    </servlet-mapping>
+
+
 
     <!--Servlets end -->
 

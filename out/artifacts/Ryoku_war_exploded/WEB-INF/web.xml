@@ -69,6 +69,25 @@
         <url-pattern>/my-account/customer/list</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>EmployeeListServlet</servlet-name>
+        <servlet-class>EmployeeListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmployeeListServlet</servlet-name>
+        <url-pattern>/my-account/employee/list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FindFlightServlet</servlet-name>
+        <servlet-class>FindFlightServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FindFlightServlet</servlet-name>
+        <url-pattern>/find-flights</url-pattern>
+    </servlet-mapping>
+
+
 
     <!--Servlets end -->
 
