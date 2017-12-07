@@ -61,8 +61,8 @@ public class FindFlightServlet extends HttpServlet {
 
 
         try {
-                //Implement Different Types of Bookings.
-            //searchType =2;
+            //Implement Different Types of Bookings.
+
             Airport src = CustomerLevelTransaction.getAirportName(5);
             Airport dest = CustomerLevelTransaction.getAirportName(6);
             request.setAttribute("srcAirport",src);
@@ -71,13 +71,23 @@ public class FindFlightServlet extends HttpServlet {
                 //One Way.
             ArrayList<FlightSearch> flightBlocks = new ArrayList<>();
             if(searchType==1) {
+                if(isFlexible)
+                    flightBlocks = CustomerLevelTransaction.searchFlights_flex(5, 6, dates.get(0));
+                else
                 flightBlocks = CustomerLevelTransaction.searchFlights(5, 6, dates.get(0));
             }
             //It is a two way Flight.
             else if(searchType ==2){
-
-                ArrayList<FlightSearch> flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
-                ArrayList<FlightSearch> flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
+                ArrayList<FlightSearch> flightBlocks_going = new ArrayList<>();
+                ArrayList<FlightSearch> flightBlocks_returning = new ArrayList<>();
+                if(isFlexible) {
+                     flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
+                     flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
+                }
+                else{
+                     flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
+                     flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
+                }
 
                 flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
             }
