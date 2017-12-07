@@ -65,7 +65,7 @@ public class FindFlightServlet extends HttpServlet {
             System.out.println(flightBlocks.size());
             for (int i = 0; i < flightBlocks.size(); i++) {
                 flightBlocks.get(i).getTotalTravelTime();
-                System.out.println(flightBlocks.get(i).toString());
+                System.out.println(flightBlocks.get(i).getFlightlegs().get(0).getArrival_time().toString());
             }
 
             request.setAttribute("flightBlocks", flightBlocks);
