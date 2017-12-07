@@ -40,7 +40,6 @@ public class FindFlightServlet extends HttpServlet {
 
 
         int searchType = _Functions.getInteger(request.getParameter("search_type"));
-        System.out.println("searchType " + searchType);
         int scope = _Functions.getInteger(request.getParameter("flight_type"));
 
         String flex = (String)request.getParameter("isFlexible");
@@ -64,21 +63,21 @@ public class FindFlightServlet extends HttpServlet {
         try {
                 //Implement Different Types of Bookings.
             //searchType =2;
-            Airport src = CustomerLevelTransaction.getAirportName(6);
-            Airport dest = CustomerLevelTransaction.getAirportName(11);
+            Airport src = CustomerLevelTransaction.getAirportName(5);
+            Airport dest = CustomerLevelTransaction.getAirportName(6);
             request.setAttribute("srcAirport",src);
             request.setAttribute("destAirport",dest);
 
                 //One Way.
             ArrayList<FlightSearch> flightBlocks = new ArrayList<>();
                 if(searchType==1) {
-                    flightBlocks = CustomerLevelTransaction.searchFlights(6, 11, dates.get(0));
+                    flightBlocks = CustomerLevelTransaction.searchFlights(5, 6, dates.get(0));
                 }
                 //It is a two way Flight.
                 else if(searchType ==2){
 
-                    ArrayList<FlightSearch> flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 11, dates.get(0));
-                    ArrayList<FlightSearch> flightBlocks_returning = CustomerLevelTransaction.searchFlights(6, 11, dates.get(1));
+                    ArrayList<FlightSearch> flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
+                    ArrayList<FlightSearch> flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
 
                     flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
                 }
@@ -95,10 +94,25 @@ public class FindFlightServlet extends HttpServlet {
                     System.out.println(flightBlocks.get(i).getFlightlegs().get(0).getArrival_time().toString());
                 }
 
-            request.setAttribute("flightsNum", flightBlocks.size());
-            request.setAttribute("flightBlocks", flightBlocks);
-            request.getSession().setAttribute("flights_inSession", flightBlocks);
-            request.getSession().setAttribute("flightsNum_inSession", flightBlocks.size());
+
+            //Changing User Infos Accordingly.
+            for (int i =0; i<flightBlocks.size();i++) {
+                //Changing the Price Accordingly
+                flightBlocks.get(i).setPrice(flightBlocks.get(i).getPrice() * (int) flyingClass * passengers);
+                request.setAttribute("flightBlocks", flightBlocks);
+            }
+
+
+            if(scope==1)
+                for (int i =0; i<flightBlocks.size();i++) {
+                    if (flightBlocks.get(i).isInternational()) {
+                        flightBlocks.remove(i);
+                        i =i-1;
+                    }
+
+                }
+
+
 
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/find-flights.jsp");
             dispatcher.forward(request, response);

@@ -208,8 +208,11 @@ public class CustomerLevelTransaction {
         conn.close();
 
         for (int i=0; i<fs.size();i++) {
-            for (int j = 0; j < fs.get(i).getFlightlegs().size(); j++)
+            for (int j = 0; j < fs.get(i).getFlightlegs().size(); j++) {
                 fs.get(i).getFlightlegs().set(j, getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
+                if(fs.get(i).getFlightlegs().get(j).isInternational())
+                    fs.get(i).setInternational(true);
+            }
             fs.get(i).getTotalTravelTime();
         }
         return fs;
@@ -238,6 +241,11 @@ public class CustomerLevelTransaction {
         f.setDepartureAirport_ob(getAirportName(f.getDepartAirport_Id()));
         f.setArrivalAirport_ob(getAirportName(f.getArriveAirport_id()));
         f.setAirlineName(getAirlineName(f.getAirline()));
+
+        if(!f.getArrivalAirport_ob().getCountry().equalsIgnoreCase("United States of America") ||
+                !f.getDepartureAirport_ob().getCountry().equalsIgnoreCase("United States of America"))
+            f.setInternational(true);
+
         return f;
 
     }
