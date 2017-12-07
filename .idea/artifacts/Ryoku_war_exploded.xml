@@ -6,8 +6,17 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Ryoku" />
+          <element id="javaee-facet-classes" facet="ryoku/web/Web" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql:mysql-connector-java:5.1.18" />
+          <element id="library" level="project" name="jstl-1.2" />
+          <element id="library" level="project" name="JPA 2.0-2.0" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.44" />
+          <element id="library" level="project" name="jstl:jstl:1.2" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="ryoku/web/Web" />
     </root>
   </artifact>
 </component>
