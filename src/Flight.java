@@ -25,6 +25,7 @@ public class Flight implements Serializable {
     private String hours;
     private String minutes;
     private boolean isInternational;
+    private boolean isLate;
 
     private Timestamp departure_status;
     private Timestamp arrival_status;
@@ -274,11 +275,24 @@ public class Flight implements Serializable {
         hours = String.format((ft/(60 * 60 * 1000))%24+"");
         minutes = String.format((ft/(60 * 1000))%60+"");
 
+        if(departure_status!=dept_time || arrival_status!=arrival_status)
+            isLate = true;
+
+        else isLate = false;
+
+    }
+
+    public boolean isLate() {
+        return isLate;
+    }
+
+    public void setLate(boolean late) {
+        isLate = late;
     }
 
     @Override
     public String toString() {
         return airline+flight_number+"\t"+
-                stopNum+"\t"+ departAirport_Id+"\t"+arriveAirport_id+"\t"+dept_time+"\t"+arrival_time+"\t"+daysOp +"\n";
+                stopNum+"\t"+ departAirport_Id+"\t"+arriveAirport_id+"\t"+dept_time+"\t"+arrival_time+"\t"+daysOp +"\t"+hours+"\t"+base_fare;
     }
 }

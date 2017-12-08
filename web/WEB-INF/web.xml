@@ -195,6 +195,16 @@
         <url-pattern>/my-account/employee/delete</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>GetReservationByFlightServlet</servlet-name>
+        <servlet-class>GetReservationByFlightServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetReservationByFlightServlet</servlet-name>
+        <url-pattern> /my-account/flight/list/reservation</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>SummaryReportServlet</servlet-name>
         <servlet-class>SummaryReportServlet</servlet-class>

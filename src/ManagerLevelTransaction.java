@@ -207,6 +207,7 @@ public class ManagerLevelTransaction {
             newFlight.setDeparture_status(rs.getTimestamp("departure_status"));
             newFlight.setArrival_status(rs.getTimestamp("arrival_status"));
             newFlight.setFlightId(rs.getInt("id"));
+            newFlight.setLegId(rs.getInt(13));
             newFlight.setTime();
             fl.add(newFlight);
         }
@@ -215,6 +216,51 @@ public class ManagerLevelTransaction {
         for (int i =0; i< fl.size();i++)
             fl.set(i, CustomerLevelTransaction.getMoreFlightdetails(fl.get(i)));
         return fl;
+    }
+
+    public static ArrayList<ReservationData> getReservationsByAFlight(int flight_id) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs =null;
+        CallableStatement cStmt = conn.prepareCall("{call getReservationByFlight(?)}");
+
+        cStmt.setInt(1,flight_id);
+
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+
+        ArrayList<ReservationData> rl = new ArrayList<>();
+        if(hadResults)
+            while (rs.next()) {
+                ReservationData data = new ReservationData();
+
+                data.setCustomer_id(rs.getInt("customer_id"));
+                data.setReservation_id(rs.getInt("id"));
+                data.setNumOfPassengers(rs.getInt("NumberOfPassengers"));
+                data.setDateCreated(rs.getTimestamp("date"));
+                data.setTotal_fare(rs.getDouble("total_fare"));
+                data.setBooking_fee(rs.getDouble("booking_fee"));
+                data.setEmployee_id(rs.getInt("employee_id"));
+                data.setFare_restrictions(rs.getString("fare_restrictions"));
+                data.setLengthOfstay(rs.getInt("lengthOfStay"));
+                data.setAdvPurchases(rs.getString("advancePurchase"));
+
+                rl.add(data);
+            }
+        conn.close();
+
+        for (int i =0;i < rl.size();i++)
+            rl.set(i,CustomerLevelTransaction.getReservationDetails(rl.get(i)));
+
+
+        for(int i=0;i<rl.size();i++){
+            rl.get(i).setCustomer(CustomerLevelTransaction.getCustomerByID(rl.get(i).getCustomer_id()));
+        }
+
+        System.out.println("mlt => "+rl.get(0).getCustomer().getFirstName());
+
+
+        return rl;
     }
 
     public static ArrayList<ReservationData> getReservationsByACustomer(int cust_id) throws SQLException, ClassNotFoundException {
