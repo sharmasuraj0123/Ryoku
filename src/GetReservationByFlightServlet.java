@@ -25,6 +25,7 @@ public class GetReservationByFlightServlet extends HttpServlet {
 
                 ArrayList<ReservationData> reservations = ManagerLevelTransaction.getReservationsByAFlight(leg_id);
 
+                System.out.print("     yup yup  "+reservations.size());
 
 //                for (int  l=0; l<reservations.size();l++) {
 //                    ArrayList<FlightSearch> fs = reservations.get(l).getFlights();

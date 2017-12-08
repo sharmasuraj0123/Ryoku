@@ -203,7 +203,12 @@ public class ManagerLevelTransaction {
             newFlight.setArrival_time(rs.getTimestamp("arrv_timestamp"));
             newFlight.setDept_time(rs.getTimestamp("dept_timestamp"));
             newFlight.setDaysOp(rs.getInt("days_Op"));
-            CustomerLevelTransaction.getMoreFlightdetails(newFlight);
+            newFlight.setBase_fare(rs.getInt("base_fare"));
+            newFlight.setDeparture_status(rs.getTimestamp("departure_status"));
+            newFlight.setArrival_status(rs.getTimestamp("arrival_status"));
+            newFlight.setFlightId(rs.getInt("id"));
+            newFlight.setLegId(rs.getInt(13));
+            newFlight.setTime();
             fl.add(newFlight);
         }
         conn.close();
@@ -213,13 +218,13 @@ public class ManagerLevelTransaction {
         return fl;
     }
 
-    public static ArrayList<ReservationData> getReservationsByACustomer(int cust_id) throws SQLException, ClassNotFoundException {
+    public static ArrayList<ReservationData> getReservationsByAFlight(int flight_id) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs =null;
-        CallableStatement cStmt = conn.prepareCall("{call getReservationsByCustomerId(?)}");
+        CallableStatement cStmt = conn.prepareCall("{call getReservationByFlight(?)}");
 
-        cStmt.setInt(1,cust_id);
+        cStmt.setInt(1,flight_id);
 
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
@@ -247,16 +252,24 @@ public class ManagerLevelTransaction {
         for (int i =0;i < rl.size();i++)
             rl.set(i,CustomerLevelTransaction.getReservationDetails(rl.get(i)));
 
+
+        for(int i=0;i<rl.size();i++){
+            rl.get(i).setCustomer(CustomerLevelTransaction.getCustomerByID(rl.get(i).getCustomer_id()));
+        }
+
+        System.out.println("mlt => "+rl.get(0).getCustomer().getFirstName());
+
+
         return rl;
     }
 
-    public static ArrayList<ReservationData> getReservationsByAFlight(int flight_id) throws SQLException, ClassNotFoundException {
+    public static ArrayList<ReservationData> getReservationsByACustomer(int cust_id) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs =null;
-        CallableStatement cStmt = conn.prepareCall("{call getReservationByFlight(?)}");
+        CallableStatement cStmt = conn.prepareCall("{call getReservationsByCustomerId(?)}");
 
-        cStmt.setInt(1,flight_id);
+        cStmt.setInt(1,cust_id);
 
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();

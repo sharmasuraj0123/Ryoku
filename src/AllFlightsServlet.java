@@ -23,7 +23,7 @@ public class AllFlightsServlet extends HttpServlet {
                 ArrayList<Flight> flights = ManagerLevelTransaction.listAllFlights();
                 request.setAttribute("flights",flights);
 
-                System.out.println("hello => "+flights.get(0));
+                System.out.println("hello skrr lod =>  "+flights.get(0).getLegId());
 
 
 

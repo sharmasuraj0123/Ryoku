@@ -57,6 +57,8 @@
                             <span class="uk-align-center">${flight.hours}h ${flight.minutes}m </span>
                         </div>
                         <div class="uk-width-expand uk-text-right">
+
+
                             <label class="uk-label uk-label-default"> Scheduled </label>
                         </div>
                     </div>
@@ -64,7 +66,7 @@
                 <div class="uk-margin" uk-grid>
                     <div class="uk-width-2-3">
 
-                        <a href="/my-account/flight/list/reservation?${flight.flightId}" class="uk-button uk-button-primary">Reservations</a>
+                        <a href="/my-account/flight/list/reservation?${flight.legId}" class="uk-button uk-button-primary">Reservations</a>
                     </div>
                 </div>
 
