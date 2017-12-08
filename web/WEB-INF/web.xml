@@ -224,12 +224,21 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>MyTripsServlet</servlet-name>
+        <servlet-class>MyTripsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyTripsServlet</servlet-name>
+        <url-pattern>/my-account/trips</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>CustomerReservationsServlet</servlet-name>
         <servlet-class>CustomerReservationsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CustomerReservationsServlet</servlet-name>
-        <url-pattern>/my-account/trips</url-pattern>
+        <url-pattern>/my-account/my-trips</url-pattern>
     </servlet-mapping>
 
     <!--Servlets end -->
