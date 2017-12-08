@@ -228,9 +228,11 @@
                                         <% }
                                             else  {
                                         %>
-                                        <span uk-icon="icon: arrow-right"></span> ${destAirport.name}
+                                        <span uk-icon="icon: arrow-right"></span>
                                         <% }
-
+                                        %>
+                                        ${destAirport.name}
+                                        <%
                                         if (pageContext.getAttribute("type").toString().equals("3")){
                                             %>
                                             <span uk-icon="icon: arrow-right"></span> ${airport3.name}

@@ -35,10 +35,10 @@ public class ConfirmReservation extends HttpServlet {
                 int p = flight_selected.getPrice();
                 int p2 = _Functions.getInteger(request.getParameter("reservation_price").toString());
                 int price = 0;
-                if (p == p2){
-                    price = p;
-                } else {
+                if (p2 != 0){
                     price = p2;
+                } else {
+                    price = p;
                 }
                int r_id =  CRLevelTransactions.addReservation(customer.getAccountNumber(), price,flight_selected.getPrice()/10
                 ,3,passenger_firstName.length,Integer.parseInt(flight_selected.getDay()),5);

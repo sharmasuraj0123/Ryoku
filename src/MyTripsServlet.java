@@ -20,10 +20,10 @@ public class MyTripsServlet extends HttpServlet {
             try {
 
                 // add check here later skrr
-                int cust_id = Integer.parseInt(request.getQueryString());
+//                int cust_id = Integer.parseInt(request.getQueryString());
 
+                int cust_id = ((Customer)request.getSession().getAttribute("customer")).getAccountNumber();
                 ArrayList<ReservationData> reservations = ManagerLevelTransaction.getReservationsByACustomer(cust_id);
-
 
                 for (int  l=0; l<reservations.size();l++) {
                     ArrayList<FlightSearch> fs = reservations.get(l).getFlights();
