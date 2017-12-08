@@ -76,7 +76,7 @@
                             <div class="uk-margin" uk-grid>
                                 <div class="uk-width-2-3">
                                     <button class="uk-button uk-button-primary">Create Reservation</button>
-                                    <a href="/my-account/customer/list/reservation?id=${cust_list.id}" class="uk-button uk-button-primary">Reservations</a>
+                                    <a href="/my-account/customer/list/reservation?${cust_list.accountNumber}" class="uk-button uk-button-primary">Reservations</a>
                                 </div>
                                 <div class="uk-width-1-3 uk-text-right">
                                     <a href="/my-account/customer/edit?id=${cust_list.id}" class="uk-button uk-button-secondary"> <span uk-icon="icon: file-edit"></span> </a>

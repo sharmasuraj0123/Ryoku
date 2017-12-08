@@ -35,10 +35,10 @@
                     <div class="uk-margin-small">
                         <div class="uk-grid-small" uk-grid>
                             <div class="uk-width-1-3">
-                                <span class="bold">Reservation ID: ${reservation.reservation_id}</span>
+                                Reservation ID: <span class="bold"> ${reservation.reservation_id}</span>
                             </div>
                             <div class="uk-width-1-3 uk-text-center">
-                                <span> ${reservation.total_fare}$   </span>
+                                <span> $ ${reservation.total_fare}   </span>
 
                             </div>
                             <div class="uk-width-1-3 uk-text-right">
@@ -54,46 +54,49 @@
 
                     <ul uk-accordion="multiple : true">
                         <c:forEach items="${reservation.flights}" var="flight">
+                            <c:forEach items="${flight.flightlegs}" var="leg">
+                                <li>
+                                <h3 class="uk-accordion-title small-font"> Details </h3>
+                                <div class="uk-accordion-content">
+                                    <hr>
+                                    <div class="uk-margin-small">
+                                        <div class="uk-grid-small" uk-grid>
+                                            <div class="uk-text-left uk-width-1-3 uk-text-small">
+                                                 ${leg.airline}  &nbsp; <span class="uk-text-muted" uk-icon="icon: chevron-right"></span> &nbsp; ${leg.departureAirport_ob.name} <span uk-icon="icon: arrow-right"></span> ${leg.arrivalAirport_ob.name}  <br>
+                                                <span> ${leg.hours}h ${leg.minutes}m</span>
+                                            </div>
+                                            <div class="uk-width-1-3 uk-text-center uk-text-small">
+                                                ${leg.dTime} &ndash; ${leg.aTime} <span class="uk-text-danger"></span> <br>
+                                                ${leg.d_date}
+                                            </div>
+                                            <%--<div class="uk-width-expand uk-text-right">--%>
+                                                 <%--${flight_serach.price}&nbsp;<sup>.00</sup>--%>
+                                            <%--</div>--%>
+                                        </div>
 
-                                <c:forEach items="${flight.flightlegs}" var="leg">
-                            <li>
-                            <h3 class="uk-accordion-title small-font"> Details </h3>
-                            <div class="uk-accordion-content">
-                                <hr>
-                                <div class="uk-margin-small">
-                                    <div class="uk-grid-small" uk-grid>
-                                        <div class="uk-text-left uk-width-1-3 uk-text-small">
-                                             ${leg.airline}  &nbsp; <span class="uk-text-muted" uk-icon="icon: chevron-right"></span> &nbsp; ${leg.departureAirport} <span uk-icon="icon: arrow-right"></span> ${leg.arrivalAirport}  <br>
-                                            <span> ${leg.hours}h ${leg.minutes}m</span>
-                                        </div>
-                                        <div class="uk-width-1-3 uk-text-center uk-text-small">
-                                            ${leg.dTime} &ndash; ${leg.aTime} <span class="uk-text-danger"></span> <br>
-                                            ${leg.d_date}
-                                        </div>
-                                        <div class="uk-width-expand uk-text-right">
-                                             ${flight_serach.price}&nbsp;<sup>.00</sup>
-                                        </div>
+                                        <c:forEach items="${reservation.pasengerList}" var="passenger">
+                                            <div class="uk-margin-medium-top">
+                                                <div class="uk-margin-small" uk-grid>
+                                                    <div class="uk-width-1-3">
+                                                        <h3 class="small-font uk-text-muted"> ${passenger.firstName} ${passenger.lastName}</h3>
+                                                    </div>
+                                                    <div class="uk-width-1-3 uk-text-center">
+                                                        <h3 class="small-font uk-text-muted"> Meal Type: ${passenger.mealPref}  </h3>
+                                                    </div>
+                                                    <div class="uk-width-1-3 uk-text-right">
+                                                        <span class="small-font uk-text-muted"> Seat :</span> &nbsp;
+                                                        <button class="uk-button-text uk-button"><span class="uk-text-muted">${passenger.seat_num}</span></button>&nbsp;
+                                                        <span class="small-font uk-text-muted"> ${passenger.travelClass} </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+
                                     </div>
-                                    <div class="uk-margin-medium-top">
-                                        <div class="uk-margin-small" uk-grid>
-                                            <div class="uk-width-1-3">
-                                                <h3 class="small-font uk-text-muted"> ${reservation.customer.firstName} ${reservation.customer.lastName}</h3>
-                                            </div>
-                                            <div class="uk-width-1-3 uk-text-center">
-                                                <h3 class="small-font uk-text-muted"> Meal Type:  </h3>
-                                            </div>
-                                            <div class="uk-width-1-3 uk-text-right">
-                                                <span class="small-font uk-text-muted"> Seat :</span> &nbsp;
-                                                <button class="uk-button-text uk-button"><span class="uk-text-muted">33F</span></button>&nbsp;
-                                                <span class="small-font uk-text-muted"> (ECONOMY) </span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <hr>
+
                                 </div>
-                                <hr>
-
-                            </div>
-                        </li>
+                            </li>
 
                             </c:forEach>
                         </c:forEach>
