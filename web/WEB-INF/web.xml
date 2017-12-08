@@ -223,6 +223,15 @@
         <url-pattern>/my-account/sales-report</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>MyTripsServlet</servlet-name>
+        <servlet-class>MyTripsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyTripsServlet</servlet-name>
+        <url-pattern>/my-account/trips</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets end -->
 
     <mime-mapping>
