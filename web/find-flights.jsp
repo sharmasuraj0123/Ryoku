@@ -52,8 +52,8 @@
                         <label class="uk-form-label"> <i class="fa fa-plane" aria-hidden="true"></i> From:</label>
                         <select  name="airport" id="src-airport-select" class="uk-select">
                             <option value="${srcAirport.id}">${srcAirport.name}</option>
-                            <option value="1" > JFK </option>
-                            <option value="2" > LGA </option>
+                            <option disabled>--</option>
+                            <%@include file="airports.html"%>
                         </select>
                     </div>
 
@@ -62,8 +62,8 @@
                         <label class="uk-form-label"> <i class="fa fa-plane" aria-hidden="true"></i> To:</label><br>
                         <select  name="airport" id="return-airport-select" class="uk-select">
                             <option value="${destAirport.id}"> ${destAirport.name} </option>
-                            <option value="3" > DEL </option>
-                            <option value="4" > BOM </option>
+                            <option disabled>--</option>
+                            <%@include file="airports.html"%>
                         </select>
                     </div>
 
@@ -72,8 +72,8 @@
                         <label class="uk-form-label"> <i class="fa fa-plane" aria-hidden="true"></i> To:</label><br>
                         <select  name="airport" id="airport-3-select" class="uk-select">
                             <option value="${airport3.id}"> ${airport3.name} </option>
-                            <option value="3" > DEL </option>
-                            <option value="4" > BOM </option>
+                            <option disabled>--</option>
+                            <%@include file="airports.html"%>
                         </select>
                     </div>
 
@@ -86,12 +86,6 @@
                     <div class="uk-margin" id="date-2-containter">
                         <label class="uk-form-label">Returning/Connecting:</label> <br>
                         <input type="date" class="uk-input" id="date-2" name="date" value="${searchQuery.dates[1]}">
-                    </div>
-
-
-                    <div class="uk-margin" id="date-3-containter">
-                        <label class="uk-form-label">Connecting:</label> <br>
-                        <input type="date" class="uk-input" id="date-3" name="date" value="${searchQuery.dates[2]}">
                     </div>
 
 
@@ -209,23 +203,51 @@
                                     <c:set value="${flight_block.flightlegs[0]}" var="f1"/>
                                     <span class="bold">${f1.airlineName}</span> <br>
                                     <span class="small-font uk-text-muted">
-                                    <c:set value="${searchQuery.dates[0]}" var="date_d2" />
-                                        <%
-                                            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                                            SimpleDateFormat f = new SimpleDateFormat("MMMMM dd, YYYY");
-                                            Object s = pageContext.getAttribute("date_d2");
-                                            String ss = s.toString();
-                                            Date sd = df.parse(ss);
-                                            String s0 = f.format(sd.getTime());
-                                            request.setAttribute("date_fg", s0);
+                                    <%--<c:set value="${f1.d_date}" var="date_d2" />--%>
+                                        <%--<%--%>
+                                            <%--DateFormat df = new SimpleDateFormat("yyyy-MM-dd");--%>
+                                            <%--SimpleDateFormat f = new SimpleDateFormat("MMMMM dd, YYYY");--%>
+                                            <%--Object s = pageContext.getAttribute("date_d2");--%>
+                                            <%--String ss = s.toString();--%>
+                                            <%--Date sd = df.parse(ss);--%>
+                                            <%--String s0 = f.format(sd.getTime());--%>
+                                            <%--request.setAttribute("date_fg", s0);--%>
 
-                                        %>
-                                        <%=request.getAttribute("date_fg")%> - ${f1.dTime}
+                                        <%--%>--%>
+                                        <%--<%=request.getAttribute("date_fg")%> - ${f1.dTime}--%>
+                                        ${f1.d_date}
                                     </span>
                                 </div>
                                 <div class="uk-width-1-3 uk-text-center">
-                                    <span> ${srcAirport.name} <span uk-icon="icon: arrow-right"></span> ${destAirport.name}  </span> <br>
-                                    <span class="small-font">${srcAirport.city} - ${destAirport.city}</span>
+                                    <c:set value="${searchQuery.searchType}" var="type" />
+                                    <span> ${srcAirport.name}
+                                        <%
+                                            if (pageContext.getAttribute("type").toString().equals("2")){
+                                        %>
+                                        <span uk-icon="icon: expand"></span>
+                                        <% }
+                                            else  {
+                                        %>
+                                        <span uk-icon="icon: arrow-right"></span> ${destAirport.name}
+                                        <% }
+
+                                        if (pageContext.getAttribute("type").toString().equals("3")){
+                                            %>
+                                            <span uk-icon="icon: arrow-right"></span> ${airport3.name}
+                                            <%
+                                        }
+
+                                        %> </span> <br>
+                                    <span class="small-font">${srcAirport.city} - ${destAirport.city}
+                                        <%
+                                            if (pageContext.getAttribute("type").toString().equals("3")){
+                                        %>
+                                            - ${airport3.city}
+                                            <%
+                                                }
+
+                                        %>
+                                    </span>
                                 </div>
                                 <div class="uk-width-1-3 uk-text-right">
                                     $ <b>${flight_block.price}</b>&nbsp;<sup>.00</sup>
@@ -286,17 +308,23 @@
                                         <li>
                                             <h3 class="uk-accordion-title small-font">  </h3>
                                             <div class="uk-accordion-content">
-                                                <div class="uk-margin-small" uk-grid>
-                                                    <div class="uk-width-1-3 uk-text-small">
-                                                        Reverse Auction
+                                                <form action="/book-flight?bid=1" method="post" class="uk-form-horizontal uk-form-blank">
+                                                    <div class="uk-margin-small" uk-grid>
+                                                        <div class="uk-width-1-3 uk-text-small">
+                                                            Reverse Auction
+                                                        </div>
+                                                        <div class="uk-width-1-3 uk-text-small">
+                                                            Your Price: <input required name="bid_price" type="number" class="uk-input uk-form-width-small uk-form-blank uk-form-small" placeholder="$">
+                                                        </div>
+                                                        <div class="uk-width-1-3 uk-text-small uk-text-right">
+                                                                <input type="hidden" value="<%=position%>" name="flight_selected_position">
+                                                                <input type="hidden" value="<%=request.getParameter("passenger_count")%>" name="passenger_count">
+                                                                <input type="hidden" value="<%=request.getParameter("class")%>" name="class">
+
+                                                            <button class="uk-button uk-button-small uk-button-default" type="submit"> <span class="uk-text-primary">Bid</span></button>
+                                                        </div>
                                                     </div>
-                                                    <div class="uk-width-1-3 uk-text-small">
-                                                        Your Price: <input type="text" class="uk-input uk-form-width-small uk-form-blank uk-form-small" placeholder="$">
-                                                    </div>
-                                                    <div class="uk-width-1-3 uk-text-small uk-text-right">
-                                                        <button class="uk-button uk-button-small uk-button-default"> <span class="uk-text-primary">Bid</span></button>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </li>
                                     </ul>

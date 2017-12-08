@@ -188,8 +188,20 @@
                             %></span>
                     </div>
                 </div>
+                <% if (pageContext.getAttribute("bid_price") != null){ %>
+                <div class="uk-margin-small" uk-grid>
+                    <div class="uk-width-1-2">
+                        <span class="">Bid: </span>
+                    </div>
+                    <div class="uk-width-1-2">
+                        <span class="uk-text-danger"> ${bid_price} </span>
+                    </div>
+                </div>
+                <%
+                    fee = Integer.parseInt(pageContext.getAttribute("bid_price").toString());
+                } %>
                 <hr>
-                <div class="margin-small uk-grid-small" uk-grid>
+                <div class="uk-margin-small uk-grid-small" uk-grid>
                     <div class="uk-width-1-2">
                         <span class="small-font ">Total:</span>
                     </div>

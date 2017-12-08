@@ -37,6 +37,11 @@ public class BookFlightServlet extends HttpServlet {
             request.setAttribute("class", request.getParameter("class"));
             request.setAttribute("passenger_count", request.getParameter("passenger_count"));
 
+            if (request.getParameter("bid") != null && request.getParameter("bid").toString().equals("1")){
+                double price = Double.parseDouble(request.getParameter("bid_price"));
+                request.setAttribute("bid_price",  price);
+            }
+
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/book-flight.jsp");
             dispatcher.forward(request, response);
 

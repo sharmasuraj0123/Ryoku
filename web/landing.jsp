@@ -27,15 +27,13 @@
                     <div class="uk-width-1-3">
                         Flying From: <br>
                         <select name="airport" id="src-airport-select" class="uk-select">
-                            <option value="1"> JFK </option>
-                            <option value="2"> LGA </option>
+                            <%@include file="airports.html"%>
                         </select>
                     </div>
                     <div class="uk-width-1-3">
                         <div id="return-airport">Flying To: <br>
                             <select name="airport" id="return-airport-select" class="uk-select">
-                                <option value="3"> DEL </option>
-                                <option value="4"> BOM </option>
+                                <%@include file="airports.html"%>
                             </select>
                         </div>
                     </div>
@@ -44,8 +42,7 @@
                         <div id="airport-3">
                             Flying To: <br>
                             <select name="airport" id="airport-3-select" class="uk-select">
-                                <option value="3"> DEL </option>
-                                <option value="4"> BOM </option>
+                                <%@include file="airports.html"%>
                             </select>
                         </div>
                     </div>
@@ -61,11 +58,7 @@
                         </div>
                     </div>
 
-                    <div class="uk-width-1-3">
-                        <div id="date-3-containter">Connecting: <br>
-                            <input type="date" id="date-3" class="uk-input" name="date">
-                        </div>
-                    </div>
+                    <div class="uk-width-1-3"></div>
 
                     <br><br>
 

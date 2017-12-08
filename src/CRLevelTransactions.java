@@ -275,4 +275,17 @@ public class CRLevelTransactions {
 
     }
 
+    public static void deleteReservation (int res_id) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs;
+        CallableStatement cStmt = conn.prepareCall("{call deleteReservation(?)}");
+
+        cStmt.setInt(1, res_id);
+        boolean hadResults = cStmt.execute();
+        conn.close();
+
+    }
+
+
 }
