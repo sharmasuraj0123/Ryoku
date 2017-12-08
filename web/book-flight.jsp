@@ -5,13 +5,11 @@
 <br><br>
 <div class="uk-container">
     <h3 class="uk-heading-line uk-text-left"> <span>Book Flight</span></h3>
-
+    <form class="uk-form-horizontal uk-margin" method="post" action="/confirm-reservation">
     <div uk-grid>
         <div class="uk-width-3-4">
             <div class="uk-card uk-card-default uk-card-body">
                 <span uk-icon="icon: user"></span> &nbsp;&nbsp; Personal Details.
-
-                <form class="uk-form-horizontal uk-margin" method="post" action="/confirm-reservation">
                     <input type="hidden" value="1" name="in-progress">
                     <div class="uk-margin">
                         <label class="uk-form-label" for="_user-email">Email: </label>
@@ -148,7 +146,7 @@
                         <button class="uk-button uk-button-primary" type="submit">Confirm</button>
                         <a href="/" class="uk-button uk-button-default">Cancel</a>
                     </div>
-                </form>
+
             </div>
         </div>
         <c:set value="${sessionScope.get(\"flight_selected\")}" var="flight"/>
@@ -207,11 +205,13 @@
                     </div>
                     <div class="uk-width-1-2">
                         <% request.getSession().setAttribute("total_fare", (fee+f2)); %>
+                        <input type="hidden" name="reservation_price" value="<%= (fee+f2) %>">
                         <span class="small-font uk-align-right uk-text-right ">$ <%= (fee+f2) %></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 </div>
 <%@include file="footer.jsp"%>

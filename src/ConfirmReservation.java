@@ -32,7 +32,15 @@ public class ConfirmReservation extends HttpServlet {
 
             try {
                 //Add it to the Reservation Table
-               int r_id =  CRLevelTransactions.addReservation(customer.getAccountNumber(),flight_selected.getPrice(),flight_selected.getPrice()/10
+                int p = flight_selected.getPrice();
+                int p2 = _Functions.getInteger(request.getParameter("reservation_price").toString());
+                int price = 0;
+                if (p == p2){
+                    price = p;
+                } else {
+                    price = p2;
+                }
+               int r_id =  CRLevelTransactions.addReservation(customer.getAccountNumber(), price,flight_selected.getPrice()/10
                 ,3,passenger_firstName.length,Integer.parseInt(flight_selected.getDay()),5);
 
                 //Add it to the Reservation Legs Table. (Add the Flight legs to the reservation)
