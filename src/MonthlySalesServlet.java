@@ -19,7 +19,6 @@ import java.util.Locale;
 public class MonthlySalesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("month-year") != null){
-            System.out.println(request.getParameter("month-year"));
             DateFormat df = new SimpleDateFormat("yyyy-MM-d", Locale.ENGLISH);
 
             String month = request.getParameter("month-year").toString() + "-01" ;
@@ -28,10 +27,7 @@ public class MonthlySalesServlet extends HttpServlet {
             LocalDate date = LocalDate.parse(month, formatter);
 
             try {
-                System.out.println(date.getMonthValue() + " |  " + date.getYear());
                 ArrayList<String> result = ManagerLevelTransaction.getSalesReportOfAMonth(date.getMonthValue(), date.getYear());
-
-                System.out.println(result);
 
                 request.setAttribute("result", result);
                 RequestDispatcher d = request.getServletContext().getRequestDispatcher("/my-account-mgr-sales-report.jsp");
