@@ -50,20 +50,19 @@ public class ConfirmReservation extends HttpServlet {
 
 
                 //Add it to the Passenger Table. (Add the Passengers to the reservation)
+                String travel_class = request.getSession().getAttribute("travel_class").toString();
                 for (int i =0;i <passenger_firstName.length;i++){
-                    CRLevelTransactions.addPassenger(r_id,meal_preference[i],"FIRST","AISLE","33A",
+                    CRLevelTransactions.addPassenger(r_id,meal_preference[i], travel_class,"AISLE","33A",
                             passenger_firstName[i],passenger_lastName[i]);
                 }
+
+                response.sendRedirect("/my-account/trips");
 
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
-            //
-            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/my-account/trips");
-            dispatcher.forward(request, response);
 
         } else {
             response.sendRedirect("/err");

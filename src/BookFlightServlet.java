@@ -35,6 +35,8 @@ public class BookFlightServlet extends HttpServlet {
             System.out.println("Flight Data: " + flight_selected.toString());
 
             request.setAttribute("class", request.getParameter("class"));
+            request.getSession().setAttribute("travel_class", request.getParameter("class"));
+
             request.setAttribute("passenger_count", request.getParameter("passenger_count"));
 
             if (request.getParameter("bid") != null && request.getParameter("bid").toString().equals("1")){
