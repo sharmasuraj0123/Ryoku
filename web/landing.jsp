@@ -2,6 +2,12 @@
 <%@ include file = "header.jsp" %>
 
 <br> <br>
+<script>
+    $(function() {
+        search_type_func(2);
+    });
+
+</script>
 <div class="uk-container">
     <div class="uk-container-large">
         <div class="uk-card uk-card-default uk-card-body uk-width-xxlarge uk-align-center">
@@ -9,17 +15,18 @@
                 <input type="hidden" name="flight_search" value="1">
                 <h3 class="uk-heading-line uk-text-left"><span>Find Flights</span></h3> <br>
                 <center>
-                    <label><input name="search_type" value="1" class="uk-radio" onclick="search_type_func(1)" type="radio" checked> One way</label> &nbsp;&nbsp;&nbsp;
-                    <label><input name="search_type" value="2" class="uk-radio" onclick="search_type_func(2)" type="radio"> Round Trip</label> &nbsp;&nbsp;&nbsp;
+                    <label><input name="search_type" value="1" class="uk-radio" onclick="search_type_func(1)" type="radio"> One way</label> &nbsp;&nbsp;&nbsp;
+                    <label><input name="search_type" value="2" class="uk-radio" onclick="search_type_func(2)" type="radio" checked> Round Trip</label> &nbsp;&nbsp;&nbsp;
                     <label><input name="search_type" value="3" class="uk-radio" onclick="search_type_func(3)" type="radio"> Multi City</label> &nbsp; | &nbsp;
-                    <label><input name="flight_type" value="0" class="uk-radio" onclick="flight_type(0)" type="radio" checked> International </label> &nbsp;&nbsp;&nbsp;
-                    <label><input name="flight_type" value="1" class="uk-radio" onclick="flight_type(1)" type="radio"> Domestic</label> &nbsp;&nbsp;&nbsp;
+                    <label><input name="flight_type" value="0" class="uk-radio" onclick="flight_type_func(0)" type="radio" checked> International </label> &nbsp;&nbsp;&nbsp;
+                    <label><input name="flight_type" value="1" class="uk-radio" onclick="flight_type_func(1)" type="radio"> Domestic</label> &nbsp;&nbsp;&nbsp;
                 </center>
+
                 <br><br>
                 <div uk-grid>
                     <div class="uk-width-1-3">
                         Flying From: <br>
-                        <select name="airport" class="uk-select">
+                        <select name="airport" id="src-airport-select" class="uk-select">
                             <option value="1"> JFK </option>
                             <option value="2"> LGA </option>
                         </select>
@@ -46,15 +53,18 @@
                     <br><br><br>
                     <div class="uk-width-1-3">
                         Departing: <br>
-                        <input type="date" class="uk-input" name="date">
+                        <input type="date" class="uk-input" id="date-1" name="date">
                     </div>
                     <div class="uk-width-1-3">
-                        <div id="date-2-containter">Returning: <br>
-                        <input type="date" id="date-2" class="uk-input" name="date">
+                        <div id="date-2-containter">Returning/Connecting: <br>
+                            <input type="date" id="date-2" class="uk-input" name="date">
                         </div>
                     </div>
 
                     <div class="uk-width-1-3">
+                        <div id="date-3-containter">Connecting: <br>
+                            <input type="date" id="date-3" class="uk-input" name="date">
+                        </div>
                     </div>
 
                     <br><br>
@@ -91,9 +101,9 @@
 
                 </div>
                 <br>
-                <button class="uk-button uk-align-center uk-button-primary" type="submit">Search</button>
-            </div>
-        </form>
+                <button class="uk-button uk-align-center uk-button-primary" onclick="return valid_submit()" type="submit">Search</button>
+            </form>
+        </div>
         <!--find flights card end-->
 
         <!-- announcements sections begins-->

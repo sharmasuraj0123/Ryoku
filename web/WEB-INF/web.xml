@@ -205,6 +205,24 @@
         <url-pattern> /my-account/flight/list/reservation</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SummaryReportServlet</servlet-name>
+        <servlet-class>SummaryReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SummaryReportServlet</servlet-name>
+        <url-pattern>/my-account/summary-report</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MonthlySalesServlet</servlet-name>
+        <servlet-class>MonthlySalesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MonthlySalesServlet</servlet-name>
+        <url-pattern>/my-account/sales-report</url-pattern>
+    </servlet-mapping>
+
     <!--Servlets end -->
 
     <mime-mapping>

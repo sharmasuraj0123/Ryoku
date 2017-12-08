@@ -63,35 +63,61 @@ public class FindFlightServlet extends HttpServlet {
         try {
             //Implement Different Types of Bookings.
 
-            Airport src = CustomerLevelTransaction.getAirportName(5);
-            Airport dest = CustomerLevelTransaction.getAirportName(6);
+            Airport src = CustomerLevelTransaction.getAirportName(Integer.parseInt(s[0]));
+            Airport dest = CustomerLevelTransaction.getAirportName(Integer.parseInt(s[1]));
+
             request.setAttribute("srcAirport",src);
             request.setAttribute("destAirport",dest);
+
 
                 //One Way.
             ArrayList<FlightSearch> flightBlocks = new ArrayList<>();
             if(searchType==1) {
                 if(isFlexible)
-                    flightBlocks = CustomerLevelTransaction.searchFlights_flex(5, 6, dates.get(0));
+                    flightBlocks = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
                 else
-                flightBlocks = CustomerLevelTransaction.searchFlights(5, 6, dates.get(0));
+                flightBlocks = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
             }
             //It is a two way Flight.
             else if(searchType ==2){
                 ArrayList<FlightSearch> flightBlocks_going = new ArrayList<>();
                 ArrayList<FlightSearch> flightBlocks_returning = new ArrayList<>();
                 if(isFlexible) {
-                     flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
-                     flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
+                     flightBlocks_going = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
+                     flightBlocks_returning = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[1]), Integer.parseInt(s[0]), dates.get(1));
                 }
                 else{
-                     flightBlocks_going = CustomerLevelTransaction.searchFlights(6, 5, dates.get(0));
-                     flightBlocks_returning = CustomerLevelTransaction.searchFlights(5, 6, dates.get(1));
+                     flightBlocks_going = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
+                     flightBlocks_returning = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[1]), Integer.parseInt(s[0]), dates.get(1));
                 }
 
                 flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
             }
             else if(searchType==3){
+                Airport airport3 = CustomerLevelTransaction.getAirportName(Integer.parseInt(s[2]));
+                request.setAttribute("airport3", airport3);
+
+
+
+                ArrayList<FlightSearch> flightBlock_one =new ArrayList<>();
+                ArrayList<FlightSearch> flightBlock_two =new ArrayList<>();
+                ArrayList<FlightSearch> flightBlock_three =new ArrayList<>();
+
+                if(isFlexible){
+                    flightBlock_one = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[0]),Integer.parseInt(s[1]),dates.get(0));
+                    flightBlock_two = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[1]),Integer.parseInt(s[2]),dates.get(1));
+                   // flightBlock_three = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[2]),Integer.parseInt(s[3]),dates.get(2));
+
+                }
+                else{
+                    flightBlock_one = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[0]),Integer.parseInt(s[1]),dates.get(0));
+                    flightBlock_two = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[1]),Integer.parseInt(s[2]),dates.get(1));
+                    //flightBlock_three = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[2]),Integer.parseInt(s[3]),dates.get(2));
+                }
+
+                flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlock_one,flightBlock_two);
+
+                //flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks,flightBlock_three);
 
             }
             else{
