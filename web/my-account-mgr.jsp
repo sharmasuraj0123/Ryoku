@@ -28,7 +28,7 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_mgr-old-password">Current Password: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_mgr-old-password" type="password" name="password_old" placeholder="" required>
+                        <input class="uk-input" id="_mgr-old-password" type="password" name="password_old"  placeholder="" required>
                     </div>
                 </div>
 
@@ -52,14 +52,14 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_mgr-first-name">First Name: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_mgr-first-name" type="text" placeholder="" name="firstName" value="${emp.firstName}">
+                        <input class="uk-input" id="_mgr-first-name" type="text" placeholder="" required  name="firstName" value="${emp.firstName}">
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_mgr-last-name">Last Name: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_mgr-last-name" type="text" placeholder="" name="lastName" value="${emp.lastName}">
+                        <input class="uk-input" id="_mgr-last-name" type="text" placeholder="" required name="lastName" value="${emp.lastName}">
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@
                                 pageContext.setAttribute("mob", "");
                             else pageContext.setAttribute("mob", m2.toString());
                         %>
-                        <input class="uk-input" id="_mgr-phone-number" type="text" placeholder="" name="mobile" value="<%=pageContext.getAttribute("mob")%>">
+                        <input class="uk-input" id="_mgr-phone-number" type="number" placeholder="" required name="mobile" value="<%=pageContext.getAttribute("mob")%>">
                     </div>
                 </div>
 
@@ -81,14 +81,14 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_mgr-address-1">Address: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_mgr-address-1" type="text" placeholder="Address" name="address" value="${emp.address}">
+                        <input class="uk-input" id="_mgr-address-1" type="text" placeholder="Address" required name="address" value="${emp.address}">
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <label class="uk-form-label" for="_mgr-city-town"> City / Town</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_mgr-city-town" type="text" placeholder="City/Town" name="city" value="${emp.city}">
+                        <input class="uk-input" id="_mgr-city-town" type="text" placeholder="City/Town" required name="city" value="${emp.city}">
                     </div>
                 </div>
 
@@ -96,7 +96,7 @@
                     <label class="uk-form-label" for="_mgr-state"> State: </label>
                     <div class="uk-form-controls">
                         <%--<input class="uk-input" id="_mgr-state" type="text" placeholder="State">--%>
-                        <select name="state" id="_mgr-state" name="state" class="uk-select">
+                        <select name="state" id="_mgr-state" name="state"required  class="uk-select">
                             <option value="${emp.state}">${emp.state}</option>
                             <option value="">--</option>
                             <%@include file="_state_options.html"%>
@@ -113,7 +113,7 @@
                     %>
                     <label class="uk-form-label" for="_mgr-zip-code"> Zip Code: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_mgr-zip-code" type="text" name="zipCode" placeholder="Zip Code" value="<%=pageContext.getAttribute("zip")%>">
+                        <input class="uk-input" id="_mgr-zip-code" type="number" name="zipCode" required placeholder="Zip Code" value="<%=pageContext.getAttribute("zip")%>">
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@
                     %>
                     <label class="uk-form-label" for="_mgr-social-security-number"> Social Security Number: </label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="_mgr-social-security-number" name="socialSecurityNumber" type="text" placeholder="Social Security Number" maxlength="10" value="<%=pageContext.getAttribute("ssn")%>" >
+                        <input class="uk-input" id="_mgr-social-security-number" required name="socialSecurityNumber" type="number" placeholder="Social Security Number" maxlength="10" value="<%=pageContext.getAttribute("ssn")%>" >
                     </div>
                 </div>
 

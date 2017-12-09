@@ -1,14 +1,20 @@
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Flight {
+public class Flight implements Serializable {
     private String airline;
     private String airlineName;
-    private int Flight_number;
+    private int flight_number;
     private int stopNum;
     private String departureAirport;
     private String arrivalAirport;
     private Timestamp dept_time;
     private Timestamp arrival_time;
+    private String dTime;
+    private String aTime;
+    private String d_date;
     private int daysOp;
     private int departAirport_Id;
     private int arriveAirport_id;
@@ -16,13 +22,45 @@ public class Flight {
     private int legId;
     private int base_fare;
     private int hidden_fare;
+    private String hours;
+    private String minutes;
+    private boolean isInternational;
+    private boolean isLate;
+
+    private Timestamp departure_status;
+    private Timestamp arrival_status;
+
 
     private Airport departureAirport_ob;
     private Airport arrivalAirport_ob;
 
+    public String getdTime() {
+        return dTime;
+    }
+
+    public void setdTime(String dTime) {
+        this.dTime = dTime;
+    }
+
+    public String getaTime() {
+        return aTime;
+    }
+
+    public void setaTime(String aTime) {
+        this.aTime = aTime;
+    }
+
+    public String getD_date() {
+        return d_date;
+    }
+
+    public void setD_date(String d_date) {
+        this.d_date = d_date;
+    }
 
     public Flight(int stopNum, Timestamp dept_time, Timestamp arrival_time, int departAirport_Id, int arriveAirport_id,
                   int flightId, int legId, int base_fare, int hidden_fare) {
+        //isInternational = false;
         this.stopNum = stopNum;
         this.dept_time = dept_time;
         this.arrival_time = arrival_time;
@@ -32,9 +70,22 @@ public class Flight {
         this.legId = legId;
         this.base_fare = base_fare;
         this.hidden_fare = hidden_fare;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        this.dTime = sdf.format(dept_time.getTime());
+        this.aTime = sdf.format(arrival_time.getTime());
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MMMMM dd, YYYY");
+        this.d_date = sdf2.format(dept_time.getTime());
+
+        long ft =  arrival_time.getTime() - dept_time.getTime();
+        hours = String.format((ft/(60 * 60 * 1000))%24+"");
+        minutes = String.format((ft/(60 * 1000))%60+"");
+
+
     }
 
-    public Flight(){}
+    public Flight(){
+    }
 
     public String getAirline() {
         return airline;
@@ -45,11 +96,11 @@ public class Flight {
     }
 
     public int getFlight_number() {
-        return Flight_number;
+        return flight_number;
     }
 
     public void setFlight_number(int flight_number) {
-        Flight_number = flight_number;
+        this.flight_number = flight_number;
     }
 
     public int getStopNum() {
@@ -172,11 +223,76 @@ public class Flight {
         this.arrivalAirport_ob = arrivalAirport_ob;
     }
 
+    public String getHours() {
+        return hours;
+    }
 
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public String getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(String minutes) {
+        this.minutes = minutes;
+    }
+
+    public boolean isInternational() {
+        return isInternational;
+    }
+
+    public void setInternational(boolean international) {
+        isInternational = international;
+    }
+
+    public Timestamp getDeparture_status() {
+        return departure_status;
+    }
+
+    public void setDeparture_status(Timestamp departure_status) {
+        this.departure_status = departure_status;
+    }
+
+    public Timestamp getArrival_status() {
+        return arrival_status;
+    }
+
+    public void setArrival_status(Timestamp arrival_status) {
+        this.arrival_status = arrival_status;
+    }
+
+    public void setTime(){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        this.dTime = sdf.format(dept_time.getTime());
+        this.aTime = sdf.format(arrival_time.getTime());
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MMMMM dd, YYYY");
+        this.d_date = sdf2.format(dept_time.getTime());
+
+        long ft =  arrival_time.getTime() - dept_time.getTime();
+        hours = String.format((ft/(60 * 60 * 1000))%24+"");
+        minutes = String.format((ft/(60 * 1000))%60+"");
+
+        if(departure_status!=dept_time || arrival_status!=arrival_status)
+            isLate = true;
+
+        else isLate = false;
+
+    }
+
+    public boolean isLate() {
+        return isLate;
+    }
+
+    public void setLate(boolean late) {
+        isLate = late;
+    }
 
     @Override
     public String toString() {
-        return airline+Flight_number+"\t"+
-                stopNum+"\t"+ departAirport_Id+"\t"+arriveAirport_id+"\t"+dept_time+"\t"+arrival_time+"\t"+daysOp +"\n";
+        return airline+flight_number+"\t"+
+                stopNum+"\t"+ departAirport_Id+"\t"+arriveAirport_id+"\t"+dept_time+"\t"+arrival_time+"\t"+daysOp +"\t"+hours+"\t"+base_fare;
     }
 }

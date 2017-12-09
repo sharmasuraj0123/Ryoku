@@ -29,7 +29,7 @@
             <ul class="uk-navbar-nav">
                 <li> <a href="/" class="uk-button uk-button-text" > Search Flights </a> </li>
                 <li> <a href="/my-account" class="uk-button uk-button-text" > My Account </a> </li>
-                <li> <a href="/my-account/trips" class="uk-button uk-button-text" > My Trips </a> </li>
+                <li> <a href="/my-account/trips?${sessionScope.customer.accountNumber}" class="uk-button uk-button-text" > My Trips </a> </li>
                 <% if ( request.getSession() != null &&
                         request.getSession().getAttribute("loggedin") != null &&
                         ((boolean)request.getSession().getAttribute("loggedin"))) {%>

@@ -54,21 +54,105 @@ public class FindFlightServlet extends HttpServlet {
         _SearchQuery sq = new _SearchQuery(s ,
                  passengers, flyingClass, dates, searchType, scope, isFlexible);
 
+
         request.setAttribute("searchQuery", sq);
 
         System.out.println(sq);
 
 
         try {
-            ArrayList<FlightSearch> flightBlocks = CustomerLevelTransaction.searchFlights(6,11, dates.get(0));
+            //Implement Different Types of Bookings.
 
-            System.out.println(flightBlocks.size());
+            Airport src = CustomerLevelTransaction.getAirportName(Integer.parseInt(s[0]));
+            Airport dest = CustomerLevelTransaction.getAirportName(Integer.parseInt(s[1]));
+
+            request.setAttribute("srcAirport",src);
+            request.setAttribute("destAirport",dest);
+
+
+                //One Way.
+            ArrayList<FlightSearch> flightBlocks = new ArrayList<>();
+            if(searchType==1) {
+                if(isFlexible)
+                    flightBlocks = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
+                else
+                flightBlocks = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
+            }
+            //It is a two way Flight.
+            else if(searchType ==2){
+                ArrayList<FlightSearch> flightBlocks_going = new ArrayList<>();
+                ArrayList<FlightSearch> flightBlocks_returning = new ArrayList<>();
+                if(isFlexible) {
+                     flightBlocks_going = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
+                     flightBlocks_returning = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[1]), Integer.parseInt(s[0]), dates.get(1));
+                }
+                else{
+                     flightBlocks_going = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[0]), Integer.parseInt(s[1]), dates.get(0));
+                     flightBlocks_returning = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[1]), Integer.parseInt(s[0]), dates.get(1));
+                }
+
+                flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks_going,flightBlocks_returning);
+            }
+            else if(searchType==3){
+                Airport airport3 = CustomerLevelTransaction.getAirportName(Integer.parseInt(s[2]));
+                request.setAttribute("airport3", airport3);
+
+
+
+                ArrayList<FlightSearch> flightBlock_one =new ArrayList<>();
+                ArrayList<FlightSearch> flightBlock_two =new ArrayList<>();
+                ArrayList<FlightSearch> flightBlock_three =new ArrayList<>();
+
+                if(isFlexible){
+                    flightBlock_one = CustomerLevelTransaction.searchFlights_flex(Integer.parseInt(s[0]),Integer.parseInt(s[1]),dates.get(0));
+                    flightBlock_two = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[1]),Integer.parseInt(s[2]),dates.get(1));
+                   // flightBlock_three = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[2]),Integer.parseInt(s[3]),dates.get(2));
+
+                }
+                else{
+                    flightBlock_one = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[0]),Integer.parseInt(s[1]),dates.get(0));
+                    flightBlock_two = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[1]),Integer.parseInt(s[2]),dates.get(1));
+                    //flightBlock_three = CustomerLevelTransaction.searchFlights(Integer.parseInt(s[2]),Integer.parseInt(s[3]),dates.get(2));
+                }
+
+                flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlock_one,flightBlock_two);
+
+                //flightBlocks = CustomerLevelTransaction.mergeBlockList(flightBlocks,flightBlock_three);
+
+            }
+            else{
+                System.out.println(searchType);
+                //System.out.println(flightBlocks.size());
+            }
+
             for (int i = 0; i < flightBlocks.size(); i++) {
                 flightBlocks.get(i).getTotalTravelTime();
-                System.out.println(flightBlocks.get(i).toString());
+                System.out.println(flightBlocks.get(i).getFlightlegs().get(0).getArrival_time().toString());
+            }
+
+
+            //Changing User Infos Accordingly.
+            for (int i =0; i<flightBlocks.size();i++) {
+                //Changing the Price Accordingly
+                flightBlocks.get(i).setPrice(flightBlocks.get(i).getPrice() * (int) flyingClass * passengers);
+            }
+
+
+            if(scope==1) {
+                for (int i = 0; i < flightBlocks.size(); i++) {
+                    if (flightBlocks.get(i).isInternational()) {
+                        flightBlocks.remove(i);
+                        i = i - 1;
+                    }
+
+                }
             }
 
             request.setAttribute("flightBlocks", flightBlocks);
+            request.setAttribute("flightsNum", flightBlocks.size());
+
+            request.getSession().setAttribute("flights_inSession", flightBlocks);
+            request.getSession().setAttribute("flightsNum_inSession", flightBlocks.size());
 
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/find-flights.jsp");
             dispatcher.forward(request, response);

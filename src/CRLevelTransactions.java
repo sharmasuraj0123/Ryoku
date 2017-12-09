@@ -30,28 +30,39 @@ public class CRLevelTransactions {
         conn.close();
     }
 
-    public static void addReservation(int cust_id, double fare,
-                                      double book_fee, int emp_id, int length_stay, int advPurchase) throws SQLException, ClassNotFoundException {
+    public static int addReservation(int cust_id, double fare,
+                                      double book_fee, int emp_id, int numberOfPassengers,int length_stay, int advPurchase) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call addReservation(?,?,?,?,?,?,?,?,?,?,?,?)}");
-
+        CallableStatement cStmt = conn.prepareCall("{call addReservation(?,?,?,?,?,?,?,?,?,?)}");
+        int a =0;
+        int r_id =0;
 
         Date reservationDate = new Date(System.currentTimeMillis());
 
         cStmt.setInt(1, cust_id);
         cStmt.setDate(2, reservationDate);
-        cStmt.setDouble(3, book_fee);
-        cStmt.setInt(4, emp_id);
-        cStmt.setInt(5, length_stay);
-        cStmt.setInt(6, advPurchase);
+        cStmt.setDouble(3, fare);
+        cStmt.setDouble(4, book_fee);
+        cStmt.setInt(5, emp_id);
+        cStmt.setString(6,"Restricted");
+        cStmt.setInt(7, length_stay);
+        cStmt.setInt(8, advPurchase);
+        cStmt.setInt(9, numberOfPassengers);
+        cStmt.setInt(10,a);
 
 
         boolean hadResults = cStmt.execute();
 
+        r_id =  cStmt.getInt(10);
+
+       System.out.println(r_id);
+
         conn.close();
+        return r_id;
     }
+
 
     // by The Bird of Hermes
     public static void addCustomer(String firstname, String lastname, String email, String password) throws SQLException, ClassNotFoundException{
@@ -119,8 +130,8 @@ public class CRLevelTransactions {
         ResultSet rs;
         CallableStatement cStmt = conn.prepareCall("{call deleteCustomer(?,?)}");
 
-        cStmt.setInt(1, personId);
-        cStmt.setInt(2,cust_id);
+        cStmt.setInt(1, cust_id);
+        cStmt.setInt(2, personId);
 
         boolean hadResults = cStmt.execute();
         conn.close();
@@ -129,27 +140,40 @@ public class CRLevelTransactions {
 
 
     public static void addPassenger(int reservation_id, String mealPref,
-                                    int TravelClass, String seatPref,
-                                    String seatNum, String firstName, String lastName,
-                                    String address
-            , String city, String state, int zipcode, int phoneNumber) throws SQLException, ClassNotFoundException {
+                                    String TravelClass, String seatPref,
+                                    String seatNum, String firstName, String lastName
+            ) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs;
-        CallableStatement cStmt = conn.prepareCall("{call addPassenger(?,?,?,?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cStmt = conn.prepareCall("{call addPassenger(?,?,?,?,?,?,?,?)}");
 
+
+        Timestamp startdate = new Timestamp(System.currentTimeMillis());
         cStmt.setInt(1, reservation_id);
         cStmt.setString(2, mealPref);
-        cStmt.setString(3, "ECONOMY");
+        cStmt.setString(3, TravelClass);
         cStmt.setString(4, seatPref);
         cStmt.setString(5, seatNum);
         cStmt.setString(6, firstName);
         cStmt.setString(7, lastName);
-        cStmt.setString(8, address);
-        cStmt.setString(9, city);
-        cStmt.setString(10, state);
-        cStmt.setInt(11, zipcode);
-        cStmt.setInt(12, phoneNumber);
+        cStmt.setString(8, String.valueOf(startdate));
+
+
+        boolean hadResults = cStmt.execute();
+        conn.close();
+
+    }
+
+    public static void addReservationLeg(int reservation_id, int leg_id, int legNum) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs;
+        CallableStatement cStmt = conn.prepareCall("{call addReservationLeg(?,?,?)}");
+
+        cStmt.setInt(1, reservation_id);
+        cStmt.setInt(2,leg_id);
+        cStmt.setInt(3,legNum);
 
 
         boolean hadResults = cStmt.execute();
@@ -250,5 +274,18 @@ public class CRLevelTransactions {
         return cl;
 
     }
+
+    public static void deleteReservation (int res_id) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs;
+        CallableStatement cStmt = conn.prepareCall("{call deleteReservation(?)}");
+
+        cStmt.setInt(1, res_id);
+        boolean hadResults = cStmt.execute();
+        conn.close();
+
+    }
+
 
 }

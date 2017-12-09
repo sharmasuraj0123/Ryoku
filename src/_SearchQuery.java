@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.Arrays;
 
-public class _SearchQuery {
+public class _SearchQuery implements Serializable {
     public String[] airports;
     public int numPassengers;
     public double flyingClass;

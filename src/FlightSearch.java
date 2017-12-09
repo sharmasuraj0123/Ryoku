@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class FlightSearch {
+public class FlightSearch implements Serializable{
     private int numberOfpassengers;
     private ArrayList<Flight> flightlegs;
     private int price;
@@ -9,9 +10,11 @@ public class FlightSearch {
     private String day;
     private String hours;
     private String minutes;
+    private boolean isInternational ;
 
     public FlightSearch() {
         flightlegs = new ArrayList<>();
+        //isInternational = false;
         price =0;
     }
 
@@ -88,6 +91,14 @@ public class FlightSearch {
             rs+= flightlegs.get(i).toString();
         }
         return rs;
+    }
+
+    public boolean isInternational() {
+        return isInternational;
+    }
+
+    public void setInternational(boolean international) {
+        isInternational = international;
     }
 
     @Override

@@ -43,6 +43,43 @@ public class CustomerLevelTransaction {
             return current_customer;
     }
 
+    public static Customer getCustomerByID(int p_id) throws SQLException, ClassNotFoundException{
+        Customer current_customer = null;
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+        CallableStatement cStmt = conn.prepareCall("{call getCustomerByID(?)}");
+
+        cStmt.setInt(1,p_id);
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+        if(hadResults)
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String firstName = rs.getString("FirstName");
+                String lastName= rs.getString("LastName");
+                String email= rs.getString("emailAddress");
+                String password= rs.getString("password");
+                String address= rs.getString("address");
+                String city= rs.getString("City_town");
+                String state= rs.getString("State");
+                int zipCode = rs.getInt("ZipCode");
+                long phoneNumber = rs.getLong("Phone");
+                int accountNumber = rs.getInt("AccountNumber");
+                Timestamp dateCreated = rs.getTimestamp("AccountCreationDate");
+                long creditCardNumber = rs.getLong("CreditCardNumber");
+                double ratings = rs.getDouble("Ratings");
+
+
+                current_customer = new Customer(id,firstName,lastName,email,password,
+                        address,city,state,zipCode,phoneNumber,accountNumber,
+                        dateCreated,creditCardNumber,ratings);
+
+            }
+
+        conn.close();
+        return current_customer;
+    }
+
 
     /**
      *
@@ -207,22 +244,193 @@ public class CustomerLevelTransaction {
             }
         conn.close();
 
-        for (int i=0; i<fs.size();i++)
-            for (int j = 0; j<fs.get(i).getFlightlegs().size();j++)
-                fs.get(i).getFlightlegs().set(j,getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
-
+        for (int i=0; i<fs.size();i++) {
+            for (int j = 0; j < fs.get(i).getFlightlegs().size(); j++) {
+                fs.get(i).getFlightlegs().set(j, getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
+                if(fs.get(i).getFlightlegs().get(j).isInternational())
+                    fs.get(i).setInternational(true);
+            }
+            fs.get(i).getTotalTravelTime();
+        }
         return fs;
     }
 
 
+    public static ArrayList<FlightSearch> searchFlights_flex (int source, int dest , Date date)throws SQLException, ClassNotFoundException{
+
+        ArrayList<FlightSearch> fs = new ArrayList<>();
+        FlightSearch flightBlock;
+        Flight newflight;
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs = null;
+
+
+        //Execute The Statement For direct Flights
+        CallableStatement cStmt = conn.prepareCall("{call searchFlights_direct_flex(?,?,?)}");
+        cStmt.setInt(1,source);
+        cStmt.setInt(2,dest);
+        cStmt.setDate(3, (java.sql.Date) date);
+        boolean hadResults = cStmt.execute();
+
+        rs = cStmt.getResultSet();
+        if(hadResults)
+            while (rs.next()) {
+
+                flightBlock = new FlightSearch();
+
+                int leg_id = rs.getInt("id");
+                int flight_id = rs.getInt("flight_id");
+                int departureAirport = rs.getInt("departureAirport");
+                int arrivalAirport = rs.getInt("arrivalAirport");
+                Timestamp dept_timestamp = rs.getTimestamp("dept_timestamp");
+                Timestamp arrv_timestamp = rs.getTimestamp("arrv_timestamp");
+                int base_fare = rs.getInt("base_fare");
+                int stopNum = rs.getInt("stopNum");
+                int hidden_fare = rs.getInt("hidden_fare");
+
+
+                newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+                        leg_id,base_fare,hidden_fare);
+
+                flightBlock.addFlight(newflight);
+                flightBlock.setPrice(base_fare);
+                fs.add(flightBlock);
+            }
+
+
+        //Execute The Statement For two Flights
+        CallableStatement cStmt2 = conn.prepareCall("{call searchFlights_oneStop_flex(?,?,?)}");
+        cStmt2.setInt(1,source);
+        cStmt2.setInt(2,dest);
+        cStmt2.setDate(3, (java.sql.Date) date);
+        hadResults = cStmt2.execute();
+        rs = cStmt2.getResultSet();
+        if(hadResults)
+            while (rs.next()) {
+
+                flightBlock = new FlightSearch();
+
+                //Add First Flight & The Base Fare
+                int leg_id = rs.getInt(1);
+                int flight_id = rs.getInt(2);
+                int departureAirport = rs.getInt(3);
+                int arrivalAirport = rs.getInt(4);
+                Timestamp dept_timestamp = rs.getTimestamp(5);
+                Timestamp arrv_timestamp = rs.getTimestamp(6);
+                int hidden_fare = rs.getInt(8);
+                int base_fare = rs.getInt(7);
+                int stopNum = rs.getInt(9);
+                newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+                        leg_id,base_fare,hidden_fare);
+                flightBlock.addFlight(newflight);
+                flightBlock.addPrice(base_fare);
+
+
+
+                //Add Second Flight & The Base Fare
+                leg_id = rs.getInt(12);
+                flight_id = rs.getInt(13);
+                departureAirport = rs.getInt(14);
+                arrivalAirport = rs.getInt(15);
+                dept_timestamp = rs.getTimestamp(16);
+                arrv_timestamp = rs.getTimestamp(17);
+                base_fare = rs.getInt(18);
+                hidden_fare = rs.getInt(19);
+                stopNum = rs.getInt(20);
+                newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+                        leg_id,base_fare,hidden_fare);
+                flightBlock.addFlight(newflight);
+                flightBlock.addPrice(base_fare);
+
+                fs.add(flightBlock);
+            }
+
+
+
+        CallableStatement cStmt3 = conn.prepareCall("{call searchFlights_twoStop_flex(?,?,?)}");
+        cStmt3.setInt(1,source);
+        cStmt3.setInt(2,dest);
+        cStmt3.setDate(3, (java.sql.Date) date);
+        hadResults = cStmt3.execute();
+        rs = cStmt3.getResultSet();
+        if(hadResults)
+            while (rs.next()) {
+
+                flightBlock = new FlightSearch();
+
+                //Add First Flight & The Base Fare
+                int leg_id = rs.getInt(1);
+                int flight_id = rs.getInt(2);
+                int departureAirport = rs.getInt(3);
+                int arrivalAirport = rs.getInt(4);
+                Timestamp dept_timestamp = rs.getTimestamp(5);
+                Timestamp arrv_timestamp = rs.getTimestamp(6);
+                int base_fare = rs.getInt(7);
+                int hidden_fare = rs.getInt(8);
+                int stopNum = rs.getInt(9);
+                newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+                        leg_id,base_fare,hidden_fare);
+                flightBlock.addFlight(newflight);
+                flightBlock.addPrice(base_fare);
+
+
+
+                //Add Second Flight & The Base Fare
+                leg_id = rs.getInt(12);
+                flight_id = rs.getInt(13);
+                departureAirport = rs.getInt(14);
+                arrivalAirport = rs.getInt(15);
+                dept_timestamp = rs.getTimestamp(16);
+                arrv_timestamp = rs.getTimestamp(17);
+                base_fare = rs.getInt(18);
+                hidden_fare = rs.getInt(19);
+                stopNum = rs.getInt(20);
+                newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+                        leg_id,base_fare,hidden_fare);
+                flightBlock.addPrice(base_fare);
+                flightBlock.addFlight(newflight);
+
+
+
+                //Add Third Flight & The Base Fare
+                leg_id = rs.getInt(23);
+                flight_id = rs.getInt(24);
+                departureAirport = rs.getInt(25);
+                arrivalAirport = rs.getInt(26);
+                dept_timestamp = rs.getTimestamp(27);
+                arrv_timestamp = rs.getTimestamp(28);
+                base_fare = rs.getInt(29);
+                hidden_fare = rs.getInt(30);
+                stopNum = rs.getInt(31);
+                newflight = new Flight(stopNum,dept_timestamp,arrv_timestamp,departureAirport,arrivalAirport,flight_id,
+                        leg_id,base_fare,hidden_fare);
+                flightBlock.addFlight(newflight);
+                flightBlock.addPrice(base_fare);
+
+                fs.add(flightBlock);
+            }
+        conn.close();
+
+
+        for (int i=0; i<fs.size();i++) {
+            for (int j = 0; j < fs.get(i).getFlightlegs().size(); j++) {
+                fs.get(i).getFlightlegs().set(j, getMoreFlightdetails(fs.get(i).getFlightlegs().get(j)));
+                if(fs.get(i).getFlightlegs().get(j).isInternational())
+                    fs.get(i).setInternational(true);
+            }
+            fs.get(i).getTotalTravelTime();
+        }
+
+        return fs;
+    }
 
     public static Flight getMoreFlightdetails(Flight f) throws SQLException, ClassNotFoundException {
 
         Connection conn = ConnectionUtils.getConnection();
         ResultSet rs = null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM `Flights` F  WHERE \n" +
-                "F.id = ?;\n}");
+        CallableStatement cStmt = conn.prepareCall("SELECT * FROM `Flights` F  WHERE F.id = ?");
         cStmt.setInt(1,f.getFlightId());
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
@@ -231,13 +439,20 @@ public class CustomerLevelTransaction {
 
                 f.setAirline(rs.getString(2));
                 f.setDaysOp(rs.getInt("days_Op"));
-                f.setFlight_number(3);
+                f.setFlight_number(rs.getInt(3));
             }
         conn.close();
         //Return the Airports.
         f.setDepartureAirport_ob(getAirportName(f.getDepartAirport_Id()));
-        f.setDepartureAirport_ob(getAirportName(f.getArriveAirport_id()));
-        f.setAirlineName(f.getAirline());
+        f.setArrivalAirport_ob(getAirportName(f.getArriveAirport_id()));
+        f.setAirlineName(getAirlineName(f.getAirline()));
+
+
+        if(f.getArrivalAirport_ob()!=null && f.getDepartureAirport_ob()!=null)
+        if(!f.getArrivalAirport_ob().getCountry().equalsIgnoreCase("United States of America") ||
+                !f.getDepartureAirport_ob().getCountry().equalsIgnoreCase("United States of America"))
+            f.setInternational(true);
+
         return f;
 
     }
@@ -249,18 +464,19 @@ public class CustomerLevelTransaction {
         ResultSet rs = null;
         Airport airport = null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM Airports A  WHERE \n" +
-                "A.id = ?;\n}");
+        CallableStatement cStmt = conn.prepareCall("SELECT * FROM Airports A  WHERE A.id = ?");
         cStmt.setInt(1,airport_id);
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
         if(hadResults) {
-            String name = rs.getString("name");
-            String city =rs.getString("city");
-            String state =rs.getString("state");
-            String country =rs.getString("country");
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                String country = rs.getString("country");
 
-            airport = new Airport(airport_id,name,state,city,country);
+                airport = new Airport(airport_id, name, state, city, country);
+            }
         }
 
         conn.close();
@@ -274,14 +490,16 @@ public class CustomerLevelTransaction {
         ResultSet rs = null;
         String airlinename =null;
 
-        CallableStatement cStmt = conn.prepareCall("{SELECT * FROM Airlines A  WHERE \n" +
-                "A.iD = ?;\n}");
+        CallableStatement cStmt = conn.prepareCall("SELECT * FROM Airlines A  WHERE A.id = ?");
+
         cStmt.setString(1,airline);
 
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
         if(hadResults) {
-            airlinename = rs.getString("airline_name");
+            while (rs.next()) {
+                airlinename = rs.getString("airline_name");
+            }
         }
 
         conn.close();
@@ -355,6 +573,32 @@ public class CustomerLevelTransaction {
         conn.close();
         return r;
     }
+
+
+    public static FlightSearch mergeFlightBlock(FlightSearch a , FlightSearch b){
+        FlightSearch newList = a;
+
+        //Add teh Price
+        newList.addPrice(b.getPrice());
+        //Add All the Flights.
+        for (int i =0; i<b.getFlightlegs().size();i++){
+            Flight newFlight  = b.getFlightlegs().get(i);
+            newList.addFlight(newFlight);
+        }
+        return a;
+    }
+
+
+    public static ArrayList<FlightSearch> mergeBlockList(ArrayList<FlightSearch>a,ArrayList<FlightSearch>b){
+        ArrayList<FlightSearch> newList= new ArrayList<>();
+
+        for (int i=0; i<a.size();i++)
+            for (int j=0; j<b.size();j++)
+                newList.add(mergeFlightBlock(a.get(i),b.get(j)));
+
+        return newList;
+    }
+
 
 
 }

@@ -172,8 +172,8 @@ public class ManagerLevelTransaction {
         rs = cStmt.getResultSet();
 
         while (rs.next()) {
-            String newEntry = String.format(rs.getString("EmployeeName")+"\t"+ rs.getInt("TotalRevenue")
-                    +"\t"+rs.getInt("FEES"));
+            String newEntry = String.format("<td>" + rs.getString("EmployeeName")+"</td><td>"+ rs.getInt("TotalRevenue")
+                    +"</td><td>"+rs.getInt("FEES"));
             el.add(newEntry);
         }
         conn.close();
@@ -203,11 +203,64 @@ public class ManagerLevelTransaction {
             newFlight.setArrival_time(rs.getTimestamp("arrv_timestamp"));
             newFlight.setDept_time(rs.getTimestamp("dept_timestamp"));
             newFlight.setDaysOp(rs.getInt("days_Op"));
+            newFlight.setBase_fare(rs.getInt("base_fare"));
+            newFlight.setDeparture_status(rs.getTimestamp("departure_status"));
+            newFlight.setArrival_status(rs.getTimestamp("arrival_status"));
+            newFlight.setFlightId(rs.getInt("id"));
+            newFlight.setLegId(rs.getInt(13));
+            newFlight.setTime();
             fl.add(newFlight);
         }
-
         conn.close();
+
+        for (int i =0; i< fl.size();i++)
+            fl.set(i, CustomerLevelTransaction.getMoreFlightdetails(fl.get(i)));
         return fl;
+    }
+
+    public static ArrayList<ReservationData> getReservationsByAFlight(int flight_id) throws SQLException, ClassNotFoundException {
+
+        Connection conn = ConnectionUtils.getConnection();
+        ResultSet rs =null;
+        CallableStatement cStmt = conn.prepareCall("{call getReservationByFlight(?)}");
+
+        cStmt.setInt(1,flight_id);
+
+        boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
+
+        ArrayList<ReservationData> rl = new ArrayList<>();
+        if(hadResults)
+            while (rs.next()) {
+                ReservationData data = new ReservationData();
+
+                data.setCustomer_id(rs.getInt("customer_id"));
+                data.setReservation_id(rs.getInt("id"));
+                data.setNumOfPassengers(rs.getInt("NumberOfPassengers"));
+                data.setDateCreated(rs.getTimestamp("date"));
+                data.setTotal_fare(rs.getDouble("total_fare"));
+                data.setBooking_fee(rs.getDouble("booking_fee"));
+                data.setEmployee_id(rs.getInt("employee_id"));
+                data.setFare_restrictions(rs.getString("fare_restrictions"));
+                data.setLengthOfstay(rs.getInt("lengthOfStay"));
+                data.setAdvPurchases(rs.getString("advancePurchase"));
+
+                rl.add(data);
+            }
+        conn.close();
+
+        for (int i =0;i < rl.size();i++)
+            rl.set(i,CustomerLevelTransaction.getReservationDetails(rl.get(i)));
+
+
+        for(int i=0;i<rl.size();i++){
+            rl.get(i).setCustomer(CustomerLevelTransaction.getCustomerByID(rl.get(i).getCustomer_id()));
+        }
+
+        System.out.println("mlt => "+rl.get(0).getCustomer().getFirstName());
+
+
+        return rl;
     }
 
     public static ArrayList<ReservationData> getReservationsByACustomer(int cust_id) throws SQLException, ClassNotFoundException {
@@ -240,6 +293,10 @@ public class ManagerLevelTransaction {
                 rl.add(data);
             }
         conn.close();
+
+        for (int i =0;i < rl.size();i++)
+            rl.set(i,CustomerLevelTransaction.getReservationDetails(rl.get(i)));
+
         return rl;
     }
 
@@ -359,10 +416,36 @@ public class ManagerLevelTransaction {
         CallableStatement cStmt = conn.prepareCall("{call listMostSalesByCustRep()}");
 
         boolean hadResults = cStmt.execute();
+        rs = cStmt.getResultSet();
         String rep = null;
-        if(hadResults)
-        rep = String.format(rs.getString("FirstName")+" "+ rs.getString("LastName")
-                +"\t"+rs.getInt("total_sales_made"));
+
+        if(hadResults){
+            if(rs.next()) {
+                int id = rs.getInt("id"); // 0
+                //String firstName = "" + rs.getString("FirstName");
+                //String lastName = "" + rs.getString("LastName");
+                String email = "" + rs.getString("emailAddress"); // 1
+                //String password = "" + rs.getString("password");
+                String address = "" + rs.getString("Address"); // 2
+                String city = "" + rs.getString("City_Town"); // 3
+                String state = "" + rs.getString("State");  // 4
+                int zipCode = rs.getInt("ZipCode");  // 5
+                //long phoneNumber = rs.getLong("Phone");
+                //int account_number = rs.getInt("AccountNumber");
+
+                Timestamp dateCreated = rs.getTimestamp("StartDate"); // 6
+                Date memberSince = new Date(dateCreated.getTime());
+
+                double hrPay = rs.getDouble("HourlyPay");
+
+                //long creditCardNumber = rs.getLong("CreditCardNumber");
+                double rating = rs.getDouble("Rating"); // 7
+                int totalSales = rs.getInt("total_sales_made");
+
+                rep = String.format(email + "~" + address + "~" + city + "~" + state + "~" + zipCode + "~"
+                        + memberSince + "~"+hrPay+"~" + rating+"~"+totalSales);
+            }
+        }
         conn.close();
         return rep;
     }
@@ -375,11 +458,39 @@ public class ManagerLevelTransaction {
 
         boolean hadResults = cStmt.execute();
         rs = cStmt.getResultSet();
+
         String rep = null;
-        if(hadResults)
-        rep = String.format(rs.getString("FirstName")+" "+ rs.getString("LastName")
-                +"\t"+rs.getInt("total_sales_made"));
+
+        if(hadResults){
+            if(rs.next()) {
+                int id = rs.getInt("id"); // 0
+                //String firstName = "" + rs.getString("FirstName");
+                //String lastName = "" + rs.getString("LastName");
+                String email = "" + rs.getString("emailAddress"); // 1
+                //String password = "" + rs.getString("password");
+                String address = "" + rs.getString("Address"); // 2
+                String city = "" + rs.getString("City_Town"); // 3
+                String state = "" + rs.getString("State");  // 4
+                int zipCode = rs.getInt("ZipCode");  // 5
+                //long phoneNumber = rs.getLong("Phone");
+                //int account_number = rs.getInt("AccountNumber");
+
+                Timestamp dateCreated = rs.getTimestamp("AccountCreationDate"); // 6
+                Date memberSince = new Date(dateCreated.getTime());
+
+                //long creditCardNumber = rs.getLong("CreditCardNumber");
+                double rating = rs.getDouble("Ratings"); // 7
+                int totalSales = rs.getInt("total_sales_made");
+
+                rep = String.format(email + "~" + address + "~" + city + "~" + state + "~" + zipCode + "~"
+                        + memberSince + "~" + rating+"~"+totalSales);
+            }
+        }
+
+
         conn.close();
+
+
         return rep;
     }
 
