@@ -6,5 +6,5 @@ The entire design of the Relational database system followed Request Based MVC u
 Tomcat server.
 Ui ToolKit was used to make the userinterface.
 
-This porject followed a database-oriented design approach, 
+This project followed a database-oriented design approach, 
 Here is the ER Diagram and relational Model for the Database : https://docs.google.com/document/d/1EPjMsmd4Ul4EinCq2K11ObCbgMmGhq8z08IDTdA_4hM/edit?usp=sharing
